@@ -1,27 +1,33 @@
-@extends('layouts.guest')
-@section('title', 'Giriş Yap')
-@section('panel-title', 'Tekrar hoş geldin.')
-@section('panel-text', 'Hesabına giriş yap ve kaldığın yerden devam et.')
+@extends('layouts.auth-master')
+
+@section('title', trans('Sign In'))
+
+@section('panel-title', trans('Welcome Again'))
+
+@section('panel-text', trans('Log in to your account and continue where you left off'))
 
 @section('content')
     <div>
         <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">Giriş yap</h1>
         <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
             Hesabın yok mu?
-            <a href="{{ route('register') }}" class="font-medium text-indigo-700 hover:underline dark:text-indigo-400">Hemen kayıt ol</a>
+            <a href="{{ route('register') }}" class="font-medium text-indigo-700 hover:underline dark:text-indigo-400">Hemen
+                kayıt ol</a>
         </p>
     </div>
 
-    <form method="POST" action="{{ route('loginPost') }}" class="mt-8 space-y-5" novalidate>
+    <form method="POST" action="{{ route('login') }}" class="mt-8 space-y-5" novalidate>
         @csrf
 
         <x-text-input id="username" name="username" type="username" icon="username" label="Kullanıcı Adınız"
-            placeholder="örn:ahmet31" autocomplete="username" autofocus />
+                      placeholder="örn:ahmet31" autocomplete="username" autofocus/>
 
-        <x-password-input id="password" name="password" label="Şifre" autocomplete="current-password">
+        <x-password-input id="password" name="password" :label="trans('Password')" autocomplete="current-password">
             @if (Route::has('password.request'))
                 <x-slot:action>
-                    <a href="{{ route('password.request') }}" class="text-sm font-medium text-indigo-700 hover:underline dark:text-indigo-400">Şifremi unuttum</a>
+                    <a href="{{ route('password.request') }}"
+                       class="text-sm font-medium text-indigo-700 hover:underline dark:text-indigo-400">Şifremi
+                        unuttum</a>
                 </x-slot:action>
             @endif
         </x-password-input>

@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 class UserFactory extends Factory
 {
-
     private static string $password;
 
     public function definition(): array
