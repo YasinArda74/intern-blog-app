@@ -8,18 +8,21 @@
 
 @section('content')
     <div>
-        <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">Giriş yap</h1>
+        <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+            @lang('Sign In')
+        </h1>
         <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
-            Hesabın yok mu?
-            <a href="{{ route('register') }}" class="font-medium text-indigo-700 hover:underline dark:text-indigo-400">Hemen
-                kayıt ol</a>
+            @lang("Don't you have an account?")
+            <a href="{{ route('register') }}" class="font-medium text-indigo-700 hover:underline dark:text-indigo-400">
+                @lang('Sign up now')
+            </a>
         </p>
     </div>
 
     <form method="POST" action="{{ route('login') }}" class="mt-8 space-y-5" novalidate>
         @csrf
 
-        <x-text-input id="username" name="username" type="username" icon="username" label="Kullanıcı Adınız"
+        <x-text-input id="username" name="username" type="username" icon="username" :label="trans('User Name')"
                       placeholder="örn:ahmet31" autocomplete="username" autofocus/>
 
         <x-password-input id="password" name="password" :label="trans('Password')" autocomplete="current-password">
@@ -40,7 +43,7 @@
 
         <button type="submit"
             class="w-full rounded-lg bg-indigo-700 px-5 py-3 text-center text-sm font-semibold text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
-            Giriş yap
+            @lang('Sign In')
         </button>
     </form>
 

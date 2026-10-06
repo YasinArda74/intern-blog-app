@@ -26,25 +26,25 @@
         </a>
 
         <div class="relative max-w-md">
-            <h2 class="text-balance text-4xl font-bold leading-tight">@yield('panel-title', 'Tekrar hoş geldin.')</h2>
+            <h2 class="text-balance text-4xl font-bold leading-tight">@yield('panel-title')</h2>
             <p class="mt-4 text-pretty text-lg leading-relaxed text-indigo-100">
-                @yield('panel-text', 'Yazılarını paylaş, okurlarınla buluş.')
+                @yield('panel-text')
             </p>
 
             <ul class="mt-10 space-y-4 text-indigo-50">
                 <li class="flex items-center gap-3">
                     <i class="fa-solid fa-circle-check"></i>
-                    Sade ve odaklı yazı editörü
+                    @lang('Simple and focused writing editor')
                 </li>
 
                 <li class="flex items-center gap-3">
                     <i class="fa-solid fa-circle-check"></i>
-                    Kişisel profil ve yazar sayfası
+                    @lang('Personal profile and author page')
                 </li>
 
                 <li class="flex items-center gap-3">
                     <i class="fa-solid fa-circle-check"></i>
-                    Tüm cihazlarda kusursuz görünüm
+                    @lang('Flawless appearance on all devices')
                 </li>
             </ul>
         </div>

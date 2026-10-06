@@ -14,21 +14,23 @@
                 </span>
 
                 <h1 class="mt-5 text-balance text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl dark:text-white">
-                    Fikirlerini yaz, dünyayla paylaş.</h1>
+                    @lang('Write down your ideas and share them with the world.')
+                </h1>
 
-                <p class="mt-4 text-pretty text-lg leading-relaxed text-gray-600 dark:text-gray-400">Yazılım, seyahat,
-                    üretkenlik ve daha fazlası. Topluluğumuzun en yeni yazılarını keşfet.</p>
+                <p class="mt-4 text-pretty text-lg leading-relaxed text-gray-600 dark:text-gray-400">
+                    @lang('Software, travel, productivity, and more. Discover the latest posts from our community.')
+                </p>
 
                 <div class="mt-8 flex flex-wrap gap-3">
                     <a href="{{route('posts.create')}}"
                        class="rounded-lg bg-indigo-700 px-5 py-3 text-sm font-semibold text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
                         <i class="fa-solid fa-pencil me-2 text-xs"></i>
-
-                        Yazmaya başla
+                        @lang('Start writing')
                     </a>
                     <a href="#son-yazilar"
-                       class="rounded-lg border border-gray-300 bg-white px-5 py-3 text-sm font-semibold text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700">Yazıları
-                        keşfet</a>
+                       class="rounded-lg border border-gray-300 bg-white px-5 py-3 text-sm font-semibold text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700">
+                        @lang('Discover articles')
+                    </a>
                 </div>
             </div>
         </div>
@@ -69,10 +71,10 @@
             {{-- Yazı listesi --}}
             <section id="son-yazilar" class="lg:col-span-2" aria-labelledby="latest-heading">
                 <div class="flex flex-wrap items-center justify-between gap-4">
-                    <h2 id="latest-heading" class="text-xl font-bold text-gray-900 dark:text-white">Son yazılar</h2>
+                    <h2 id="latest-heading" class="text-xl font-bold text-gray-900 dark:text-white">@lang('Recent posts')</h2>
                     <div class="flex flex-wrap gap-2 text-sm">
                         <a href="#"
-                           class="rounded-full bg-gray-900 px-3 py-1 font-medium text-white dark:bg-white dark:text-gray-900">Tümü</a>
+                           class="rounded-full bg-gray-900 px-3 py-1 font-medium text-white dark:bg-white dark:text-gray-900">@lang('All')</a>
                         <a href="#"
                            class="rounded-full border border-gray-200 bg-white px-3 py-1 text-gray-700 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-800">Yazılım</a>
                         <a href="#"
@@ -96,7 +98,7 @@
             {{-- Kenar çubuğu --}}
             <aside class="space-y-6">
                 <div class="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
-                    <h2 class="font-semibold text-gray-900 dark:text-white">Popüler yazılar</h2>
+                    <h2 class="font-semibold text-gray-900 dark:text-white">@lang('Popular posts')</h2>
                     <ol class="mt-4 space-y-4">
                         <li class="flex gap-3">
                             <span class="text-2xl font-bold text-gray-200 dark:text-gray-700">01</span>
@@ -107,29 +109,11 @@
                                 <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Ahmet Yılmaz · 2,4B okuma</p>
                             </div>
                         </li>
-                        <li class="flex gap-3">
-                            <span class="text-2xl font-bold text-gray-200 dark:text-gray-700">02</span>
-                            <div>
-                                <a href="/posts/ornek-yazi"
-                                   class="text-sm font-medium leading-snug text-gray-900 hover:text-indigo-700 dark:text-white dark:hover:text-indigo-400">Uzaktan
-                                    çalışırken odaklanmanın yolları</a>
-                                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Mert Demir · 1,8B okuma</p>
-                            </div>
-                        </li>
-                        <li class="flex gap-3">
-                            <span class="text-2xl font-bold text-gray-200 dark:text-gray-700">03</span>
-                            <div>
-                                <a href="/posts/ornek-yazi"
-                                   class="text-sm font-medium leading-snug text-gray-900 hover:text-indigo-700 dark:text-white dark:hover:text-indigo-400">Kapadokya'da
-                                    3 gün: Gezi rehberi</a>
-                                <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Elif Kaya · 1,2B okuma</p>
-                            </div>
-                        </li>
                     </ol>
                 </div>
 
                 <div class="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
-                    <h2 class="font-semibold text-gray-900 dark:text-white">Etiketler</h2>
+                    <h2 class="font-semibold text-gray-900 dark:text-white">@lang('Tags')</h2>
                     <div class="mt-4 flex flex-wrap gap-2">
                         @foreach (['laravel', 'php', 'tailwind', 'seyahat', 'tasarım', 'kariyer', 'kitap', 'üretkenlik'] as $tag)
                             <a href="#"
@@ -139,15 +123,15 @@
                 </div>
 
                 <div class="rounded-xl bg-indigo-700 p-6 text-white">
-                    <h2 class="font-semibold">Bültene abone ol</h2>
-                    <p class="mt-2 text-sm text-indigo-100">Haftanın en iyi yazıları her pazar e-posta kutunda.</p>
+                    <h2 class="font-semibold">@lang('Subscribe to the newsletter')</h2>
+                    <p class="mt-2 text-sm text-indigo-100">@lang('The best articles of the week in your inbox every Sunday.')</p>
                     <form action="#" class="mt-4 space-y-3">
                         <label for="newsletter-email" class="sr-only">E-posta adresi</label>
                         <input type="email" id="newsletter-email" placeholder="ornek@site.com"
                                class="block w-full rounded-lg border-0 bg-white/15 p-2.5 text-sm text-white placeholder-indigo-200 focus:ring-2 focus:ring-white">
                         <button type="submit"
                                 class="w-full rounded-lg bg-white px-4 py-2.5 text-sm font-semibold text-indigo-700 hover:bg-indigo-50">
-                            Abone ol
+                                @lang('Subscribe')
                         </button>
                     </form>
                 </div>
