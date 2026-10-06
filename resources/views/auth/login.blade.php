@@ -12,7 +12,7 @@
         </p>
     </div>
 
-    <form method="POST" action="{{ route('loginPost') }}" class="mt-8 space-y-5" novalidate>
+    <form method="POST" action="{{ route('login') }}" class="mt-8 space-y-5" novalidate>
         @csrf
 
         <x-text-input id="username" name="username" type="username" icon="username" label="Kullanıcı Adınız"

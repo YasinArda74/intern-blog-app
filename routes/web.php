@@ -1,16 +1,22 @@
 <?php
 
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/login', [UserController::class,'login'])->name('login');
-Route::post('/login', [UserController::class,'authenticate'])->name('loginPost');
+// Auth Routes
+Route::controller(AuthController::class)->group(function () {
+    Route::middleware(['guest'])->group(function () {
+        Route::get('login', 'getLogin')->name('login');
+        Route::post('login', 'postLogin');
 
+        Route::get('register', 'getRegister')->name('register');
+        Route::post('register', 'postRegister');
+    });
 
-Route::get('/register', [UserController::class,'register'])->name('register');
-Route::post('/register', [UserController::class,'store']);
-
+    Route::get('logout', 'getLogout')->name('logout')->middleware('auth');
+});
 
 
 Route::middleware(['auth'])->group( function () {;
@@ -34,6 +40,4 @@ Route::middleware(['auth'])->group( function () {;
     });
     Route::get('/profilAyarlari', [UserController::class,'ayarlar'])->name('profilAyarlari');
     Route::get('/showProfil', [UserController::class,'showProfil'])->name('showProfil');
-    Route::get('logout', [UserController::class,'logout'])->name('logout');
-
 });

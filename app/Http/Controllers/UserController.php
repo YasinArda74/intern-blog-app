@@ -10,30 +10,12 @@ use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
-    public function login(){
-        return view('auth.login');
-    }
     public function HomePage()
     {
         $posts = post::all();
         return view('home' , compact('posts'));
     }
-    public function register(){
-        return view('auth.register');
-    }
-    public function store(Request $request){
-        $validatedData=$request->validate([
-            'firstname' => 'required',
-            'lastname' => 'required',
-            'username' => 'required|unique:users',
-            'email' => 'required|unique:users',
-            'password' => 'required',
 
-        ]);
-
-        $user=User::query()->create($validatedData);
-        return redirect()->back()->with('success', 'Kullanıcı başarıyla kaydedilmiştir');
-    }
     public function create(){
         $categories=Category::all();
         return view('posts.create' , compact('categories'));
@@ -88,37 +70,6 @@ class UserController extends Controller
         ]);
         Auth::user()->update($validatedData);
         return redirect()->back();
-
-    }
-
-
-
-
-
-
-    public function logout(){
-        Auth::logout();
-        return redirect()->route('login');
-
-    }
-
-
-
-
-    public function authenticate(Request $request){
-        $credentials = $request->validate([
-            'username' => ['required'],
-            'password' => ['required'],
-        ]);
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            return redirect()->intended('/');
-
-        }
-        return back()->withErrors([])
-            ->withInput($request->only('username', 'remember'));
-
-
 
     }
 }
