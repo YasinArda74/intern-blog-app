@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use App\Models\post;
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -28,7 +28,7 @@ class PostController extends Controller
             ]
         )->validated();
 
-        $inputs['user_id'] = auth()->id();
+        $inputs['user_id'] = $this->authUser->id;
 
         $category = Category::query()
             ->where('slug', $inputs['category_slug'])

@@ -1,7 +1,9 @@
-@extends('layouts.guest')
+@extends('layouts.auth-master')
 
-@section('title', 'Kayıt Ol')
+@section('title', trans('Sign Up'))
+
 @section('panel-title', 'Birkaç saniyede aramıza katıl.')
+
 @section('panel-text', 'Ücretsiz hesabını oluştur, tüm özellikleri hemen kullanmaya başla.')
 
 @section('content')

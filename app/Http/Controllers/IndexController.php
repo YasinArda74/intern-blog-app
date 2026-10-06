@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\post;
+use App\Models\Post;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
     public function getHome()
     {
-        $posts = post::all();
+        $posts = Post::all();
 
         return view('home' , compact('posts'));
     }

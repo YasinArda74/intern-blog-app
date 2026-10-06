@@ -9,16 +9,16 @@ use Illuminate\Support\Facades\Validator;
 class ProfileController extends Controller
 {
     public function getProfile(){
-        $user = Auth::user();
-
-        return view('profile.show', compact('user'));
+        return view('profile.show', [
+            'user' => $this->authUser,
+        ]);
     }
 
     public function getEdit()
     {
-        $user = Auth::user();
-
-        return view('profile.edit', compact('user'));
+        return view('profile.edit', [
+            'user' => $this->authUser,
+        ]);
     }
 
     public function putEdit(Request $request)
@@ -33,7 +33,7 @@ class ProfileController extends Controller
             ],
         )->validated();
 
-        Auth::user()->update($inputs);
+        $this->authUser->update($inputs);
 
         return redirect()->back();
     }
