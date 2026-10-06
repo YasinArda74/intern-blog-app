@@ -2,8 +2,13 @@
 
 
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\IndexController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+
+// Index Routes
+Route::get('/', [IndexController::class, 'getHome'])->name('home');
 
 // Auth Routes
 Route::controller(AuthController::class)->group(function () {
@@ -18,26 +23,25 @@ Route::controller(AuthController::class)->group(function () {
     Route::get('logout', 'getLogout')->name('logout')->middleware('auth');
 });
 
-
-Route::middleware(['auth'])->group( function () {;
-
-    Route::get('/', [UserController::class,'HomePage'])->name('HomePage');
-
-    Route::get('form', function () {
-        return view('posts.form');
+// Post Routes
+Route::controller(PostController::class)
+    ->prefix('posts')
+    ->as('posts.')
+    ->group(function () {
+        Route::middleware(['auth'])->group(function () {
+            Route::get('create', 'getCreate')->name('create');
+            Route::post('create', 'postCreate');
+        });
     });
-    Route::get('edit', function () {
-        return view('posts.edit');
-    });
-    Route::get('/create', [UserController::class,'create'])->name('posts.create');
-    Route::post('/create', [UserController::class,'createPost']);
 
-    Route::get('/profileEdit', [UserController::class,'profileEdit'])->name('profileEdit');
-    Route::put('/profileEdit', [UserController::class,'updateProfil']);
+// Profile Routes
+Route::controller(ProfileController::class)
+    ->middleware(['auth'])
+    ->group( function () {
+        Route::prefix('profile')->as('profile.')->group(function () {
+            Route::get('/', 'getProfile')->name('show');
 
-    Route::get('show', function () {
-        return view('posts.show');
+            Route::get('edit', 'getEdit')->name('edit');
+            Route::put('edit', 'putEdit');
+        });
     });
-    Route::get('/profilAyarlari', [UserController::class,'ayarlar'])->name('profilAyarlari');
-    Route::get('/showProfil', [UserController::class,'showProfil'])->name('showProfil');
-});

@@ -9,7 +9,7 @@
 
         <div class="mt-8 space-y-8">
             {{-- Profil bilgileri --}}
-            <form action="{{route('profileEdit')}}" method="post" class="rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+            <form action="{{route('profile.edit')}}" method="post" class="rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
                 @method('PUT')
                 @csrf
                 <div class="border-b border-gray-200 p-6 dark:border-gray-800">

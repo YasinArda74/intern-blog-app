@@ -17,7 +17,7 @@
                     </div>
                 </div>
                 <div class="flex gap-2 sm:pb-2">
-                    <a href="{{route('profileEdit')}}" class="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700">Profili düzenle</a>
+                    <a href="{{route('profile.edit')}}" class="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700">Profili düzenle</a>
                     <a href="/posts/create" class="rounded-lg bg-indigo-700 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-800 dark:bg-indigo-600 dark:hover:bg-indigo-700">Yazı yaz</a>
                 </div>
             </div>

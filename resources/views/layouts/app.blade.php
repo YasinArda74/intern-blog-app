@@ -57,10 +57,10 @@
                         <p class="truncate text-gray-500 dark:text-gray-400">{{\Illuminate\Support\Facades\Auth::user()->email}}</p>
                     </div>
                     <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="user-menu-button">
-                        <li><a href="{{route('showProfil')}}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Profilim</a></li>
+                        <li><a href="{{route('profile.show')}}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Profilim</a></li>
                         <li><a href="{{route('posts.create')}}" class="block px-4 py-2 hover:bg-gray-100 sm:hidden dark:hover:bg-gray-700">Yazı yaz</a></li>
-                        <li><a href="" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Taslaklarım</a></li>
-                        <li><a href="{{route('profilAyarlari')}}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Ayarlar</a></li>
+                        <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Taslaklarım</a></li>
+                        <li><a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Ayarlar</a></li>
                     </ul>
                     <div class="py-2">
                         <a href="{{route('logout')}}" class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:text-red-400 dark:hover:bg-gray-700">Çıkış yap</a>
