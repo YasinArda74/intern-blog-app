@@ -16,28 +16,29 @@
 
         <!-- Search -->
         <form action="#" role="search" class="hidden flex-1 md:block md:max-w-sm">
-            <label for="nav-search" class="sr-only">Yazılarda ara</label>
+            <label for="nav-search" class="sr-only">@lang('Search within posts')</label>
 
             <div class="relative">
                 <div class="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3">
                     <i class="fa-solid fa-magnifying-glass text-gray-500 dark:text-gray-400 text-sm"></i>
                 </div>
 
-                <input type="search" id="nav-search" name="q" placeholder="Yazılarda ara..."
+                <input type="search" id="nav-search" name="q" placeholder="{{trans('Search within posts...')}}"
                        class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 ps-9 text-sm text-gray-900 focus:border-indigo-600 focus:ring-indigo-600 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder-gray-500">
             </div>
         </form>
 
         <div class="flex items-center gap-2">
+            <div class="w-36 shrink-0">
+                <label for="nav-locale" class="sr-only">@lang('Language')</label>
+                <select id="nav-locale" onchange="window.location.href = this.value"
+                        class="block w-full px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body">
+                    <option value="{{ route('lang.switch', 'tr') }}" @selected(app()->getLocale() === 'tr')>Türkçe</option>
+                    <option value="{{ route('lang.switch', 'en') }}" @selected(app()->getLocale() === 'en')>English</option>
+                </select>
+            </div>
+
             @auth()
-                <!-- Create Post -->
-                <a href="{{route('posts.create')}}"
-                   class="hidden items-center gap-2 rounded-lg bg-indigo-700 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 sm:inline-flex dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
-                    <i class="fa-solid fa-pencil text-xs"></i>
-
-                    Yazı yaz
-                </a>
-
                 <button type="button" id="user-menu-button" data-dropdown-toggle="user-menu"
                         data-dropdown-placement="bottom-end"
                         class="rounded-full focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:focus:ring-indigo-800">
@@ -56,27 +57,28 @@
                     <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="user-menu-button">
                         <li>
                             <a href="{{route('profile.show')}}"
-                               class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Profilim</a>
+                               class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">@lang('My Profile')</a>
                         </li>
 
                         <li>
                             <a href="{{route('posts.create')}}"
-                               class="block px-4 py-2 hover:bg-gray-100 sm:hidden dark:hover:bg-gray-700">Yazı yaz</a>
+                               class="block px-4 py-2 hover:bg-gray-100 sm:hidden dark:hover:bg-gray-700">@lang('Write something')</a>
                         </li>
 
                         <li>
-                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Taslaklarım</a>
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">@lang('My drafts')</a>
                         </li>
 
                         <li>
-                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Ayarlar</a>
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">@lang('Settings')</a>
                         </li>
                     </ul>
 
                     <div class="py-2">
                         <a href="{{route('logout')}}"
-                           class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:text-red-400 dark:hover:bg-gray-700">Çıkış
-                            yap</a>
+                           class="block px-4 py-2 text-sm text-red-600 hover:bg-gray-100 dark:text-red-400 dark:hover:bg-gray-700">
+                            @lang('Log Out')
+                        </a>
                     </div>
                 </div>
             @endauth

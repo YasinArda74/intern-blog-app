@@ -1,5 +1,5 @@
 @props([
-    'href' => '/posts/ornek-yazi',
+    'href' => '#',
     'image' => '/images/post-1.png',
     'category' => 'Yazılım',
     'title' => 'Yazı başlığı',
