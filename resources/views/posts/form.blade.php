@@ -4,7 +4,7 @@
     $bad = 'border-red-500 bg-red-50 focus:border-red-500 focus:ring-red-500';
 @endphp
 
-<form method="POST" action="{{ $action }}" enctype="multipart/form-data" class="grid gap-8 lg:grid-cols-3">
+<form method="POST" action="#" enctype="multipart/form-data" class="grid gap-8 lg:grid-cols-3">
     @csrf
     @if ($post->exists) @method('PUT') @endif
 

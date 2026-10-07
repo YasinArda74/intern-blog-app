@@ -49,7 +49,7 @@
             </ul>
         </div>
 
-        <p class="relative text-sm text-indigo-200">&copy; 2026 Kalem. Tüm hakları saklıdır.</p>
+        <p>&copy; {{ now()->format('Y') . ' ' . config('app.name') }}. @lang('All rights reserved.')</p>
     </aside>
 
     <main class="flex w-full flex-1 flex-col justify-center px-6 py-12 sm:px-12 lg:w-1/2 lg:px-20">

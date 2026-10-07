@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 
 // Index Routes
@@ -45,3 +46,4 @@ Route::controller(ProfileController::class)
             Route::put('edit', 'putEdit');
         });
     });
+

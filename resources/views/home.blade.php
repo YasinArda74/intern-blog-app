@@ -40,7 +40,7 @@
         {{-- Öne çıkan yazı --}}
         <article
             class="group grid overflow-hidden rounded-2xl border border-gray-200 bg-white md:grid-cols-2 dark:border-gray-800 dark:bg-gray-900">
-            <a href="/posts/ornek-yazi"
+            <a href="#"
                class="block aspect-[16/10] overflow-hidden bg-gray-100 md:aspect-auto dark:bg-gray-800">
                 <img src="/images/post-1.png" alt=""
                      class="size-full object-cover transition duration-300 group-hover:scale-105">
@@ -52,7 +52,7 @@
                         class="rounded-md bg-indigo-50 px-2.5 py-0.5 text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-300">Yazılım</span>
                 </div>
                 <h2 class="mt-4 text-balance text-2xl font-bold leading-tight text-gray-900 sm:text-3xl dark:text-white">
-                    <a href="/posts/ornek-yazi" class="hover:text-indigo-700 dark:hover:text-indigo-400">Laravel 13 ile
+                    <a href="#" class="hover:text-indigo-700 dark:hover:text-indigo-400">Laravel 13 ile
                         modern bir blog altyapısı kurmak</a>
                 </h2>
                 <p class="mt-3 leading-relaxed text-gray-600 dark:text-gray-400">Route yapısından Blade bileşenlerine
@@ -103,7 +103,7 @@
                         <li class="flex gap-3">
                             <span class="text-2xl font-bold text-gray-200 dark:text-gray-700">01</span>
                             <div>
-                                <a href="/posts/ornek-yazi"
+                                <a href="#"
                                    class="text-sm font-medium leading-snug text-gray-900 hover:text-indigo-700 dark:text-white dark:hover:text-indigo-400">Laravel
                                     13'te gelen yenilikler</a>
                                 <p class="mt-1 text-xs text-gray-500 dark:text-gray-400">Ahmet Yılmaz · 2,4B okuma</p>

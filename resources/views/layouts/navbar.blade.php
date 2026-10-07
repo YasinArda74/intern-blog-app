@@ -23,7 +23,7 @@
                     <i class="fa-solid fa-magnifying-glass text-gray-500 dark:text-gray-400 text-sm"></i>
                 </div>
 
-                <input type="search" id="nav-search" name="q" :placeholder="trans('Search within posts...')"
+                <input type="search" id="nav-search" name="q" placeholder="{{trans('Search within posts...')}}"
                        class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 ps-9 text-sm text-gray-900 focus:border-indigo-600 focus:ring-indigo-600 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder-gray-500">
             </div>
         </form>
@@ -35,7 +35,7 @@
                    class="hidden items-center gap-2 rounded-lg bg-indigo-700 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 sm:inline-flex dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
                     <i class="fa-solid fa-pencil text-xs"></i>
 
-                    Yazı yaz
+                    @lang('Write something')
                 </a>
 
                 <button type="button" id="user-menu-button" data-dropdown-toggle="user-menu"
@@ -56,20 +56,20 @@
                     <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="user-menu-button">
                         <li>
                             <a href="{{route('profile.show')}}"
-                               class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Profilim</a>
+                               class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">@lang('My Profile')</a>
                         </li>
 
                         <li>
                             <a href="{{route('posts.create')}}"
-                               class="block px-4 py-2 hover:bg-gray-100 sm:hidden dark:hover:bg-gray-700">Yazı yaz</a>
+                               class="block px-4 py-2 hover:bg-gray-100 sm:hidden dark:hover:bg-gray-700">@lang('Write something')</a>
                         </li>
 
                         <li>
-                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Taslaklarım</a>
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">@lang('My drafts')</a>
                         </li>
 
                         <li>
-                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">Ayarlar</a>
+                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">@lang('Settings')</a>
                         </li>
                     </ul>
 
