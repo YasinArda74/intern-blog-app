@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="tr" class="h-full">
+<html lang="{{ app()->getLocale() }}" class="h-full">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">

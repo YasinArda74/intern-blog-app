@@ -7,10 +7,10 @@
     <section class="border-b border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
         <div class="mx-auto max-w-6xl px-4 py-14 sm:px-6 lg:py-20">
             <div class="max-w-2xl">
-                <span
-                    class="inline-flex items-center gap-2 rounded-full bg-indigo-50 px-3 py-1 text-xs font-medium text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-300">
+                <span class="inline-flex items-center gap-2 rounded-full bg-indigo-50 px-3 py-1 text-xs font-medium text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-300">
                     <span class="size-1.5 rounded-full bg-indigo-600"></span>
-                    Bu hafta 24 yeni yazı yayınlandı
+
+                    @lang(':count new articles were published this week.', ['count' => '10'])
                 </span>
 
                 <h1 class="mt-5 text-balance text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl dark:text-white">

@@ -38,7 +38,7 @@
         <div class="flex items-center">
             <input id="remember" name="remember" type="checkbox" value="1" @checked(old('remember'))
                 class="size-4 rounded-sm border-gray-300 bg-gray-100 text-indigo-600 focus:ring-2 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-800 dark:ring-offset-gray-900">
-            <label for="remember" class="ms-2 text-sm text-gray-700 dark:text-gray-300">Beni hatırla</label>
+            <label for="remember" class="ms-2 text-sm text-gray-700 dark:text-gray-300">@lang('Remember Me')</label>
         </div>
 
         <button type="submit"
@@ -47,7 +47,7 @@
         </button>
     </form>
 
-    <p class="mt-10 text-center text-xs text-gray-500 dark:text-gray-400">
-        Giriş yaparak <a href="#" class="underline hover:text-gray-700 dark:hover:text-gray-200">Kullanım Koşulları</a>'nı kabul etmiş olursun.
+    <p class="mt-5 text-center text-xs text-gray-500 dark:text-gray-400">
+        @lang('By logging in, you agree to the <a href="#" class="underline hover:text-gray-700 dark:hover:text-gray-200">Terms of Use</a>.')
     </p>
 @endsection

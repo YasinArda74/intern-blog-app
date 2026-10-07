@@ -1,12 +1,19 @@
 <?php
 
-
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Post;
 use Illuminate\Support\Facades\Route;
+
+Route::get('/lang/{locale}', function (string $locale) {
+    abort_unless(in_array($locale, ['en', 'tr'], true), 404);
+
+    session(['locale' => $locale]);
+
+    return back();
+})->name('lang.switch');
 
 // Index Routes
 Route::get('/', [IndexController::class, 'getHome'])->name('home');
@@ -38,7 +45,7 @@ Route::controller(PostController::class)
 // Profile Routes
 Route::controller(ProfileController::class)
     ->middleware(['auth'])
-    ->group( function () {
+    ->group(function () {
         Route::prefix('profile')->as('profile.')->group(function () {
             Route::get('/', 'getProfile')->name('show');
 
@@ -46,4 +53,3 @@ Route::controller(ProfileController::class)
             Route::put('edit', 'putEdit');
         });
     });
-

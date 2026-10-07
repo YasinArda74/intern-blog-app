@@ -29,15 +29,16 @@
         </form>
 
         <div class="flex items-center gap-2">
+            <div class="w-36 shrink-0">
+                <label for="nav-locale" class="sr-only">@lang('Language')</label>
+                <select id="nav-locale" onchange="window.location.href = this.value"
+                        class="block w-full px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body">
+                    <option value="{{ route('lang.switch', 'tr') }}" @selected(app()->getLocale() === 'tr')>Türkçe</option>
+                    <option value="{{ route('lang.switch', 'en') }}" @selected(app()->getLocale() === 'en')>English</option>
+                </select>
+            </div>
+
             @auth()
-                <!-- Create Post -->
-                <a href="{{route('posts.create')}}"
-                   class="hidden items-center gap-2 rounded-lg bg-indigo-700 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 sm:inline-flex dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
-                    <i class="fa-solid fa-pencil text-xs"></i>
-
-                    @lang('Write something')
-                </a>
-
                 <button type="button" id="user-menu-button" data-dropdown-toggle="user-menu"
                         data-dropdown-placement="bottom-end"
                         class="rounded-full focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:focus:ring-indigo-800">

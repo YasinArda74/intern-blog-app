@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d6ac99d72a737e9a9108ec7b1b46b3f4",
+    "content-hash": "ddccb2d720b4292abb2404b5df03d10b",
     "packages": [
         {
             "name": "brick/math",
@@ -5883,6 +5883,72 @@
                 "source": "https://github.com/tijsverkoyen/CssToInlineStyles/tree/v2.4.0"
             },
             "time": "2025-12-02T11:56:42+00:00"
+        },
+        {
+            "name": "tunahan-genc/laravel-lang-harvest",
+            "version": "v0.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/Tunahangncc/laravel-lang-harvest.git",
+                "reference": "674a9e33000ed2d09ee0d90083ac8fe60c13e65c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/Tunahangncc/laravel-lang-harvest/zipball/674a9e33000ed2d09ee0d90083ac8fe60c13e65c",
+                "reference": "674a9e33000ed2d09ee0d90083ac8fe60c13e65c",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/support": "^12.0||^13.0",
+                "nikic/php-parser": "^5.8",
+                "php": "^8.3"
+            },
+            "require-dev": {
+                "larastan/larastan": "^3.9",
+                "laravel/pao": "^1.0",
+                "laravel/pint": "^1.29",
+                "orchestra/testbench": "^10.0||^11.0",
+                "pestphp/pest": "^4.6",
+                "pestphp/pest-plugin-laravel": "^4.1",
+                "pestphp/pest-plugin-type-coverage": "^4.0",
+                "phpstan/extension-installer": "^1.4"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "LaravelLangHarvest\\LaravelLangHarvest\\LaravelLangHarvestServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "LaravelLangHarvest\\LaravelLangHarvest\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "tunahan.genc",
+                    "email": "tunahangncc@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Scan Laravel projects for static translation strings and sync them to JSON and PHP language files.",
+            "homepage": "https://github.com/tunahan-genc/laravel-lang-harvest",
+            "keywords": [
+                "laravel",
+                "laravel-lang-harvest",
+                "tunahan-genc"
+            ],
+            "support": {
+                "issues": "https://github.com/Tunahangncc/laravel-lang-harvest/issues",
+                "source": "https://github.com/Tunahangncc/laravel-lang-harvest/tree/v0.1.0"
+            },
+            "time": "2026-08-20T08:57:36+00:00"
         },
         {
             "name": "vlucas/phpdotenv",
