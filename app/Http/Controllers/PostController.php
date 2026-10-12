@@ -39,6 +39,13 @@ class PostController extends Controller
         Post::query()->create($inputs);
 
         return redirect()->back();
+
+    }
+
+    public function getShow(Post $post)
+    {
+        Post::all();
+        return view('posts.show', compact('post'));
     }
 
 }

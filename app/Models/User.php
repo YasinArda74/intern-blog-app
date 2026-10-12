@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Traits\HasRoles;
 
 /**
  * @property int $id
@@ -38,7 +39,7 @@ use Illuminate\Notifications\Notifiable;
  */
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable , HasRoles;
 
     protected $fillable = [
         'username',
@@ -72,5 +73,9 @@ class User extends Authenticatable
         return mb_substr($this->firstname, 0, 1) . mb_substr($this->lastname, 0, 1);
     }
 
+    public function posts()
+    {
+        return $this->hasMany(Post::class);
+    }
     // endregion
 }

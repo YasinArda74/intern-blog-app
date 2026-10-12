@@ -8,21 +8,21 @@
             <ol class="flex items-center gap-2">
                 <li><a href="/" class="hover:text-gray-900 dark:hover:text-white">Anasayfa</a></li>
                 <li aria-hidden="true">/</li>
-                <li><a href="#" class="hover:text-gray-900 dark:hover:text-white">Yazılım</a></li>
+                <li><a href="#" class="hover:text-gray-900 dark:hover:text-white">{{$post->category->name}}</a></li>
             </ol>
         </nav>
 
         <header class="mt-6">
-            <span class="rounded-md bg-indigo-50 px-2.5 py-0.5 text-xs font-medium text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-300">Yazılım</span>
-            <h1 class="mt-4 text-balance text-3xl font-bold leading-tight tracking-tight text-gray-900 sm:text-4xl dark:text-white">Laravel 13 ile modern bir blog altyapısı kurmak</h1>
-            <p class="mt-4 text-pretty text-lg leading-relaxed text-gray-600 dark:text-gray-400">Route yapısından Blade bileşenlerine kadar, sıfırdan sade ve hızlı bir blog nasıl kurulur adım adım inceliyoruz.</p>
+            <span class="rounded-md bg-indigo-50 px-2.5 py-0.5 text-xs font-medium text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-300">{{$post->category->name}}</span>
+            <h1 class="mt-4 text-balance text-3xl font-bold leading-tight tracking-tight text-gray-900 sm:text-4xl dark:text-white">{{$post->title}}</h1>
+            <p class="mt-4 text-pretty text-lg leading-relaxed text-gray-600 dark:text-gray-400">{{$post->slug}}</p>
 
             <div class="mt-8 flex flex-wrap items-center justify-between gap-4 border-y border-gray-200 py-4 dark:border-gray-800">
                 <a href="/profile" class="flex items-center gap-3">
-                    <x-avatar initials="AY" />
+                    <x-avatar :initials="$post->user->getFullNameInitials()" />
                     <div class="text-sm">
-                        <p class="font-medium text-gray-900 dark:text-white">Ahmet Yılmaz</p>
-                        <p class="text-gray-500 dark:text-gray-400">30 Eylül 2026 · 8 dk okuma</p>
+                        <p class="font-medium text-gray-900 dark:text-white">{{$post->user->getFullName()}}</p>
+                        <p class="text-gray-500 dark:text-gray-400">{{$post->created_at->format('d/m/y')}}</p>
                     </div>
                 </a>
                 <div class="flex items-center gap-1">
@@ -40,23 +40,10 @@
             </div>
         </header>
 
-        <img src="/images/post-1.png" alt="Kod açık bir dizüstü bilgisayar ve kahve" class="mt-8 aspect-[16/9] w-full rounded-2xl object-cover">
+        <img src="#" alt="Kod açık bir dizüstü bilgisayar ve kahve" class="mt-8 aspect-[16/9] w-full rounded-2xl object-cover">
 
         <div class="mt-10 space-y-6 text-lg leading-relaxed text-gray-700 dark:text-gray-300">
-            <p>Laravel, PHP dünyasının en sevilen framework'lerinden biri. Bu yazıda yeni sürümle birlikte gelen özellikleri kullanarak basit ama güçlü bir blog altyapısı kuracağız.</p>
-            <h2 class="pt-4 text-2xl font-bold text-gray-900 dark:text-white">Neden Laravel?</h2>
-            <p>Temiz söz dizimi, geniş ekosistemi ve güçlü topluluğu sayesinde Laravel, küçük projelerden büyük ölçekli uygulamalara kadar her yerde tercih ediliyor.</p>
-            <blockquote class="border-s-4 border-indigo-600 bg-indigo-50 p-5 text-base italic text-gray-800 dark:bg-gray-900 dark:text-gray-200">
-                "İyi bir framework, sizi kod yazmaktan değil, tekrar eden işlerden kurtarır."
-            </blockquote>
-            <h2 class="pt-4 text-2xl font-bold text-gray-900 dark:text-white">Kuruluma başlayalım</h2>
-            <p>İlk adım olarak yeni bir proje oluşturuyoruz:</p>
-            <pre class="overflow-x-auto rounded-xl bg-gray-900 p-5 text-sm text-gray-100"><code>composer create-project laravel/laravel blog</code></pre>
-            <ul class="list-disc space-y-2 ps-6">
-                <li>Veritabanı ayarlarını yap</li>
-                <li>Tailwind CSS ve Flowbite'ı kur</li>
-                <li>Blade layout'larını oluştur</li>
-            </ul>
+            {{$post->content}}
         </div>
 
         <div class="mt-10 flex flex-wrap gap-2">
@@ -67,10 +54,10 @@
 
         {{-- Yazar kutusu --}}
         <div class="mt-10 flex flex-col gap-4 rounded-2xl border border-gray-200 bg-white p-6 sm:flex-row sm:items-center dark:border-gray-800 dark:bg-gray-900">
-            <x-avatar initials="AY" size="lg" />
+            <x-avatar :initials="$post->user->getFullNameInitials()" size="lg" />
             <div class="flex-1">
-                <p class="font-semibold text-gray-900 dark:text-white">Ahmet Yılmaz</p>
-                <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">Full-stack geliştirici. Laravel, Tailwind ve sade arayüzler hakkında yazıyor.</p>
+                <p class="font-semibold text-gray-900 dark:text-white">{{$post->user->getFullName()}}</p>
+
             </div>
             <a href="/profile" class="rounded-lg border border-gray-300 px-4 py-2 text-center text-sm font-medium text-gray-900 hover:bg-gray-100 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800">Profili gör</a>
         </div>

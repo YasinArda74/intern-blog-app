@@ -57,8 +57,8 @@ class AuthController extends Controller
             ]
         )->validated();
 
-        User::query()->create($inputs);
-
+        $user = User::query()->create($inputs);
+        $user -> assignRole('user');
         return redirect()->route('login');
     }
 

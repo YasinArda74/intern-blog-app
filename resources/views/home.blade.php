@@ -22,11 +22,13 @@
                 </p>
 
                 <div class="mt-8 flex flex-wrap gap-3">
-                    <a href="{{route('posts.create')}}"
-                       class="rounded-lg bg-indigo-700 px-5 py-3 text-sm font-semibold text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
-                        <i class="fa-solid fa-pencil me-2 text-xs"></i>
-                        @lang('Start writing')
-                    </a>
+                    @role('author|admin')
+                        <a href="{{route('posts.create')}}"
+                           class="rounded-lg bg-indigo-700 px-5 py-3 text-sm font-semibold text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
+                            <i class="fa-solid fa-pencil me-2 text-xs"></i>
+                            @lang('Start writing')
+                        </a>
+                    @endrole
                     <a href="#son-yazilar"
                        class="rounded-lg border border-gray-300 bg-white px-5 py-3 text-sm font-semibold text-gray-900 hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700">
                         @lang('Discover articles')
@@ -35,6 +37,7 @@
             </div>
         </div>
     </section>
+
 
     <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
         {{-- Öne çıkan yazı --}}
@@ -86,10 +89,19 @@
 
                 <div class="mt-6 grid gap-6 sm:grid-cols-2">
                     @foreach($posts as $post)
-                        <x-post-card image="/images/post-2.png" category="{{$post->category->name}}"
-                                     title="{{$post->title}}"
-                                     excerpt="{{$post->slug}}" author="{{$post->user->firstname}}"
-                                     date="{{$post->created_at->format('d.m.Y')}}"/>
+                        <div class="group flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white transition hover:shadow-md dark:border-gray-800 dark:bg-gray-900">
+                            <x-post-card :post="$post" image="/images/post-2.png" category="{{$post->category->name}}"
+                                         title="{{$post->title}}"
+                                         excerpt="{{$post->slug}}" author="{{$post->user->firstname}}"
+                                         date="{{$post->created_at->format('d.m.Y')}}"/>
+                            <div class="p-3 flex items-center gap-3 text-sm">
+                                <x-avatar :initials="$post->user->getFullNameInitials()" size="sm" />
+                                <p class="font-medium text-gray-900 dark:text-white">{{$post->user->firstname}}</p>
+                                <p class="text-gray-500 dark:text-gray-400">{{ $post->created_at->format('d/m/y  H:i') }}</p>
+                            </div>
+
+
+                        </div>
                     @endforeach
 
                 </div>

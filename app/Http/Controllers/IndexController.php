@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 
 class IndexController extends Controller
 {
-    public function getHome()
+    public function getHome(Post $posts)
     {
-        $posts = Post::all();
+        Post::all()->sortByDesc('created_at');
 
         return view('home' , compact('posts'));
     }

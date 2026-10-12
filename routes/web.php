@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
@@ -36,9 +37,11 @@ Route::controller(PostController::class)
     ->prefix('posts')
     ->as('posts.')
     ->group(function () {
-        Route::middleware(['auth'])->group(function () {
+        Route::middleware(['auth','role:admin|author'])->group(function () {
             Route::get('create', 'getCreate')->name('create');
             Route::post('create', 'postCreate');
+
+            Route::get('show/{post}', 'getShow')->name('show');
         });
     });
 
@@ -51,5 +54,23 @@ Route::controller(ProfileController::class)
 
             Route::get('edit', 'getEdit')->name('edit');
             Route::put('edit', 'putEdit');
+        });
+    });
+
+
+//Dashboard Routes
+Route::controller(DashboardController::class)
+    ->prefix('dashboard')
+    ->as('admin.')
+    ->group(function () {
+        Route::middleware(['auth','role:admin'])->group(function () {
+            Route::get('', 'dashboard')->name('dashboard');
+
+            Route::get('dashboard/categories', 'getCategoryIndex')->name('getCategories');
+            Route::POST('dashboard/categories', 'postCategoryIndex');
+
+            Route::get('roles/index', 'getRolesIndex')->name('getRoles');
+            Route::POST('roles/index', 'postRolesIndex');
+
         });
     });
