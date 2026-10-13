@@ -42,8 +42,12 @@ class Post extends Model
     protected $fillable = [
         'title',
         'slug',
+        'excerpt',
         'content',
-        'views',
+        'status',
+        'is_featured',
+        'views_count',
+        'published_at',
         'user_id',
         'category_id',
     ];

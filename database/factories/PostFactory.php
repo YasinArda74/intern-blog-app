@@ -17,9 +17,12 @@ class PostFactory extends Factory
         $title = $this->faker->sentence();
         return [
             'title' => $title,
-            'content' => $this->faker->paragraph(),
             'slug' => $this->faker->slug(),
-            'views' => $this->faker->randomDigit(),
+            'excerpt' => $this->faker->text(),
+            'content' => json_encode($this->faker->paragraphs(5, true)),
+            'status' => $this->faker->randomElement(['published', 'draft', 'archived']),
+            'is_featured' => $this->faker->randomElement([false, true]),
+            'views_count' => $this->faker->randomDigit(),
             'user_id' => User::factory(),
             'category_id' => Category::factory(),
         ];
