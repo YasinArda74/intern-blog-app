@@ -48,6 +48,7 @@ class Post extends Model
         'is_featured',
         'views_count',
         'published_at',
+        'scheduled_at',
         'user_id',
         'category_id',
     ];

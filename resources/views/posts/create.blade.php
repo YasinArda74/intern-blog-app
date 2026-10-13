@@ -24,7 +24,7 @@
                     <textarea id="slug" name="slug" rows="2" placeholder="{{trans('The brief description readers will see in the list')}}"
                         class="block w-full rounded-lg border border-gray-300 bg-white p-3 text-sm text-gray-900 focus:border-indigo-600 focus:ring-indigo-600 dark:border-gray-700 dark:bg-gray-950 dark:text-white dark:placeholder-gray-500"></textarea>
                 </div>
-
+                <div id="editor"></div>
                 <div class="overflow-hidden rounded-xl border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
                     <div class="flex flex-wrap items-center gap-1 border-b border-gray-200 px-3 py-2 dark:border-gray-800" role="toolbar" aria-label="Biçimlendirme">
                         <button type="button" aria-label="Kalın" class="rounded p-2 text-gray-600 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-800 dark:hover:text-white"><span class="block size-4 text-sm font-bold leading-4">B</span></button>
