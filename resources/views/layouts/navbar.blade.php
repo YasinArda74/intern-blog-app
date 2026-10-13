@@ -64,11 +64,6 @@
                             <a href="{{route('posts.create')}}"
                                class="block px-4 py-2 hover:bg-gray-100 sm:hidden dark:hover:bg-gray-700">@lang('Write something')</a>
                         </li>
-
-                        <li>
-                            <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">@lang('My drafts')</a>
-                        </li>
-
                         <li>
                             <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">@lang('Settings')</a>
                         </li>

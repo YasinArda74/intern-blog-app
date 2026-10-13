@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Kullanıcı Rolleri</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet">
+</head>
+<body class="bg-slate-50 text-slate-900">
+<div class="flex min-h-screen">@include('admin.partials.sidebar')
+    <main class="min-w-0 flex-1 lg:ml-64">
+        <header class="flex h-20 items-center justify-between border-b bg-white px-6 lg:px-10">
+            <div><p class="text-xs text-slate-400">Yönetim</p>
+                <h1 class="text-xl font-bold">Kullanıcı rolleri</h1></div>
+            <button data-modal-target="role-modal" data-modal-toggle="role-modal"
+                    class="rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white">+ Yeni rol
+            </button>
+        </header>
+        <div class="p-6 lg:p-10">
+            <div class="mb-6 rounded-2xl border bg-white p-5"><h2 class="font-bold">Roller ve yetkiler</h2>
+                <p class="mt-1 text-sm text-slate-500">Kullanıcıların erişebileceği bölümleri buradan yönetin.</p></div>
+            <div class="overflow-hidden rounded-2xl border bg-white shadow-sm">
+                <table class="w-full text-left text-sm">
+                    <thead class="border-b bg-slate-50 text-xs uppercase text-slate-500">
+                    <tr>
+                        <th class="px-6 py-4">Rol adı</th>
+                        <th class="px-6 py-4">Kullanıcı</th>
+                        <th class="px-6 py-4">Yetkiler</th>
+                        <th class="px-6 py-4">İşlem</th>
+                    </tr>
+                    </thead>
+                    <tbody>@foreach ([['Yönetici','1','Tüm yetkiler'],['Editör','3','Yazılar, yorumlar'],['Yazar','8','Kendi yazıları']] as $role)
+                        <tr class="border-b last:border-0">
+                            <td class="px-6 py-5 font-semibold">{{ $role[0] }}</td>
+                            <td class="px-6 py-5 text-slate-500">{{ $role[1] }} kişi</td>
+                            <td class="px-6 py-5"><span
+                                    class="rounded-full bg-orange-100 px-3 py-1 text-xs font-medium text-orange-700">{{ $role[2] }}</span>
+                            </td>
+                            <td class="px-6 py-5">
+                                <button class="text-sm font-medium text-orange-600 hover:underline">Düzenle</button>
+                            </td>
+                        </tr>
+                    @endforeach</tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>
+<div id="role-modal" tabindex="-1"
+     class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden p-4">
+    <div class="relative max-h-full w-full max-w-md">
+        <div class="relative rounded-2xl bg-white p-6 shadow">
+            <div class="flex items-center justify-between border-b pb-4"><h3 class="text-lg font-bold">Yeni rol
+                    oluştur</h3>
+                <button data-modal-hide="role-modal" class="text-2xl text-slate-400">×</button>
+            </div>
+            <form class="mt-5"><label class="mb-2 block text-sm font-medium">Rol adı</label><input type="text"
+                                                                                                   class="mb-5 w-full rounded-lg border border-slate-300 p-3 text-sm"
+                                                                                                   placeholder="Örn. Moderatör">
+                <p class="mb-3 text-sm font-semibold">Yetkiler</p>
+                <div class="grid gap-3 text-sm"><label><input type="checkbox" class="mr-2 rounded border-slate-300">
+                        Yazıları yönetebilir</label><label><input type="checkbox" class="mr-2 rounded border-slate-300">
+                        Yorumları yönetebilir</label><label><input type="checkbox"
+                                                                   class="mr-2 rounded border-slate-300"> Kategori
+                        yönetebilir</label></div>
+                <button type="button"
+                        class="mt-6 w-full rounded-lg bg-slate-900 px-4 py-3 text-sm font-semibold text-white">Rolü
+                    kaydet
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
+</body>
+</html>

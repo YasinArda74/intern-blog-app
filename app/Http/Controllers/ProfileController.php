@@ -2,15 +2,21 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 
 class ProfileController extends Controller
 {
-    public function getProfile(){
+    public function getProfile()
+    {
+        $posts = Post::whereUserId($this->authUser->id)
+            ->orderByDesc('created_at')
+            ->get();
+
         return view('profile.show', [
             'user' => $this->authUser,
+            'posts' => $posts,
         ]);
     }
 

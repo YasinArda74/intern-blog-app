@@ -93,5 +93,7 @@
     "Edit": "Düzenle",
     "Language": "Dil",
     ":count new articles were published this week.": "Bu hafta :count yeni yazı yayınlandı",
-    "By logging in, you agree to the <a href=\"#\" class=\"underline hover:text-gray-700 dark:hover:text-gray-200\">Terms of Use</a>.": "Giriş yaparak <a href=\"#\" class=\"underline hover:text-gray-700 dark:hover:text-gray-200\">Kullanım Koşulları</a>'nı kabul etmiş olursun."
+    "By logging in, you agree to the <a href=\"#\" class=\"underline hover:text-gray-700 dark:hover:text-gray-200\">Terms of Use</a>.": "Giriş yaparak <a href=\"#\" class=\"underline hover:text-gray-700 dark:hover:text-gray-200\">Kullanım Koşulları</a>'nı kabul etmiş olursun.",
+    "Edit profile": "Profili Düzenle"
+
 }
