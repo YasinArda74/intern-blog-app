@@ -5,7 +5,6 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
-use App\Models\Post;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/lang/{locale}', function (string $locale) {
@@ -40,9 +39,9 @@ Route::controller(PostController::class)
         Route::middleware(['auth','role:admin|author'])->group(function () {
             Route::get('create', 'getCreate')->name('create');
             Route::post('create', 'postCreate');
-
-            Route::get('show/{post}', 'getShow')->name('show');
         });
+
+        Route::get('show/{post}', 'getShow')->name('show');
     });
 
 // Profile Routes

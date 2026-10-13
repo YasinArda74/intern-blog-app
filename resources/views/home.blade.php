@@ -10,7 +10,7 @@
                 <span class="inline-flex items-center gap-2 rounded-full bg-indigo-50 px-3 py-1 text-xs font-medium text-indigo-700 dark:bg-indigo-900/40 dark:text-indigo-300">
                     <span class="size-1.5 rounded-full bg-indigo-600"></span>
 
-                    @lang(':count new articles were published this week.', ['count' => '10'])
+                    @lang(':count new articles were published this week.', ['count' => $postWeaklyCount])
                 </span>
 
                 <h1 class="mt-5 text-balance text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl dark:text-white">
@@ -87,23 +87,31 @@
                     </div>
                 </div>
 
-                <div class="mt-6 grid gap-6 sm:grid-cols-2">
-                    @foreach($posts as $post)
-                        <div class="group flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white transition hover:shadow-md dark:border-gray-800 dark:bg-gray-900">
-                            <x-post-card :post="$post" image="/images/post-2.png" category="{{$post->category->name}}"
-                                         title="{{$post->title}}"
-                                         excerpt="{{$post->slug}}" author="{{$post->user->firstname}}"
-                                         date="{{$post->created_at->format('d.m.Y')}}"/>
-                            <div class="p-3 flex items-center gap-3 text-sm">
-                                <x-avatar :initials="$post->user->getFullNameInitials()" size="sm" />
-                                <p class="font-medium text-gray-900 dark:text-white">{{$post->user->firstname}}</p>
-                                <p class="text-gray-500 dark:text-gray-400">{{ $post->created_at->format('d/m/y  H:i') }}</p>
+                <div>
+                    <div class="mt-6 grid gap-6 sm:grid-cols-2">
+                        @foreach($posts as $post)
+                            <div class="group flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white transition hover:shadow-md dark:border-gray-800 dark:bg-gray-900">
+                                <a href="{{ route('posts.show', $post->id) }}">
+                                    @component('components.post-card', [
+                                        'image' => '/images/post-1.png',
+                                        'post' => $post
+                                    ])@endcomponent
+                                </a>
+
+                                <div class="p-3 flex items-center gap-3 text-sm">
+                                    <x-avatar :initials="$post->user->getFullNameInitials()" size="sm" />
+
+                                    <p class="font-medium text-gray-900 dark:text-white">{{$post->user->firstname}}</p>
+
+                                    <p class="text-gray-500 dark:text-gray-400">{{ $post->created_at->diffForHumans() }}</p>
+                                </div>
                             </div>
+                        @endforeach
+                    </div>
 
-
-                        </div>
-                    @endforeach
-
+                    <div class="mt-5">
+                        {{ $posts->links() }}
+                    </div>
                 </div>
             </section>
 

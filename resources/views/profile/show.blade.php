@@ -19,7 +19,7 @@
                 <div class="flex gap-2 sm:pb-2">
                     <a href="{{route('profile.edit')}}" class="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700">@lang('Edit profile') </a>
                     @role('author|admin')
-                        <a href="/posts/create" class="rounded-lg bg-indigo-700 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-800 dark:bg-indigo-600 dark:hover:bg-indigo-700">@lang('Write something')</a>
+                        <a href="{{ route('posts.create') }}" class="rounded-lg bg-indigo-700 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-800 dark:bg-indigo-600 dark:hover:bg-indigo-700">@lang('Write something')</a>
                     @endrole
                 </div>
             </div>
@@ -46,11 +46,12 @@
 
     <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
             <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 ">
-                @dd($posts)
                 @foreach($posts as $post)
                     <div class="group flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white transition hover:shadow-md dark:border-gray-800 dark:bg-gray-900">
-                        <x-post-card :post="$post" image="/images/post-1.png" :category="$post->category->name" :title="$post->title"
-                                     :excerpt="$post->slug" :date="$post->created_at" readTime="8 dk" />
+                        <a href="{{ route('posts.show', $post->id) }}">
+                            <x-post-card :post="$post" />
+                        </a>
+
                         <div class="p-3 flex items-center gap-3 text-sm">
                             <x-avatar :initials="$post->user->getFullNameInitials()" size="sm" />
                             <p class="font-medium text-gray-900 dark:text-white">{{$post->user->firstname}}</p>
