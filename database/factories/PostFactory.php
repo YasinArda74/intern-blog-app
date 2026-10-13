@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\PostStatusEnum;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
@@ -20,7 +21,7 @@ class PostFactory extends Factory
             'slug' => $this->faker->slug(),
             'excerpt' => $this->faker->text(),
             'content' => json_encode($this->faker->paragraphs(5, true)),
-            'status' => $this->faker->randomElement(['published', 'draft', 'archived']),
+            'status' => $this->faker->randomElement(PostStatusEnum::cases()),
             'is_featured' => $this->faker->randomElement([false, true]),
             'views_count' => $this->faker->randomDigit(),
             'user_id' => User::factory(),

@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->json('content');
             $table->enum('status', PostStatusEnum::cases());
             $table->boolean('is_featured')->default(false);
-            $table->unsignedBigInteger('views_count')->default(0);
+            $table->unsignedInteger('views_count')->default(0);
             $table->dateTime('published_at')->nullable();
             $table->foreignId('category_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
