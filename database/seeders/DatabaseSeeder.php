@@ -13,14 +13,9 @@ class DatabaseSeeder extends Seeder
 
     public function run(): void
     {
-        $this->call(RoleSeeder::class);
-
-        $categories = Category::factory()->count(5)->create();
-
-        foreach ($categories as $category) {
-            Post::factory()->count(3)->create([
-                'category_id' => $category->id,
-            ]);
-        }
+        $this->call([
+            PostSeeder::class,
+            RoleSeeder::class,
+        ]);
     }
 }

@@ -1,12 +1,11 @@
 <?php
 
-use Illuminate\Database\Eloquent\Attributes\Table;
+use App\Enums\PostStatusEnum;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -16,8 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('slug');
-            $table->string('content');
-            $table->unsignedBigInteger('views')->default(0);
+            $table->string('excerpt');
+            $table->json('content');
+            $table->enum('status', PostStatusEnum::cases());
+            $table->boolean('is_featured')->default(false);
+            $table->integer('views_count')->default(0);
+            $table->dateTime('published_at')->nullable();
             $table->foreignId('category_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamps();
@@ -32,3 +35,4 @@ return new class extends Migration
         Schema::dropIfExists('posts');
     }
 };
+
