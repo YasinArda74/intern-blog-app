@@ -5,6 +5,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
 /**
  * @property int $id
@@ -66,6 +67,30 @@ class Post extends Model
     public function category(): BelongsTo
     {
         return $this->belongsTo(Category::class);
+    }
+
+
+    // Hooks
+
+    /**
+     * boot metodu laravelin modelleri için life cycle hooklarıdır. Bu metotlar modelin yaşam döngüsü boyunca çalıştırılabilir.
+     *
+     * created => Oluşturulduktan sonra çalışır,
+     * creating => Oluşturulma aşamasında çalışır,
+     * updated => Güncellendikten sonra çalışır,
+     * updating => Güncellenme aşamasında çalışır,
+     * saved => Kayıt edildikten sonra çalışır. (hem update hem create),
+     * saving => Kayıt edilirken çalışır. (hem update hem create),
+     * deleted => Silindikten sonra çalışır,
+     * deleting => Silinirken çalışır
+     */
+    public static function boot(): void
+    {
+        parent::boot();
+
+        static::saving(function (self $post) {
+            $post->slug = Str::slug($post->title);
+        });
     }
 
 }
