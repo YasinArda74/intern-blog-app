@@ -2,12 +2,15 @@
 @import "flowbite/src/themes/default.css";
 
 @plugin "flowbite/plugin";
+@plugin "@tailwindcss/typography";
 
 @source "../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php";
 @source "../../storage/framework/views/*.php";
 @source "../**/*.blade.php";
 @source "../**/*.js";
 @source "../../node_modules/flowbite";
+#toolbar button:hover { background: #f3f4f6; }
+#toolbar button.is-active { background: #e5e7eb; }
 
 @custom-variant dark (&:where(.dark, .dark *));
 

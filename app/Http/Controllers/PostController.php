@@ -6,6 +6,8 @@ use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+use Illuminate\Validation\Rule;
 
 class PostController extends Controller
 {
@@ -22,14 +24,20 @@ class PostController extends Controller
             $request->all(),
             [
                 'title' => 'required|max:100',
-                'slug' => 'required|max:255',
                 'content' => 'required',
+                'excerpt' => 'required',
                 'category_slug' => 'required',
+                'scheduled_at'=> [Rule::date()->afterToday(),'nullable'],
+                'published_at_feature'=> ['nullable'],
             ]
         )->validated();
 
-        $inputs['user_id'] = $this->authUser->id;
+        $inputs['scheduled_at'] = ! empty($inputs['published_at_feature']) && $inputs['published_at_feature'] == 'on'
+            ? $inputs['scheduled_at']
+            : null;
 
+        $inputs['user_id'] = $this->authUser->id;
+        $inputs['slug']= Str::slug($inputs['title']);
         $category = Category::query()
             ->where('slug', $inputs['category_slug'])
             ->firstOrFail();
