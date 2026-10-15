@@ -29,7 +29,7 @@ class CreatePostRequest extends FormRequest
             'content' => ['required'],
             'excerpt' => ['required'],
             'category_id' => ['required', 'exists:categories,id'],
-            'scheduled_at'=> ['nullable', Rule::date()->afterToday()],
+            'scheduled_at'=> ['nullable', Rule::date()->afterToday(),'required_if:published_at_feature,on'],
             'published_at_feature'=> ['nullable'],
         ];
     }

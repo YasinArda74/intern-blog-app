@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+use App\Enums\PostStatusEnum;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -53,6 +54,15 @@ class Post extends Model
         'user_id',
         'category_id',
     ];
+
+    protected static function booted(): void
+    {
+        static::saving(function (Post $post) {
+            if ($post->scheduled_at !== null) {
+                $post->status = PostStatusEnum::scheduled;
+            }
+        });
+    }
 
     public function user(): BelongsTo
     {

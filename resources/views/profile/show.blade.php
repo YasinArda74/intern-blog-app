@@ -42,23 +42,29 @@
                 <li><a href="#" aria-current="page" class="inline-block border-b-2 border-transparent py-3 text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300">@lang('Saved items')</a></li>
             </ul>
         </div>
-    </section>
 
-    <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
-            <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 ">
+
+        <div class="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+            <div class="mt-6 grid gap-6 sm:grid-cols-2">
                 @foreach($posts as $post)
                     <div class="group flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white transition hover:shadow-md dark:border-gray-800 dark:bg-gray-900">
                         <a href="{{ route('posts.show', $post->id) }}">
-                            <x-post-card :post="$post" />
+                            @component('components.post-card', [
+                                'image' => '/images/post-1.png',
+                                'post' => $post
+                            ])@endcomponent
                         </a>
 
                         <div class="p-3 flex items-center gap-3 text-sm">
                             <x-avatar :initials="$post->user->getFullNameInitials()" size="sm" />
+
                             <p class="font-medium text-gray-900 dark:text-white">{{$post->user->firstname}}</p>
-                            <p class="text-gray-500 dark:text-gray-400">{{ $post->created_at->format('d/m/y H:i') }} </p>
+
+                            <p class="text-gray-500 dark:text-gray-400">{{ $post->created_at->diffForHumans() }}</p>
                         </div>
                     </div>
                 @endforeach
             </div>
-    </div>
+        </div>
+    </section>
 @endsection
