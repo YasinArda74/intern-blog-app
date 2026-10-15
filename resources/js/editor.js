@@ -13,7 +13,7 @@ if (element && input) {
         content: input.value ? JSON.parse(input.value) : '',
         editorProps: {
             attributes: {
-                class: 'prose max-w-none min-h-[400px] p-3 border rounded-b focus:outline-none',
+                class: 'prose max-w-none min-h-96 rounded-b-base border border-default-medium bg-neutral-secondary-medium px-4 py-3 text-heading focus:outline-none',
             },
         },
         onUpdate({ editor }) {

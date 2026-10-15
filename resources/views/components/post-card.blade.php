@@ -11,7 +11,7 @@
         </h3>
 
         <p class="mt-2 line-clamp-2 text-sm leading-relaxed text-gray-600 dark:text-gray-400">
-            {{ Str::limit($post->content, 100) }}
+            {{ Str::limit($post->excerpt, 100) }}
         </p>
     </div>
 </article>

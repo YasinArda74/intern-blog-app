@@ -9,8 +9,10 @@
 @source "../**/*.blade.php";
 @source "../**/*.js";
 @source "../../node_modules/flowbite";
-#toolbar button:hover { background: #f3f4f6; }
-#toolbar button.is-active { background: #e5e7eb; }
+#toolbar button.is-active {
+    background-color: var(--color-brand-soft);
+    color: var(--color-fg-brand-strong);
+}
 
 @custom-variant dark (&:where(.dark, .dark *));
 

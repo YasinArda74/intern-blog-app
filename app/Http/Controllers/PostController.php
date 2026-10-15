@@ -12,7 +12,9 @@ class PostController extends Controller
     {
         $categories = Category::all();
 
-        return view('posts.create' , compact('categories'));
+        return view('posts.create' , [
+            'categories' => $categories
+        ]);
     }
 
     public function postCreate(CreatePostRequest $request)
@@ -25,7 +27,9 @@ class PostController extends Controller
 
     public function getShow(Post $post)
     {
-        return view('posts.show', compact('post'));
+        return view('posts.show', [
+            'post' => $post
+        ]);
     }
 
 }

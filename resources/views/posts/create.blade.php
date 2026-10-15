@@ -1,140 +1,174 @@
 @extends('layouts.app')
 
-@section('title', 'Yeni Yazı')
+@php
+    $field = 'block w-full rounded-base border bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand';
+    $fieldOk = 'border-default-medium';
+    $fieldBad = 'border-danger bg-danger-soft focus:border-danger focus:ring-danger-medium';
+    $scheduleEnabled = (bool) old('published_at_feature');
+@endphp
+
+@section('title', __('Create a new post'))
 
 @section('content')
-    <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
-        <div class="flex flex-wrap items-center justify-between gap-4">
-            <div>
-                <h1 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">@lang('Create a new post')</h1>
-                <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">@lang("Write down your ideas, publish them when you're ready.")</p>
-            </div>
-            <a href="/"
-               class="text-sm font-medium text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">@lang('Give up')</a>
+    <div class="mx-auto max-w-6xl px-4 py-8 pb-28 sm:px-6 sm:py-12 lg:pb-12">
+        <div class="mb-8">
+            <a href="{{ route('home') }}"
+               class="inline-flex items-center gap-2 text-sm font-medium text-fg-brand hover:underline">
+                <i class="fa-solid fa-arrow-left text-xs" aria-hidden="true"></i>
+                @lang('Give up')
+            </a>
+            <h1 class="mt-3 text-3xl font-bold tracking-tight text-heading">@lang('Create a new post')</h1>
+            <p class="mt-2 max-w-2xl text-sm text-body">@lang("Write down your ideas, publish them when you're ready.")</p>
         </div>
 
-        <form action="{{route('posts.create')}}" method="POST" class="mt-8 grid gap-8 lg:grid-cols-3">
+        @if ($errors->any())
+            <div class="mb-6 flex items-start gap-3 rounded-base border border-danger-subtle bg-danger-soft p-4 text-sm text-fg-danger-strong" role="alert">
+                <i class="fa-solid fa-circle-exclamation mt-0.5" aria-hidden="true"></i>
+                <ul class="space-y-1">
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
+
+        <form id="create-post-form" action="{{ route('posts.create') }}" method="POST" class="grid items-start gap-6 lg:grid-cols-3">
             @csrf
+
             <div class="space-y-6 lg:col-span-2">
-                <div class="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
-                    <label for="title"
-                           class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">@lang('Title')</label>
-                    <input type="text" id="title" name="title"
-                           placeholder="{{trans('Give your article an attention-grabbing title.')}}"
-                           class="block w-full rounded-lg border border-gray-300 bg-white p-3 text-lg font-semibold text-gray-900 focus:border-indigo-600 focus:ring-indigo-600 dark:border-gray-700 dark:bg-gray-950 dark:text-white dark:placeholder-gray-500">
-                    <label for="content" class="mb-2 mt-3 block text-sm font-medium text-gray-900 dark:text-white">@lang('Article content')</label>
+                <section class="rounded-base border border-default bg-neutral-primary-soft p-5 shadow-xs sm:p-6">
+                    <label for="title" class="mb-2.5 block text-sm font-medium text-heading">@lang('Title')</label>
+                    <input type="text" id="title" name="title" value="{{ old('title') }}" required maxlength="255"
+                           placeholder="{{ __('Give your article an attention-grabbing title.') }}"
+                           @error('title') aria-invalid="true" aria-describedby="title-error" @enderror
+                           class="block w-full border-0 bg-transparent p-0 text-2xl font-semibold text-heading placeholder:text-body-subtle focus:ring-0">
+                    @error('title')
+                        <p id="title-error" class="mt-2 text-sm text-fg-danger">{{ $message }}</p>
+                    @enderror
 
-                    <!-- Content -->
-                    <div class="mt-2">
-                        @include('posts.partials._tiptap-editor')
+                    <hr class="my-6 border-default">
+
+                    <p class="mb-2.5 text-sm font-medium text-heading">@lang('Article content')</p>
+                    @include('posts.partials._tiptap-editor')
+                    @error('content')
+                        <p class="mt-2 text-sm text-fg-danger">{{ $message }}</p>
+                    @enderror
+
+                    <div class="mt-6">
+                        <label for="excerpt" class="mb-2.5 block text-sm font-medium text-heading">@lang('Brief summary')</label>
+                        <textarea id="excerpt" name="excerpt" rows="3" required
+                                  placeholder="{{ __('The brief description readers will see in the list') }}"
+                                  @error('excerpt') aria-invalid="true" aria-describedby="excerpt-error" @enderror
+                                  class="{{ $field }} {{ $errors->has('excerpt') ? $fieldBad : $fieldOk }}">{{ old('excerpt') }}</textarea>
+                        @error('excerpt')
+                            <p id="excerpt-error" class="mt-2 text-sm text-fg-danger">{{ $message }}</p>
+                        @enderror
                     </div>
-
-                    <label for="excerpt"
-                           class="mb-2 mt-5 block text-sm font-medium text-gray-900 dark:text-white">@lang('Brief summary')</label>
-                    <textarea id="excerpt" name="excerpt" rows="2"
-                              placeholder="{{trans('The brief description readers will see in the list')}}"
-                              class="block w-full rounded-lg border border-gray-300 bg-white p-3 text-sm text-gray-900 focus:border-indigo-600 focus:ring-indigo-600 dark:border-gray-700 dark:bg-gray-950 dark:text-white dark:placeholder-gray-500"></textarea>
-
-                    <label for="category"
-                           class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">@lang('Category')</label>
-                    <select id="category_slug" name="category_slug"
-                            class="block w-full rounded-lg border border-gray-300 bg-white p-2.5 text-sm text-gray-900 focus:border-indigo-600 focus:ring-indigo-600 dark:border-gray-700 dark:bg-gray-950 dark:text-white">
-                        <option>@lang('Select category')</option>
-                        @foreach($categories as $category)
-                            <option value="{{$category->slug}}">
-                                {{$category->name}}
-                            </option>
-                        @endforeach
-                    </select>
-                    <div>
-                        <label for="published_at_feature" class="mt-5 flex space-x-2.5 bg-neutral-primary-soft border border-default rounded-base shadow-xs">
-                            <input id="published_at_feature" type="checkbox" name="published_at_feature" class="w-4 h-4 mt-5 ms-4 border border-default-medium rounded-xs bg-neutral-secondary-medium focus:ring-2 focus:ring-brand-soft">
-                            <div class="py-4 pe-4">
-                                <p class="select-none w-full text-sm font-medium text-heading">@lang('Publish later')</p>
-                            </div>
-                        </label>
-
-                        <div id="scheduled-date-container" class="mt-5" style="display: none;">
-                            <input id="scheduled_at" type="date"
-                                   name="scheduled_at"
-                                   class="block w-full ps-9 pe-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand px-3 py-2.5 shadow-xs placeholder:text-body"
-                                   min="{{strtotime('+1 day')}}"
-                                   placeholder="Select date">
-                        </div>
-                    </div>
-                </div>
+                </section>
             </div>
 
+            <aside class="space-y-6 lg:sticky lg:top-24">
+                <section class="rounded-base border border-default bg-neutral-primary-soft p-5 shadow-xs">
+                    <h2 class="text-base font-semibold text-heading">@lang('Publish')</h2>
+                    <p class="mt-1 text-sm text-body">@lang('Everyone can see.')</p>
 
-            {{-- Ayarlar --}}
-            <aside class="space-y-6">
-                <div class="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
-                    <h2 class="font-semibold text-gray-900 dark:text-white">@lang('Publish')</h2>
-                    <fieldset class="mt-4 space-y-3">
-                        <legend class="sr-only">Durum</legend>
-                        <label
-                            class="flex cursor-pointer items-start gap-3 rounded-lg border border-gray-200 p-3 has-[:checked]:border-indigo-600 has-[:checked]:bg-indigo-50 dark:border-gray-700 dark:has-[:checked]:bg-indigo-900/30">
-                            <input type="radio" name="status" value="published" checked
-                                   class="mt-0.5 size-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                            <span class="text-sm">
-                                <span
-                                    class="block font-medium text-gray-900 dark:text-white">@lang('Publish immediately')</span>
-                                <span class="text-gray-500 dark:text-gray-400">@lang('Everyone can see.')</span>
-                            </span>
-                        </label>
-                        <label
-                            class="flex cursor-pointer items-start gap-3 rounded-lg border border-gray-200 p-3 has-[:checked]:border-indigo-600 has-[:checked]:bg-indigo-50 dark:border-gray-700 dark:has-[:checked]:bg-indigo-900/30">
-                            <input type="radio" name="status" value="draft"
-                                   class="mt-0.5 size-4 border-gray-300 text-indigo-600 focus:ring-indigo-500">
-                            <span class="text-sm">
-                                <span
-                                    class="block font-medium text-gray-900 dark:text-white">@lang('Save as draft')</span>
-                                <span class="text-gray-500 dark:text-gray-400">@lang('Only you can see it.')</span>
-                            </span>
-                        </label>
-                    </fieldset>
-                    <div class="mt-5 flex gap-3">
-                        <button type="button"
-                                class="flex-1 rounded-lg border border-gray-300 px-4 py-2.5 text-sm font-medium text-gray-900 hover:bg-gray-100 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800">@lang('Preview')</button>
+                    <div class="mt-5 hidden flex-col gap-3 lg:flex">
                         <button type="submit"
-                                class="flex-1 rounded-lg bg-indigo-700 px-4 py-2.5 text-sm font-semibold text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700">@lang('Save')</button>
+                                class="inline-flex w-full items-center justify-center gap-2 rounded-base border border-transparent bg-brand px-4 py-2.5 text-sm font-medium text-white shadow-xs hover:bg-brand-strong focus:outline-none focus:ring-4 focus:ring-brand-medium">
+                            <i class="fa-solid fa-paper-plane text-xs" aria-hidden="true"></i>
+                            @lang('Publish')
+                        </button>
+                        <a href="{{ route('home') }}"
+                           class="inline-flex w-full items-center justify-center rounded-base border border-default-medium bg-neutral-secondary-medium px-4 py-2.5 text-sm font-medium text-body shadow-xs hover:bg-neutral-tertiary-medium hover:text-heading focus:outline-none focus:ring-4 focus:ring-neutral-tertiary">
+                            @lang('Give up')
+                        </a>
                     </div>
-                </div>
+                </section>
 
-                <div class="rounded-xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900 ">
-                    <h2 class="font-semibold text-gray-900 dark:text-white">@lang('Cover image')</h2>
-                    <label for="cover"
-                           class="mt-4 flex h-40 w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-950 dark:hover:bg-gray-800">
-                        <svg class="size-8 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"
-                             stroke-width="1.5" aria-hidden="true">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                  d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"/>
-                        </svg>
-                        <p class="mt-2 text-sm text-gray-600 dark:text-gray-400"><span
-                                class="font-semibold text-indigo-700 dark:text-indigo-400">@lang('Click to install')</span> @lang('or drag')
-                        </p>
-                        <p class="text-xs text-gray-500 dark:text-gray-500">PNG, JPG (max. 2MB)</p>
-                        <input id="cover" name="cover" type="file" accept="image/*" disabled class="hidden">
-                    </label>
-                </div>
+                <section class="space-y-5 rounded-base border border-default bg-neutral-primary-soft p-5 shadow-xs">
+                    <div>
+                        <label for="category_slug" class="mb-2.5 block text-sm font-medium text-heading">@lang('Category')</label>
+                        <select id="category_slug" name="category_slug" required
+                                @error('category_id') aria-invalid="true" aria-describedby="category-error" @enderror
+                                class="{{ $field }} {{ $errors->has('category_id') ? $fieldBad : $fieldOk }}">
+                            <option value="">@lang('Select category')</option>
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->slug }}" @selected(old('category_slug') === $category->slug)>
+                                    {{ $category->name }}
+                                </option>
+                            @endforeach
+                        </select>
+                        @error('category_id')
+                            <p id="category-error" class="mt-2 text-sm text-fg-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
 
+                    <div>
+                        <label for="published_at_feature" class="flex cursor-pointer items-start rounded-base border border-default bg-neutral-primary-soft shadow-xs">
+                            <input id="published_at_feature" type="checkbox" name="published_at_feature" value="on"
+                                   @checked($scheduleEnabled)
+                                   class="ms-4 mt-5 size-4 rounded-xs border border-default-medium bg-neutral-secondary-medium text-brand focus:ring-2 focus:ring-brand-soft">
+                            <span class="py-4 pe-4 ps-3">
+                                <span class="block text-sm font-medium text-heading">@lang('Publish later')</span>
+                                <span class="mt-1 block text-sm font-normal text-body">@lang('The post goes live on the date you choose.')</span>
+                            </span>
+                        </label>
+
+                        <div id="scheduled-date-container" @class(['mt-4', 'hidden' => ! $scheduleEnabled])>
+                            <label for="scheduled_at" class="mb-2.5 block text-sm font-medium text-heading">@lang('Publication date')</label>
+                            <div class="relative">
+                                <div class="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3">
+                                    <i class="fa-regular fa-calendar text-sm text-body" aria-hidden="true"></i>
+                                </div>
+                                <input id="scheduled_at" type="date" name="scheduled_at"
+                                       value="{{ old('scheduled_at') }}"
+                                       min="{{ now()->addDay()->toDateString() }}"
+                                       @error('scheduled_at') aria-invalid="true" aria-describedby="scheduled-at-error" @enderror
+                                       class="block w-full rounded-base border bg-neutral-secondary-medium py-2.5 ps-9 pe-3 text-sm text-heading shadow-xs focus:border-brand focus:ring-brand {{ $errors->has('scheduled_at') ? $fieldBad : $fieldOk }}">
+                            </div>
+                            @error('scheduled_at')
+                                <p id="scheduled-at-error" class="mt-2 text-sm text-fg-danger">{{ $message }}</p>
+                            @enderror
+                        </div>
+                    </div>
+                </section>
             </aside>
         </form>
     </div>
-@endsection
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const checkbox = document.getElementById('published_at_feature');
-        const dateContainer = document.getElementById('scheduled-date-container');
 
-        checkbox.addEventListener('change', function () {
-            if (this.checked) {
-                dateContainer.style.display = 'block'; // Checkbox işaretlendiyse göster
-            } else {
-                dateContainer.style.display = 'none';  // İşaret kaldırıldıysa gizle
-                // İsteğe bağlı: Checkbox kapatıldığında tarih inputunun içini sıfırlamak istersen:
-                // dateContainer.querySelector('input').value = '';
+    <div class="fixed inset-x-0 bottom-0 z-30 border-t border-default bg-neutral-primary-soft p-3 shadow-lg lg:hidden">
+        <div class="mx-auto flex max-w-6xl gap-3">
+            <a href="{{ route('home') }}"
+               class="inline-flex items-center justify-center rounded-base border border-default-medium bg-neutral-secondary-medium px-4 py-2.5 text-sm font-medium text-body shadow-xs hover:bg-neutral-tertiary-medium hover:text-heading">
+                @lang('Give up')
+            </a>
+            <button type="submit" form="create-post-form"
+                    class="inline-flex flex-1 items-center justify-center gap-2 rounded-base border border-transparent bg-brand px-4 py-2.5 text-sm font-medium text-white shadow-xs hover:bg-brand-strong focus:outline-none focus:ring-4 focus:ring-brand-medium">
+                <i class="fa-solid fa-paper-plane text-xs" aria-hidden="true"></i>
+                @lang('Publish')
+            </button>
+        </div>
+    </div>
+@endsection
+
+@section('js')
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const checkbox = document.getElementById('published_at_feature');
+            const dateContainer = document.getElementById('scheduled-date-container');
+            const dateInput = document.getElementById('scheduled_at');
+
+            if (! checkbox || ! dateContainer) {
+                return;
             }
+
+            checkbox.addEventListener('change', () => {
+                dateContainer.classList.toggle('hidden', ! checkbox.checked);
+
+                if (! checkbox.checked && dateInput) {
+                    dateInput.value = '';
+                }
+            });
         });
-    });
-</script>
+    </script>
+@endsection

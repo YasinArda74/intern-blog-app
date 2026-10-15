@@ -55,15 +55,6 @@ class Post extends Model
         'category_id',
     ];
 
-    protected static function booted(): void
-    {
-        static::saving(function (Post $post) {
-            if ($post->scheduled_at !== null) {
-                $post->status = PostStatusEnum::scheduled;
-            }
-        });
-    }
-
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class, 'user_id');
@@ -100,6 +91,10 @@ class Post extends Model
 
         static::saving(function (self $post) {
             $post->slug = Str::slug($post->title);
+
+            if ($post->scheduled_at !== null) {
+                $post->status = PostStatusEnum::scheduled;
+            }
         });
     }
 
