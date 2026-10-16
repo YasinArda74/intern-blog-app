@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\PostStatusEnum;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -10,13 +11,14 @@ class ProfileController extends Controller
 {
     public function getProfile()
     {
-        $posts = Post::whereUserId($this->authUser->id)
+        $published_posts = Post::whereUserId($this->authUser->id)
+            ->where('posts.status',PostStatusEnum::published)
             ->orderByDesc('created_at')
-            ->get();
+            ->paginate(6);
 
         return view('profile.show', [
             'user' => $this->authUser,
-            'posts' => $posts,
+            'published_posts' => $published_posts,
         ]);
     }
 
@@ -32,10 +34,11 @@ class ProfileController extends Controller
         $inputs = Validator::make(
             $request->all(),
             [
-                'firstname' => 'required',
-                'lastname' => 'required',
-                'username' => 'required',
-                'email' => 'required',
+                'firstname' => ['required'],
+                'lastname' => ['required'],
+                'username' => ['required'],
+                'email' => ['required'],
+                'about' => ['nullable'],
             ],
         )->validated();
 

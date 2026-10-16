@@ -39,14 +39,13 @@
                 <section class="rounded-base border border-default bg-neutral-primary-soft p-5 shadow-xs sm:p-6">
                     <label for="title" class="mb-2.5 block text-sm font-medium text-heading">@lang('Title')</label>
                     <input type="text" id="title" name="title" value="{{ old('title') }}" required maxlength="255"
-                           placeholder="{{ __('Give your article an attention-grabbing title.') }}"
                            @error('title') aria-invalid="true" aria-describedby="title-error" @enderror
-                           class="block w-full border-0 bg-transparent p-0 text-2xl font-semibold text-heading placeholder:text-body-subtle focus:ring-0">
+                           class="block w-full border-0 bg-transparent p-0 text-xl font-semibold text-heading placeholder:text-body-subtle focus:ring-0">
                     @error('title')
                         <p id="title-error" class="mt-2 text-sm text-fg-danger">{{ $message }}</p>
                     @enderror
 
-                    <hr class="my-6 border-default">
+                    <hr class="my-3 border-default">
 
                     <p class="mb-2.5 text-sm font-medium text-heading">@lang('Article content')</p>
                     @include('posts.partials._tiptap-editor')
@@ -57,7 +56,6 @@
                     <div class="mt-6">
                         <label for="excerpt" class="mb-2.5 block text-sm font-medium text-heading">@lang('Brief summary')</label>
                         <textarea id="excerpt" name="excerpt" rows="3" required
-                                  placeholder="{{ __('The brief description readers will see in the list') }}"
                                   @error('excerpt') aria-invalid="true" aria-describedby="excerpt-error" @enderror
                                   class="{{ $field }} {{ $errors->has('excerpt') ? $fieldBad : $fieldOk }}">{{ old('excerpt') }}</textarea>
                         @error('excerpt')
@@ -68,23 +66,6 @@
             </div>
 
             <aside class="space-y-6 lg:sticky lg:top-24">
-                <section class="rounded-base border border-default bg-neutral-primary-soft p-5 shadow-xs">
-                    <h2 class="text-base font-semibold text-heading">@lang('Publish')</h2>
-                    <p class="mt-1 text-sm text-body">@lang('Everyone can see.')</p>
-
-                    <div class="mt-5 hidden flex-col gap-3 lg:flex">
-                        <button type="submit"
-                                class="inline-flex w-full items-center justify-center gap-2 rounded-base border border-transparent bg-brand px-4 py-2.5 text-sm font-medium text-white shadow-xs hover:bg-brand-strong focus:outline-none focus:ring-4 focus:ring-brand-medium">
-                            <i class="fa-solid fa-paper-plane text-xs" aria-hidden="true"></i>
-                            @lang('Publish')
-                        </button>
-                        <a href="{{ route('home') }}"
-                           class="inline-flex w-full items-center justify-center rounded-base border border-default-medium bg-neutral-secondary-medium px-4 py-2.5 text-sm font-medium text-body shadow-xs hover:bg-neutral-tertiary-medium hover:text-heading focus:outline-none focus:ring-4 focus:ring-neutral-tertiary">
-                            @lang('Give up')
-                        </a>
-                    </div>
-                </section>
-
                 <section class="space-y-5 rounded-base border border-default bg-neutral-primary-soft p-5 shadow-xs">
                     <div>
                         <label for="category_slug" class="mb-2.5 block text-sm font-medium text-heading">@lang('Category')</label>
@@ -130,6 +111,22 @@
                                 <p id="scheduled-at-error" class="mt-2 text-sm text-fg-danger">{{ $message }}</p>
                             @enderror
                         </div>
+                    </div>
+                </section>
+                <section class="rounded-base border border-default bg-neutral-primary-soft p-5 shadow-xs">
+                    <h2 class="text-base font-semibold text-heading">@lang('Publish')</h2>
+                    <p class="mt-1 text-sm text-body">@lang('Everyone can see.')</p>
+
+                    <div class="mt-5 hidden flex-col gap-3 lg:flex">
+                        <button type="submit"
+                                class="inline-flex w-full items-center justify-center gap-2 rounded-base border border-transparent bg-brand px-4 py-2.5 text-sm font-medium text-white shadow-xs hover:bg-brand-strong focus:outline-none focus:ring-4 focus:ring-brand-medium">
+                            <i class="fa-solid fa-paper-plane text-xs" aria-hidden="true"></i>
+                            @lang('Publish')
+                        </button>
+                        <a href="{{ route('home') }}"
+                           class="inline-flex w-full items-center justify-center rounded-base border border-default-medium bg-neutral-secondary-medium px-4 py-2.5 text-sm font-medium text-body shadow-xs hover:bg-neutral-tertiary-medium hover:text-heading focus:outline-none focus:ring-4 focus:ring-neutral-tertiary">
+                            @lang('Give up')
+                        </a>
                     </div>
                 </section>
             </aside>

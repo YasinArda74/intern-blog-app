@@ -32,6 +32,7 @@
                         <x-text-input id="firstname" name="firstname" icon="user" label="{{ trans('Name') }}" value="{{$user->firstname}}" />
                         <x-text-input id="lastname" name="lastname" icon="user" label="{{ trans('Surname') }}" value="{{$user->lastname}}" />
                         <x-text-input id="email" name="email" type="email" icon="mail" label="{{ trans('Email') }}" value="{{$user->email}}" />
+
                     </div>
 
                     <div>
@@ -44,9 +45,9 @@
                     </div>
 
                     <div>
-                        <label for="bio" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">@lang('About')</label>
-                        <textarea id="bio" name="bio" disabled rows="4"
-                            class="block w-full rounded-lg border border-gray-300 bg-white p-2.5 text-sm text-gray-900 focus:border-indigo-600 focus:ring-indigo-600 dark:border-gray-700 dark:bg-gray-900 dark:text-white">Full-stack geliştirici. Laravel, Tailwind ve sade arayüzler hakkında yazıyorum.</textarea>
+                        <label for="about" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">@lang('About')</label>
+                        <textarea id="about" name="about" rows="4"
+                            class="block w-full rounded-lg border border-gray-300 bg-white p-2.5 text-sm text-gray-900 focus:border-indigo-600 focus:ring-indigo-600 dark:border-gray-700 dark:bg-gray-900 dark:text-white">{{$user->about}}</textarea>
                         <p class="mt-2 text-xs text-gray-500 dark:text-gray-400">@lang('Maximum 160 characters.')</p>
                     </div>
                 </div>
