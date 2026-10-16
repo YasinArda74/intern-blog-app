@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\PostStatusEnum;
 use App\Models\Post;
 
 class IndexController extends Controller
@@ -9,6 +10,7 @@ class IndexController extends Controller
     public function getHome()
     {
         $posts = Post::query()
+            ->where('posts.status',PostStatusEnum::published)
             ->with([
                 'category',
                 'user',

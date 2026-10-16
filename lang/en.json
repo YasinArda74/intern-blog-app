@@ -94,5 +94,10 @@
     "Language": "Language",
     ":count new articles were published this week.": ":count new articles were published this week.",
     "By logging in, you agree to the <a href=\"#\" class=\"underline hover:text-gray-700 dark:hover:text-gray-200\">Terms of Use</a>.": "By logging in, you agree to the <a href=\"#\" class=\"underline hover:text-gray-700 dark:hover:text-gray-200\">Terms of Use</a>.",
-    "Edit profile": "Edit profile"
+    "Edit profile": "Edit profile",
+    "Publish later": "Publish later",
+    "The post goes live on the date you choose.": "The post goes live on the date you choose.",
+    "Publication date": "Publication date",
+    "No published articles yet.": "No published articles yet.",
+    "Read the article": "Read the article"
 }

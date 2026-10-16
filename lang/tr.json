@@ -94,6 +94,10 @@
     "Language": "Dil",
     ":count new articles were published this week.": "Bu hafta :count yeni yazı yayınlandı",
     "By logging in, you agree to the <a href=\"#\" class=\"underline hover:text-gray-700 dark:hover:text-gray-200\">Terms of Use</a>.": "Giriş yaparak <a href=\"#\" class=\"underline hover:text-gray-700 dark:hover:text-gray-200\">Kullanım Koşulları</a>'nı kabul etmiş olursun.",
-    "Edit profile": "Profili Düzenle"
-
+    "Edit profile": "Profili Düzenle",
+    "Publish later": "Daha sonra yayınla",
+    "The post goes live on the date you choose.": "Yazı, seçtiğiniz tarihte yayına girer.",
+    "Publication date": "Yayın tarihi",
+    "No published articles yet.": "Henüz yayınlanmış bir makale yok.",
+    "Read the article": "Yazıyı oku"
 }

@@ -4,7 +4,11 @@ namespace App\Enums;
 
 enum PostStatusEnum:string
 {
-    case draft = 'draft';
     case published  = 'published ';
+
+    case draft = 'draft';
+
     case archived = 'archived';
+
+    case scheduled  = 'scheduled ';
 }

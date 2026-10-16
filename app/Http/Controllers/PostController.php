@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Post\CreatePostRequest;
 use App\Models\Category;
 use App\Models\Post;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use App\Models\User;
 
 class PostController extends Controller
 {
@@ -13,38 +13,29 @@ class PostController extends Controller
     {
         $categories = Category::all();
 
-        return view('posts.create' , compact('categories'));
+        return view('posts.create' , [
+            'categories' => $categories
+        ]);
     }
 
-    public function postCreate(Request $request)
+    public function postCreate(CreatePostRequest $request)
     {
-        $inputs = Validator::make(
-            $request->all(),
-            [
-                'title' => 'required|max:100',
-                'slug' => 'required|max:255',
-                'content' => 'required',
-                'category_slug' => 'required',
-            ]
-        )->validated();
+        Post::query()->create($request->validated());
 
-        $inputs['user_id'] = $this->authUser->id;
+        return redirect()->route('home');
 
-        $category = Category::query()
-            ->where('slug', $inputs['category_slug'])
+    }
+
+    public function getShow(User $user, $postSlug)
+    {
+        $post = Post::query()
+            ->where('user_id', $user->id)
+            ->where('slug', $postSlug)
             ->firstOrFail();
 
-        $inputs['category_id'] = $category->id;
-
-        Post::query()->create($inputs);
-
-        return redirect()->back();
-
-    }
-
-    public function getShow(Post $post)
-    {
-        return view('posts.show', compact('post'));
+        return view('posts.show', [
+            'post' => $post
+        ]);
     }
 
 }

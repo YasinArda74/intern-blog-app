@@ -43,7 +43,7 @@
         <img src="#" alt="Kod açık bir dizüstü bilgisayar ve kahve" class="mt-8 aspect-[16/9] w-full rounded-2xl object-cover">
 
         <div class="mt-10 space-y-6 text-lg leading-relaxed text-gray-700 dark:text-gray-300">
-            {{$post->content}}
+            {!! $post->content !!}
         </div>
 
         <div class="mt-10 flex flex-wrap gap-2">

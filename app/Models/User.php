@@ -14,6 +14,8 @@ use Spatie\Permission\Traits\HasRoles;
  * @property string $lastname
  * @property string $username
  * @property string $email
+ * @property string $about
+ *
  * @property \Illuminate\Support\Carbon|null $email_verified_at
  * @property string $password
  * @property string|null $remember_token
@@ -46,6 +48,7 @@ class User extends Authenticatable
         'firstname',
         'lastname',
         'email',
+        'about',
         'password',
     ];
 
