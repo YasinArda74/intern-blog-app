@@ -38,7 +38,7 @@
             <div class="space-y-6 lg:col-span-2">
                 <section class="rounded-base border border-default bg-neutral-primary-soft p-5 shadow-xs sm:p-6">
                     <label for="title" class="mb-2.5 block text-sm font-medium text-heading">@lang('Title')</label>
-                    <input type="text" id="title" name="title" value="{{ old('title') }}" required maxlength="255"
+                    <input type="text" id="title" name="title" value="{{ old('title') }}" maxlength="255"
                            @error('title') aria-invalid="true" aria-describedby="title-error" @enderror
                            class="block w-full border-0 bg-transparent p-0 text-xl font-semibold text-heading placeholder:text-body-subtle focus:ring-0">
                     @error('title')
@@ -55,7 +55,7 @@
 
                     <div class="mt-6">
                         <label for="excerpt" class="mb-2.5 block text-sm font-medium text-heading">@lang('Brief summary')</label>
-                        <textarea id="excerpt" name="excerpt" rows="3" required
+                        <textarea id="excerpt" name="excerpt" rows="3"
                                   @error('excerpt') aria-invalid="true" aria-describedby="excerpt-error" @enderror
                                   class="{{ $field }} {{ $errors->has('excerpt') ? $fieldBad : $fieldOk }}">{{ old('excerpt') }}</textarea>
                         @error('excerpt')
@@ -69,7 +69,7 @@
                 <section class="space-y-5 rounded-base border border-default bg-neutral-primary-soft p-5 shadow-xs">
                     <div>
                         <label for="category_slug" class="mb-2.5 block text-sm font-medium text-heading">@lang('Category')</label>
-                        <select id="category_slug" name="category_slug" required
+                        <select id="category_slug" name="category_slug"
                                 @error('category_id') aria-invalid="true" aria-describedby="category-error" @enderror
                                 class="{{ $field }} {{ $errors->has('category_id') ? $fieldBad : $fieldOk }}">
                             <option value="">@lang('Select category')</option>

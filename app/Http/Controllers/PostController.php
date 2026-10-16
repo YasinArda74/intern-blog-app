@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\Post\CreatePostRequest;
 use App\Models\Category;
 use App\Models\Post;
+use App\Models\User;
 
 class PostController extends Controller
 {
@@ -25,8 +26,13 @@ class PostController extends Controller
 
     }
 
-    public function getShow(Post $post)
+    public function getShow(User $user, $postSlug)
     {
+        $post = Post::query()
+            ->where('user_id', $user->id)
+            ->where('slug', $postSlug)
+            ->firstOrFail();
+
         return view('posts.show', [
             'post' => $post
         ]);

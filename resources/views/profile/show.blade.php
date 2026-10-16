@@ -1,71 +1,121 @@
-
 @extends('layouts.app')
 
-@section('title',''.auth()->user()->firstname)
+@php
+    $articleCount = $published_posts->total();
+@endphp
+
+@section('title', $user->getFullName())
 
 @section('content')
-    <section class="bg-white dark:bg-gray-900">
-        <div class="h-40 bg-indigo-700 sm:h-52" aria-hidden="true">
-            <div class="h-full w-full bg-[radial-gradient(circle_at_80%_20%,rgba(56,189,248,0.35),transparent_50%)]"></div>
-        </div>
-        <div class="mx-auto max-w-6xl px-4 pb-8 sm:px-6">
-            <div class="-mt-14 flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
-                <div class="flex flex-col gap-4 sm:flex-row sm:items-end">
-                    <x-avatar :initials="$user->getFullNameInitials()" size="xl" />
-                    <div class="sm:pb-2">
-                        <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{{$user->firstname}}</h1>
-                        <p class="text-sm text-gray-500 dark:text-gray-400">{{'@'}}{{$user->username}}</p>
-                    </div>
-                </div>
-                <div class="flex gap-2 sm:pb-2">
-                    <a href="{{route('profile.edit')}}" class="rounded-lg border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700">@lang('Edit profile') </a>
-                    @role('author|admin')
-                        <a href="{{ route('posts.create') }}" class="rounded-lg bg-indigo-700 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-800 dark:bg-indigo-600 dark:hover:bg-indigo-700">@lang('Write something')</a>
-                    @endrole
-                </div>
+    <section>
+        <div class="bg-neutral-primary-soft">
+            <div class="relative h-40 overflow-hidden bg-brand sm:h-52" aria-hidden="true">
+                <div class="absolute inset-0 bg-[radial-gradient(circle_at_80%_15%,rgba(255,255,255,0.35),transparent_46%)]"></div>
+                <div class="absolute -bottom-20 -start-10 size-64 rounded-full bg-white/10"></div>
+                <div class="absolute -top-16 end-10 size-48 rounded-full bg-white/10"></div>
             </div>
 
-            <p class="mt-6 max-w-2xl leading-relaxed text-gray-600 dark:text-gray-400">Full-stack geliştirici. Laravel, Tailwind ve sade arayüzler hakkında yazıyorum. Boş zamanlarımda kitap okuyor ve fotoğraf çekiyorum.</p>
-
-            <dl class="mt-6 flex flex-wrap gap-8 text-sm">
-                @role('admin|author')
-                    <div><dt class="text-gray-500 dark:text-gray-400">@lang('Writing')</dt><dd class="text-lg font-semibold text-gray-900 dark:text-white">{{ Auth::user()?->posts()->where('status', App\Enums\PostStatusEnum::published)->count() ?? 0 }}</dd></div>
-                @endrole
-                <div><dt class="text-gray-500 dark:text-gray-400">@lang('Registration Date')</dt><dd class="text-lg font-semibold text-gray-900 dark:text-white">{{$user->created_at->format('d/m/y')}}</dd></div>
-            </dl>
-        </div>
-
-        <div class="border-b border-gray-200 dark:border-gray-800">
-            <ul class="mx-auto flex max-w-6xl gap-6 px-4 text-sm font-medium sm:px-6">
-                @role('author|admin')
-                    <li><a href="#" aria-current="page" class="inline-block border-b-2 border-indigo-700 py-3 text-indigo-700 dark:border-indigo-400 dark:text-indigo-400">@lang('Articles')<span class="ms-1 rounded bg-indigo-50 px-1.5 text-xs dark:bg-indigo-900/40">{{ Auth::user()?->posts()->where('status', App\Enums\PostStatusEnum::published)->count() ?? 0 }}</span></a></li>
-                @endrole
-                <li><a href="#" aria-current="page" class="inline-block border-b-2 border-transparent py-3 text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300">@lang('Saved items')</a></li>
-            </ul>
-        </div>
-
-
-        <div class="mx-auto max-w-4xl px-4 py-12 sm:px-6">
-            <div class="mt-6 grid gap-6 sm:grid-cols-2">
-                @foreach($published_posts as $post)
-                    <div class="group flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white transition hover:shadow-md dark:border-gray-800 dark:bg-gray-900">
-                        <a href="{{ route('posts.show', $post->id) }}">
-                            @component('components.post-card', [
-                                'image' => '/images/post-1.png',
-                                'post' => $post
-                            ])@endcomponent
-                        </a>
-                        <div class="p-3 flex items-center gap-3 text-sm">
-                            <x-avatar :initials="$post->user->getFullNameInitials()" size="sm" />
-
-                            <p class="font-medium text-gray-900 dark:text-white">{{$post->user->firstname}}</p>
-
-                            <p class="text-gray-500 dark:text-gray-400">{{ $post->created_at->diffForHumans() }}</p>
+            <div class="mx-auto max-w-6xl px-4 sm:px-6">
+                <div class="flex flex-col gap-5 pb-8 sm:flex-row sm:items-start sm:justify-between">
+                    <div class="flex items-start gap-4">
+                        <x-avatar :initials="$user->getFullNameInitials()" size="xl" class="relative z-10 -mt-14 shrink-0 shadow-xs" />
+                        <div class="min-w-0 pt-4">
+                            <h1 class="text-2xl font-bold tracking-tight text-heading sm:text-3xl">{{ $user->getFullName() }}</h1>
+                            <p class="mt-1 text-sm text-body">{{ '@'.$user->username }}</p>
                         </div>
                     </div>
-                @endforeach
-                {{ $published_posts->links() }}
+
+                    <div class="flex flex-wrap gap-2 pt-4">
+                        <a href="{{ route('profile.edit') }}"
+                           class="inline-flex items-center gap-2 rounded-base border border-default-medium bg-neutral-secondary-medium px-4 py-2.5 text-sm font-medium text-body shadow-xs hover:bg-neutral-tertiary-medium hover:text-heading focus:outline-none focus:ring-4 focus:ring-neutral-tertiary">
+                            <i class="fa-solid fa-pen text-xs" aria-hidden="true"></i>
+                            @lang('Edit profile')
+                        </a>
+                        @role('author|admin')
+                            <a href="{{ route('posts.create') }}"
+                               class="inline-flex items-center gap-2 rounded-base border border-transparent bg-brand px-4 py-2.5 text-sm font-medium text-white shadow-xs hover:bg-brand-strong focus:outline-none focus:ring-4 focus:ring-brand-medium">
+                                <i class="fa-solid fa-pencil text-xs" aria-hidden="true"></i>
+                                @lang('Write something')
+                            </a>
+                        @endrole
+                    </div>
+                </div>
+
+                <div class="flex flex-col gap-6 pb-8">
+                    @if (filled($user->about))
+                        <p class="max-w-2xl text-base leading-relaxed text-body">{{ $user->about }}</p>
+                    @endif
+
+                    <dl class="flex flex-wrap gap-3">
+                        <div class="rounded-base border border-default bg-neutral-secondary-soft px-4 py-3">
+                            <dt class="text-sm text-body">@lang('Writing')</dt>
+                            <dd class="mt-1 text-2xl font-semibold text-heading">{{ $articleCount }}</dd>
+                        </div>
+                        <div class="rounded-base border border-default bg-neutral-secondary-soft px-4 py-3">
+                            <dt class="text-sm text-body">@lang('Registration Date')</dt>
+                            <dd class="mt-1 text-lg font-semibold whitespace-nowrap text-heading">{{ $user->created_at->translatedFormat('d F Y') }}</dd>
+                        </div>
+                    </dl>
+                </div>
             </div>
+
+            <div class="border-t border-default">
+                <ul class="mx-auto flex max-w-6xl gap-1 px-4 text-sm font-medium sm:px-6">
+                    <li>
+                        <a href="{{ route('profile.show') }}" aria-current="page"
+                           class="inline-flex items-center gap-2 border-b-2 border-brand px-3 py-3 text-fg-brand">
+                            @lang('Articles')
+                            <span class="rounded-base bg-brand-soft px-1.5 py-0.5 text-xs font-medium text-fg-brand-strong">{{ $articleCount }}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#"
+                           class="inline-block border-b-2 border-transparent px-3 py-3 text-body hover:border-default-medium hover:text-heading">
+                            @lang('Saved items')
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
+            @if ($published_posts->isEmpty())
+                <div class="rounded-base border border-dashed border-default-medium bg-neutral-primary-soft px-6 py-16 text-center shadow-xs">
+                    <span class="mx-auto flex size-12 items-center justify-center rounded-full bg-brand-soft text-fg-brand">
+                        <i class="fa-solid fa-feather-pointed" aria-hidden="true"></i>
+                    </span>
+                    <h2 class="mt-4 text-lg font-semibold text-heading">@lang('No published articles yet.')</h2>
+                    <p class="mx-auto mt-2 max-w-md text-sm leading-relaxed text-body">@lang("Write down your ideas, publish them when you're ready.")</p>
+                    @role('author|admin')
+                        <a href="{{ route('posts.create') }}"
+                           class="mt-6 inline-flex items-center gap-2 rounded-base border border-transparent bg-brand px-4 py-2.5 text-sm font-medium text-white shadow-xs hover:bg-brand-strong focus:outline-none focus:ring-4 focus:ring-brand-medium">
+                            <i class="fa-solid fa-pencil text-xs" aria-hidden="true"></i>
+                            @lang('Write something')
+                        </a>
+                    @endrole
+                </div>
+            @else
+                <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                    @foreach ($published_posts as $post)
+                        <article class="group flex flex-col overflow-hidden rounded-base border border-default bg-neutral-primary-soft shadow-xs transition hover:shadow-md">
+                            <a href="{{ route('posts.show', ['user' => $post->user->username, 'postSlug' => $post->slug]) }}" class="flex flex-1 flex-col">
+                                @component('components.post-card', [
+                                    'image' => '/images/post-1.png',
+                                    'post' => $post,
+                                ])@endcomponent
+                            </a>
+                            <div class="flex items-center gap-2 border-t border-default px-5 py-3 text-sm text-body">
+                                <i class="fa-regular fa-clock text-xs" aria-hidden="true"></i>
+                                <time datetime="{{ $post->created_at->toAtomString() }}">{{ $post->created_at->diffForHumans() }}</time>
+                            </div>
+                        </article>
+                    @endforeach
+                </div>
+
+                <div class="mt-8">
+                    {{ $published_posts->links() }}
+                </div>
+            @endif
         </div>
     </section>
 @endsection

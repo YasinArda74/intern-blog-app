@@ -34,6 +34,18 @@ class CreatePostRequest extends FormRequest
         ];
     }
 
+    public function attributes(): array
+    {
+        return [
+            'title' => trans('Title'),
+            'content' => trans('Article content'),
+            'excerpt' => trans('Brief summary'),
+            'category_id' => trans('Category'),
+            'scheduled_at'=> trans('Scheduled At'),
+            'published_at_feature'=> trans('Published At Feature'),
+        ];
+    }
+
     /**
      * Bu metot köprüden önceki son çıkıştır. Backend tarafına istek gönderildiğinde validation çalıştırılmadan önce burası çalışır.
      * Controller tarafında $request->validated() çalıştırılırsa bu metot içerisindeki merge edilen değerlerinde rules metodunda olması gerekiyor
@@ -42,12 +54,12 @@ class CreatePostRequest extends FormRequest
     {
         $category = Category::query()
             ->where('slug', $this->input('category_slug'))
-            ->firstOrFail();
+            ->first();
 
 
         $this->merge([
             'user_id' => $this->user()->id,
-            'category_id' => $category->id,
+            'category_id' => $category->id ?? null,
             'scheduled_at' => $this->filled('published_at_feature') && $this->input('published_at_feature') == 'on'
                 ? $this->input('scheduled_at')
                 : null,
