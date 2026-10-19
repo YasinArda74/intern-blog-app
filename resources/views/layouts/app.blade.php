@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="Yazılar, fikirler ve hikâyeler.">
 
     <title>@yield('title') - {{ config('app.name') }}</title>
@@ -14,7 +15,7 @@
 <body class="flex min-h-full flex-col bg-gray-50 font-sans text-gray-900 antialiased dark:bg-gray-950 dark:text-gray-100">
     @include('layouts.navbar')
 
-    <main class="flex-1">
+    <main class="min-w-0 flex-1">
         @yield('content')
     </main>
 

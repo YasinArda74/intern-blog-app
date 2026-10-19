@@ -60,10 +60,13 @@ class AuthController extends Controller
         $user = User::query()->create($inputs);
         $user->assignRole('user');
 
+        Auth::login($user);
+
         return redirect()->route('login');
     }
 
-    public function getLogout(){
+    public function getLogout()
+    {
         Auth::logout();
 
         return redirect()->route('login');

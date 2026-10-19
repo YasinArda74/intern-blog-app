@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="csrf-token" content="">
+    <meta name="description" content="Yazılar, fikirler ve hikâyeler.">
+
+    <title>Create a new post - KALEM</title>
+
+    <script type="module" src="http://127.0.0.1:5174/@vite/client"></script><script type="module" src="http://127.0.0.1:5174/resources/js/app.js"></script>
+    </head>
+<body class="flex min-h-full flex-col bg-gray-50 font-sans text-gray-900 antialiased dark:bg-gray-950 dark:text-gray-100">
+    <header
+    class="sticky top-0 z-40 border-b border-gray-200 bg-white/90 backdrop-blur dark:border-gray-800 dark:bg-gray-900/90">
+    <nav class="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6" aria-label="Ana menü">
+        <!-- Logo -->
+        <a href="http://localhost:8000"
+           class="flex items-center gap-2 text-lg font-semibold text-gray-900 dark:text-white">
+            <span class="flex size-9 items-center justify-center rounded-lg bg-indigo-700 text-white">
+                <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                     aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                </svg>
+            </span>
+
+            KALEM
+        </a>
+
+        <!-- Search -->
+        <form action="#" role="search" class="hidden flex-1 md:block md:max-w-sm">
+            <label for="nav-search" class="sr-only">Search within posts</label>
+
+            <div class="relative">
+                <div class="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3">
+                    <i class="fa-solid fa-magnifying-glass text-gray-500 dark:text-gray-400 text-sm"></i>
+                </div>
+
+                <input type="search" id="nav-search" name="q" placeholder="Search within posts..."
+                       class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 ps-9 text-sm text-gray-900 focus:border-indigo-600 focus:ring-indigo-600 dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder-gray-500">
+            </div>
+        </form>
+
+        <div class="flex items-center gap-2">
+            <div class="w-36 shrink-0">
+                <label for="nav-locale" class="sr-only">Language</label>
+                <select id="nav-locale" onchange="window.location.href = this.value"
+                        class="block w-full px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body">
+                    <option value="http://localhost:8000/lang/tr" >Türkçe</option>
+                    <option value="http://localhost:8000/lang/en" selected>English</option>
+                </select>
+            </div>
+
+            
+                            <a href="http://localhost:8000/login"
+                        class="text-white bg-brand hover:bg-brand-strong box-border border border-transparent focus:ring-4 focus:ring-brand-medium shadow-xs font-medium leading-5 rounded-base text-sm px-3 py-2 focus:outline-none">
+                    Sign In                </a>
+
+                <a href="http://localhost:8000/register"
+                        class="text-body bg-neutral-primary-soft border border-default hover:bg-neutral-secondary-medium hover:text-heading focus:ring-4 focus:ring-neutral-tertiary-soft shadow-xs font-medium leading-5 rounded-base text-sm px-3 py-2 focus:outline-none">
+                    Sign Up                </a>
+                    </div>
+    </nav>
+</header>
+
+    <main class="min-w-0 flex-1">
+            <div class="mx-auto w-full min-w-0 max-w-6xl px-4 py-10 pb-28 sm:px-6 sm:py-14 lg:pb-14">
+        <div class="mb-8 max-w-2xl">
+            <a href="http://localhost:8000"
+               class="inline-flex items-center gap-2 text-sm font-medium text-body hover:text-heading">
+                <i class="fa-solid fa-arrow-left text-xs" aria-hidden="true"></i>
+                Give up            </a>
+            <h1 class="mt-4 text-3xl font-semibold tracking-tight text-heading sm:text-4xl">Create a new post</h1>
+            <p class="mt-2 text-base leading-relaxed text-body">Write down your ideas, publish them when you're ready.</p>
+        </div>
+
+        
+        <form id="create-post-form" action="http://localhost:8000/posts/create" method="POST" class="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_22rem]">
+            <input type="hidden" name="_token" value="" autocomplete="off">
+            <section class="min-w-0 rounded-base border border-default bg-neutral-primary-soft p-5 shadow-xs sm:p-8">
+                <div class="flex flex-col gap-7">
+                    <div>
+                        <label for="title" class="mb-2 block text-sm font-medium text-heading">Title</label>
+                        <input type="text" id="title" name="title" value="" maxlength="255"
+                               placeholder="Give your article an attention-grabbing title."
+                                                              class="block w-full rounded-base border px-3.5 py-3 text-base font-medium text-heading shadow-xs placeholder:font-normal placeholder:text-body border-default-medium bg-neutral-secondary-medium focus:border-brand focus:ring-brand">
+                                            </div>
+
+                    <div>
+                        <p class="mb-2 block text-sm font-medium text-heading">Article content</p>
+                        <p class="mb-3 text-sm text-body">Start telling your story...</p>
+                        <div id="tiptap"
+     data-upload-url="http://localhost:8000/posts/images"
+     data-placeholder="Start telling your story..."
+     data-count-label=":count characters"
+     data-upload-error="The image could not be uploaded."
+     class="overflow-hidden rounded-base border border-default-medium bg-neutral-secondary-medium">
+    <div id="toolbar" class="flex flex-wrap items-center gap-1 border-b border-default-medium bg-neutral-secondary-soft p-2">
+        <button type="button" data-action="undo" aria-label="Undo" title="Undo"
+        class="inline-flex h-8 min-w-8 items-center justify-center rounded-base px-2 text-sm text-body hover:bg-neutral-tertiary-medium hover:text-heading disabled:cursor-not-allowed disabled:opacity-40">
+    <i class="fa-solid fa-rotate-left text-xs" aria-hidden="true"></i>
+</button>
+        <button type="button" data-action="redo" aria-label="Redo" title="Redo"
+        class="inline-flex h-8 min-w-8 items-center justify-center rounded-base px-2 text-sm text-body hover:bg-neutral-tertiary-medium hover:text-heading disabled:cursor-not-allowed disabled:opacity-40">
+    <i class="fa-solid fa-rotate-right text-xs" aria-hidden="true"></i>
+</button>
+
+        <span class="mx-1 hidden h-5 w-px bg-default-medium sm:block" aria-hidden="true"></span>
+
+        <label for="editor-heading" class="sr-only">Paragraph</label>
+        <select id="editor-heading"
+                class="h-8 rounded-base border border-default-medium bg-neutral-secondary-medium px-2 text-sm text-heading focus:border-brand focus:ring-brand">
+            <option value="paragraph">Paragraph</option>
+                            <option value="1">H1</option>
+                            <option value="2">H2</option>
+                            <option value="3">H3</option>
+                            <option value="4">H4</option>
+                            <option value="5">H5</option>
+                            <option value="6">H6</option>
+                    </select>
+
+        <span class="mx-1 hidden h-5 w-px bg-default-medium sm:block" aria-hidden="true"></span>
+
+        <button type="button" data-action="bold" aria-label="Bold" title="Bold"
+        class="inline-flex h-8 min-w-8 items-center justify-center rounded-base px-2 text-sm text-body hover:bg-neutral-tertiary-medium hover:text-heading disabled:cursor-not-allowed disabled:opacity-40">
+    <i class="fa-solid fa-bold text-xs" aria-hidden="true"></i>
+</button>
+        <button type="button" data-action="italic" aria-label="Italic" title="Italic"
+        class="inline-flex h-8 min-w-8 items-center justify-center rounded-base px-2 text-sm text-body hover:bg-neutral-tertiary-medium hover:text-heading disabled:cursor-not-allowed disabled:opacity-40">
+    <i class="fa-solid fa-italic text-xs" aria-hidden="true"></i>
+</button>
+        <button type="button" data-action="underline" aria-label="Underline" title="Underline"
+        class="inline-flex h-8 min-w-8 items-center justify-center rounded-base px-2 text-sm text-body hover:bg-neutral-tertiary-medium hover:text-heading disabled:cursor-not-allowed disabled:opacity-40">
+    <i class="fa-solid fa-underline text-xs" aria-hidden="true"></i>
+</button>
+        <button type="button" data-action="strike" aria-label="Strikethrough" title="Strikethrough"
+        class="inline-flex h-8 min-w-8 items-center justify-center rounded-base px-2 text-sm text-body hover:bg-neutral-tertiary-medium hover:text-heading disabled:cursor-not-allowed disabled:opacity-40">
+    <i class="fa-solid fa-strikethrough text-xs" aria-hidden="true"></i>
+</button>
+        <button type="button" data-action="code" aria-label="Inline code" title="Inline code"
+        class="inline-flex h-8 min-w-8 items-center justify-center rounded-base px-2 text-sm text-body hover:bg-neutral-tertiary-medium hover:text-heading disabled:cursor-not-allowed disabled:opacity-40">
+    <i class="fa-solid fa-code text-xs" aria-hidden="true"></i>
+</button>
+        <button type="button" data-action="highlight" aria-label="Highlight" title="Highlight"
+        class="inline-flex h-8 min-w-8 items-center justify-center rounded-base px-2 text-sm text-body hover:bg-neutral-tertiary-medium hover:text-heading disabled:cursor-not-allowed disabled:opacity-40">
+    <i class="fa-solid fa-highlighter text-xs" aria-hidden="true"></i>
+</button>
+        <button type="button" data-action="subscript" aria-label="Subscript" title="Subscript"
+        class="inline-flex h-8 min-w-8 items-center justify-center rounded-base px-2 text-sm text-body hover:bg-neutral-tertiary-medium hover:text-heading disabled:cursor-not-allowed disabled:opacity-40">
+    <i class="fa-solid fa-subscript text-xs" aria-hidden="true"></i>
+</button>
+        <button type="button" data-action="superscript" aria-label="Superscript" title="Superscript"
+        class="inline-flex h-8 min-w-8 items-center justify-center rounded-base px-2 text-sm text-body hover:bg-neutral-tertiary-medium hover:text-heading disabled:cursor-not-allowed disabled:opacity-40">
+    <i class="fa-solid fa-superscript text-xs" aria-hidden="true"></i>
+</button>
+
+        <span class="mx-1 hidden h-5 w-px bg-default-medium sm:block" aria-hidden="true"></span>
+
+        <button type="button" data-action="alignLeft" aria-label="Align left" title="Align left"
+        class="inline-flex h-8 min-w-8 items-center justify-center rounded-base px-2 text-sm text-body hover:bg-neutral-tertiary-medium hover:text-heading disabled:cursor-not-allowed disabled:opacity-40">
+    <i class="fa-solid fa-align-left text-xs" aria-hidden="true"></i>
+</button>
+        <button type="button" data-action="alignCenter" aria-label="Align center" title="Align center"
+        class="inline-flex h-8 min-w-8 items-center justify-center rounded-base px-2 text-sm text-body hover:bg-neutral-tertiary-medium hover:text-heading disabled:cursor-not-allowed disabled:opacity-40">
+    <i class="fa-solid fa-align-center text-xs" aria-hidden="true"></i>
+</button>
+        <button type="button" data-action="alignRight" aria-label="Align right" title="Align right"
+        class="inline-flex h-8 min-w-8 items-center justify-center rounded-base px-2 text-sm text-body hover:bg-neutral-tertiary-medium hover:text-heading disabled:cursor-not-allowed disabled:opacity-40">
+    <i class="fa-solid fa-align-right text-xs" aria-hidden="true"></i>
+</button>
+        <button type="button" data-action="alignJustify" aria-label="Justify" title="Justify"
+        class="inline-flex h-8 min-w-8 items-center justify-center rounded-base px-2 text-sm text-body hover:bg-neutral-tertiary-medium hover:text-heading disabled:cursor-not-allowed disabled:opacity-40">
+    <i class="fa-solid fa-align-justify text-xs" aria-hidden="true"></i>
+</button>
+
+        <span class="mx-1 hidden h-5 w-px bg-default-medium sm:block" aria-hidden="true"></span>
+
+        <button type="button" data-action="bulletList" aria-label="Bullet list" title="Bullet list"
+        class="inline-flex h-8 min-w-8 items-center justify-center rounded-base px-2 text-sm text-body hover:bg-neutral-tertiary-medium hover:text-heading disabled:cursor-not-allowed disabled:opacity-40">
+    <i class="fa-solid fa-list-ul text-xs" aria-hidden="true"></i>
+</button>
+        <button type="button" data-action="orderedList" aria-label="Ordered list" title="Ordered list"
+        class="inline-flex h-8 min-w-8 items-center justify-center rounded-base px-2 text-sm text-body hover:bg-neutral-tertiary-medium hover:text-heading disabled:cursor-not-allowed disabled:opacity-40">
+    <i class="fa-solid fa-list-ol text-xs" aria-hidden="true"></i>
+</button>
+        <button type="button" data-action="taskList" aria-label="Task list" title="Task list"
+        class="inline-flex h-8 min-w-8 items-center justify-center rounded-base px-2 text-sm text-body hover:bg-neutral-tertiary-medium hover:text-heading disabled:cursor-not-allowed disabled:opacity-40">
+    <i class="fa-solid fa-list-check text-xs" aria-hidden="true"></i>
+</button>
+        <button type="button" data-action="blockquote" aria-label="Quote" title="Quote"
+        class="inline-flex h-8 min-w-8 items-center justify-center rounded-base px-2 text-sm text-body hover:bg-neutral-tertiary-medium hover:text-heading disabled:cursor-not-allowed disabled:opacity-40">
+    <i class="fa-solid fa-quote-left text-xs" aria-hidden="true"></i>
+</button>
+        <button type="button" data-action="codeBlock" aria-label="Code block" title="Code block"
+        class="inline-flex h-8 min-w-8 items-center justify-center rounded-base px-2 text-sm text-body hover:bg-neutral-tertiary-medium hover:text-heading disabled:cursor-not-allowed disabled:opacity-40">
+    <i class="fa-solid fa-file-code text-xs" aria-hidden="true"></i>
+</button>
+        <button type="button" data-action="horizontalRule" aria-label="Horizontal rule" title="Horizontal rule"
+        class="inline-flex h-8 min-w-8 items-center justify-center rounded-base px-2 text-sm text-body hover:bg-neutral-tertiary-medium hover:text-heading disabled:cursor-not-allowed disabled:opacity-40">
+    <i class="fa-solid fa-minus text-xs" aria-hidden="true"></i>
+</button>
+
+        <span class="mx-1 hidden h-5 w-px bg-default-medium sm:block" aria-hidden="true"></span>
+
+        <button type="button" data-action="link" aria-label="Link" title="Link"
+        class="inline-flex h-8 min-w-8 items-center justify-center rounded-base px-2 text-sm text-body hover:bg-neutral-tertiary-medium hover:text-heading disabled:cursor-not-allowed disabled:opacity-40">
+    <i class="fa-solid fa-link text-xs" aria-hidden="true"></i>
+</button>
+        <button type="button" data-action="image" aria-label="Image" title="Image"
+        class="inline-flex h-8 min-w-8 items-center justify-center rounded-base px-2 text-sm text-body hover:bg-neutral-tertiary-medium hover:text-heading disabled:cursor-not-allowed disabled:opacity-40">
+    <i class="fa-solid fa-image text-xs" aria-hidden="true"></i>
+</button>
+
+        <span class="mx-1 hidden h-5 w-px bg-default-medium sm:block" aria-hidden="true"></span>
+
+        <button type="button" data-action="insertTable" aria-label="Insert table" title="Insert table"
+        class="inline-flex h-8 min-w-8 items-center justify-center rounded-base px-2 text-sm text-body hover:bg-neutral-tertiary-medium hover:text-heading disabled:cursor-not-allowed disabled:opacity-40">
+    <i class="fa-solid fa-table text-xs" aria-hidden="true"></i>
+</button>
+        <button type="button" data-action="addRowAfter" aria-label="Add row" title="Add row"
+        class="inline-flex h-8 min-w-8 items-center justify-center rounded-base px-2 text-sm text-body hover:bg-neutral-tertiary-medium hover:text-heading disabled:cursor-not-allowed disabled:opacity-40">
+    <i class="fa-solid fa-plus text-xs" aria-hidden="true"></i>
+</button>
+        <button type="button" data-action="addColumnAfter" aria-label="Add column" title="Add column"
+        class="inline-flex h-8 min-w-8 items-center justify-center rounded-base px-2 text-sm text-body hover:bg-neutral-tertiary-medium hover:text-heading disabled:cursor-not-allowed disabled:opacity-40">
+    <i class="fa-solid fa-table-columns text-xs" aria-hidden="true"></i>
+</button>
+        <button type="button" data-action="mergeOrSplit" aria-label="Merge or split cells" title="Merge or split cells"
+        class="inline-flex h-8 min-w-8 items-center justify-center rounded-base px-2 text-sm text-body hover:bg-neutral-tertiary-medium hover:text-heading disabled:cursor-not-allowed disabled:opacity-40">
+    <i class="fa-solid fa-table-cells-large text-xs" aria-hidden="true"></i>
+</button>
+        <button type="button" data-action="deleteTable" aria-label="Delete table" title="Delete table"
+        class="inline-flex h-8 min-w-8 items-center justify-center rounded-base px-2 text-sm text-body hover:bg-neutral-tertiary-medium hover:text-heading disabled:cursor-not-allowed disabled:opacity-40">
+    <i class="fa-solid fa-trash text-xs" aria-hidden="true"></i>
+</button>
+    </div>
+
+    <div id="editor"></div>
+
+    <div class="flex items-center justify-between gap-3 border-t border-default-medium px-3 py-2 text-xs text-body">
+        <p id="editor-status" class="text-fg-danger" role="status"></p>
+        <p id="editor-count"></p>
+    </div>
+
+    <input type="hidden" name="content" id="content" value="">
+    <input id="editor-image" type="file" accept="image/jpeg,image/png,image/webp,image/gif" class="sr-only">
+
+    <dialog id="editor-link-dialog" class="w-[min(100%,24rem)] rounded-base border border-default bg-neutral-primary-soft p-5 text-heading shadow-xs backdrop:bg-black/40">
+        <label for="editor-link-url" class="mb-2 block text-sm font-medium">Link address</label>
+        <input id="editor-link-url" type="url" placeholder="https://"
+               class="block w-full rounded-base border border-default-medium bg-neutral-secondary-medium px-3.5 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand">
+        <div class="mt-4 flex flex-wrap justify-end gap-2">
+            <button type="button" data-link="cancel"
+                    class="inline-flex items-center justify-center rounded-base border border-default-medium bg-neutral-secondary-medium px-4 py-2.5 text-sm font-medium text-body hover:bg-neutral-tertiary-medium hover:text-heading">
+                Give up            </button>
+            <button type="button" data-link="remove"
+                    class="inline-flex items-center justify-center rounded-base border border-default-medium bg-neutral-secondary-medium px-4 py-2.5 text-sm font-medium text-body hover:bg-neutral-tertiary-medium hover:text-heading">
+                Remove link            </button>
+            <button type="button" data-link="apply"
+                    class="inline-flex items-center justify-center rounded-base border border-transparent bg-brand px-4 py-2.5 text-sm font-medium text-white hover:bg-brand-strong">
+                Save            </button>
+        </div>
+    </dialog>
+</div>
+                                            </div>
+
+                    <div>
+                        <label for="excerpt" class="mb-2 block text-sm font-medium text-heading">Brief summary</label>
+                        <textarea id="excerpt" name="excerpt" rows="4"
+                                  placeholder="The brief description readers will see in the list"
+                                                                    class="block w-full rounded-base border px-3.5 py-3 text-sm leading-relaxed text-heading shadow-xs placeholder:text-body border-default-medium bg-neutral-secondary-medium focus:border-brand focus:ring-brand"></textarea>
+                                            </div>
+                </div>
+            </section>
+
+            <aside class="flex min-w-0 flex-col gap-4 lg:sticky lg:top-24">
+                <section class="rounded-base border border-default bg-neutral-primary-soft p-5 shadow-xs">
+                    <label for="category_slug" class="mb-2 block text-sm font-medium text-heading">Category</label>
+                    <div class="relative">
+                        <select id="category_slug" name="category_slug"
+                                                                class="block w-full appearance-none rounded-base border py-3 ps-3.5 pe-10 text-sm text-heading shadow-xs border-default-medium bg-neutral-secondary-medium focus:border-brand focus:ring-brand">
+                            <option value="">Select category</option>
+                                                            <option value="a-ipsam" >
+                                    A ipsam
+                                </option>
+                                                            <option value="ab-molestiae" >
+                                    Ab molestiae
+                                </option>
+                                                            <option value="quibusdam-sit" >
+                                    Quibusdam sit
+                                </option>
+                                                    </select>
+                        <div class="pointer-events-none absolute inset-y-0 end-0 flex items-center pe-3.5">
+                            <i class="fa-solid fa-chevron-down text-xs text-body" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                                    </section>
+
+                <section class="rounded-base border border-default bg-neutral-primary-soft p-5 shadow-xs">
+                    <label for="published_at_feature" class="flex cursor-pointer items-start gap-3">
+                        <input id="published_at_feature" type="checkbox" name="published_at_feature" value="on"
+                                                              class="mt-0.5 size-4 shrink-0 rounded-xs border border-default-medium bg-neutral-secondary-medium text-brand focus:ring-2 focus:ring-brand-soft">
+                        <span>
+                            <span class="block text-sm font-medium text-heading">Publish later</span>
+                            <span class="mt-1 block text-sm leading-relaxed text-body">The post goes live on the date you choose.</span>
+                        </span>
+                    </label>
+
+                    <div id="scheduled-date-container" class="mt-4 hidden">
+                        <label for="scheduled_at" class="mb-2 block text-sm font-medium text-heading">Publication date</label>
+                        <input id="scheduled_at" type="date" name="scheduled_at"
+                               value=""
+                               min="2026-10-17"
+                                                              class="block w-full rounded-base border px-3.5 py-3 text-sm text-heading shadow-xs border-default-medium bg-neutral-secondary-medium focus:border-brand focus:ring-brand">
+                                            </div>
+                </section>
+
+                <section class="rounded-base border border-default bg-neutral-primary-soft p-5 shadow-xs">
+                    <h2 class="text-base font-semibold text-heading">Publish</h2>
+                    <p class="mt-1 text-sm text-body">Everyone can see.</p>
+
+                    <div class="mt-5 hidden flex-col gap-3 lg:flex">
+                        <button type="submit"
+                                class="inline-flex w-full items-center justify-center gap-2 rounded-base border border-transparent bg-brand px-4 py-2.5 text-sm font-medium text-white shadow-xs hover:bg-brand-strong focus:outline-none focus:ring-4 focus:ring-brand-medium">
+                            <i class="fa-solid fa-paper-plane text-xs" aria-hidden="true"></i>
+                            Publish                        </button>
+                        <a href="http://localhost:8000"
+                           class="inline-flex w-full items-center justify-center rounded-base border border-default-medium bg-neutral-secondary-medium px-4 py-2.5 text-sm font-medium text-body shadow-xs hover:bg-neutral-tertiary-medium hover:text-heading focus:outline-none focus:ring-4 focus:ring-neutral-tertiary">
+                            Give up                        </a>
+                    </div>
+                </section>
+            </aside>
+        </form>
+    </div>
+
+    <div class="fixed inset-x-0 bottom-0 z-30 border-t border-default bg-neutral-primary-soft p-3 shadow-lg lg:hidden">
+        <div class="mx-auto flex max-w-6xl gap-3">
+            <a href="http://localhost:8000"
+               class="inline-flex items-center justify-center rounded-base border border-default-medium bg-neutral-secondary-medium px-4 py-2.5 text-sm font-medium text-body shadow-xs hover:bg-neutral-tertiary-medium hover:text-heading">
+                Give up            </a>
+            <button type="submit" form="create-post-form"
+                    class="inline-flex flex-1 items-center justify-center gap-2 rounded-base border border-transparent bg-brand px-4 py-2.5 text-sm font-medium text-white shadow-xs hover:bg-brand-strong focus:outline-none focus:ring-4 focus:ring-brand-medium">
+                <i class="fa-solid fa-paper-plane text-xs" aria-hidden="true"></i>
+                Publish            </button>
+        </div>
+    </div>
+    </main>
+
+    <footer class="mt-16 border-t border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+    <div class="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 py-8 text-sm text-gray-500 sm:flex-row sm:px-6 dark:text-gray-400">
+        <p>&copy; 2026 KALEM. All rights reserved.</p>
+        <ul class="flex gap-6">
+            <li><a href="http://localhost:8000" class="hover:text-gray-900 dark:hover:text-white">Home Page</a></li>
+            <li><a href="#" class="hover:text-gray-900 dark:hover:text-white">About</a></li>
+            <li><a href="#" class="hover:text-gray-900 dark:hover:text-white">Communication</a></li>
+        </ul>
+    </div>
+</footer>
+
+    <script src="http://localhost:8000/js/fontawesome.js"></script>
+        <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const checkbox = document.getElementById('published_at_feature');
+            const dateContainer = document.getElementById('scheduled-date-container');
+            const dateInput = document.getElementById('scheduled_at');
+
+            if (! checkbox || ! dateContainer) {
+                return;
+            }
+
+            checkbox.addEventListener('change', () => {
+                dateContainer.classList.toggle('hidden', ! checkbox.checked);
+
+                if (! checkbox.checked && dateInput) {
+                    dateInput.value = '';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

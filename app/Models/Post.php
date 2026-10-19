@@ -1,11 +1,15 @@
 <?php
 
 namespace App\Models;
+
 use App\Enums\PostStatusEnum;
+use App\Support\TiptapRenderer;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 
 /**
@@ -16,12 +20,13 @@ use Illuminate\Support\Str;
  * @property int $views
  * @property int $category_id
  * @property int $user_id
- * @property \Illuminate\Support\Carbon|null $created_at
- * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read \App\Models\Category $category
- * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Comment> $comments
+ * @property Carbon|null $created_at
+ * @property Carbon|null $updated_at
+ * @property-read Category $category
+ * @property-read Collection<int, Comment> $comments
  * @property-read int|null $comments_count
- * @property-read \App\Models\User $user
+ * @property-read User $user
+ *
  * @method static \Database\Factories\PostFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post newQuery()
@@ -35,6 +40,7 @@ use Illuminate\Support\Str;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereViews($value)
+ *
  * @mixin \Eloquent
  */
 class Post extends Model
@@ -42,6 +48,7 @@ class Post extends Model
     use HasFactory;
 
     protected $fillable = [
+        'uuid',
         'title',
         'slug',
         'excerpt',
@@ -70,6 +77,20 @@ class Post extends Model
         return $this->belongsTo(Category::class);
     }
 
+    /**
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'content' => 'array',
+        ];
+    }
+
+    public function contentHtml(): string
+    {
+        return (new TiptapRenderer)->render($this->content);
+    }
 
     // Hooks
 
@@ -96,6 +117,9 @@ class Post extends Model
                 $post->status = PostStatusEnum::scheduled;
             }
         });
-    }
 
+        static::creating(function (self $post) {
+            $post->uuid = Str::uuid();
+        });
+    }
 }
