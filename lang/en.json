@@ -143,5 +143,9 @@
     "Remove link": "Remove link",
     "Link address": "Link address",
     ":count characters": ":count characters",
-    "The image could not be uploaded.": "The image could not be uploaded."
+    "The image could not be uploaded.": "The image could not be uploaded.",
+    "admin": "Admin",
+    "author": "Author",
+    "user": "User"
+
 }

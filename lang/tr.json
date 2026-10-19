@@ -143,5 +143,8 @@
     "Remove link": "Bağlantıyı kaldır",
     "Link address": "Bağlantı adresi",
     ":count characters": ":count karakter",
-    "The image could not be uploaded.": "Görsel yüklenemedi."
+    "The image could not be uploaded.": "Görsel yüklenemedi.",
+    "admin": "Yönetici",
+    "author": "Yazar",
+    "user": "Kullanıcı"
 }

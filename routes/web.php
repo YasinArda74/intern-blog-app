@@ -37,6 +37,10 @@ Route::controller(DashboardController::class)
         Route::middleware(['auth','role:admin'])->group(function () {
             Route::get('', 'dashboard')->name('dashboard');
 
+            Route::get('dashboard/users', 'getUsersIndex')->name('getUsers');
+            Route::post('dashboard/users', 'getUsersIndex')->name('getUsers');
+
+
             Route::get('dashboard/categories', 'getCategoryIndex')->name('getCategories');
             Route::POST('dashboard/categories', 'postCategoryIndex');
 
