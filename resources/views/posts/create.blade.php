@@ -1,24 +1,17 @@
 @extends('layouts.app')
 
-@php
-    $field = 'block w-full rounded-base border bg-neutral-secondary-medium px-3 py-2.5 text-sm text-heading shadow-xs placeholder:text-body focus:border-brand focus:ring-brand';
-    $fieldOk = 'border-default-medium';
-    $fieldBad = 'border-danger bg-danger-soft focus:border-danger focus:ring-danger-medium';
-    $scheduleEnabled = (bool) old('published_at_feature');
-@endphp
-
 @section('title', __('Create a new post'))
 
 @section('content')
-    <div class="mx-auto max-w-6xl px-4 py-8 pb-28 sm:px-6 sm:py-12 lg:pb-12">
-        <div class="mb-8">
+    <div class="mx-auto w-full min-w-0 max-w-6xl px-4 py-10 pb-28 sm:px-6 sm:py-14 lg:pb-14">
+        <div class="mb-8 max-w-2xl">
             <a href="{{ route('home') }}"
-               class="inline-flex items-center gap-2 text-sm font-medium text-fg-brand hover:underline">
+               class="inline-flex items-center gap-2 text-sm font-medium text-body hover:text-heading">
                 <i class="fa-solid fa-arrow-left text-xs" aria-hidden="true"></i>
                 @lang('Give up')
             </a>
-            <h1 class="mt-3 text-3xl font-bold tracking-tight text-heading">@lang('Create a new post')</h1>
-            <p class="mt-2 max-w-2xl text-sm text-body">@lang("Write down your ideas, publish them when you're ready.")</p>
+            <h1 class="mt-4 text-3xl font-semibold tracking-tight text-heading sm:text-4xl">@lang('Create a new post')</h1>
+            <p class="mt-2 text-base leading-relaxed text-body">@lang("Write down your ideas, publish them when you're ready.")</p>
         </div>
 
         @if ($errors->any())
@@ -32,46 +25,63 @@
             </div>
         @endif
 
-        <form id="create-post-form" action="{{ route('posts.create') }}" method="POST" class="grid items-start gap-6 lg:grid-cols-3">
+        <form id="create-post-form" action="{{ route('posts.create') }}" method="POST" class="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_22rem]">
             @csrf
 
-            <div class="space-y-6 lg:col-span-2">
-                <section class="rounded-base border border-default bg-neutral-primary-soft p-5 shadow-xs sm:p-6">
-                    <label for="title" class="mb-2.5 block text-sm font-medium text-heading">@lang('Title')</label>
-                    <input type="text" id="title" name="title" value="{{ old('title') }}" maxlength="255"
-                           @error('title') aria-invalid="true" aria-describedby="title-error" @enderror
-                           class="block w-full border-0 bg-transparent p-0 text-xl font-semibold text-heading placeholder:text-body-subtle focus:ring-0">
-                    @error('title')
-                        <p id="title-error" class="mt-2 text-sm text-fg-danger">{{ $message }}</p>
-                    @enderror
+            <section class="min-w-0 rounded-base border border-default bg-neutral-primary-soft p-5 shadow-xs sm:p-8">
+                <div class="flex flex-col gap-7">
+                    <div>
+                        <label for="title" class="mb-2 block text-sm font-medium text-heading">@lang('Title')</label>
+                        <input type="text" id="title" name="title" value="{{ old('title') }}" maxlength="255"
+                               placeholder="@lang('Give your article an attention-grabbing title.')"
+                               @error('title') aria-invalid="true" aria-describedby="title-error" @enderror
+                               @class([
+                                   'block w-full rounded-base border px-3.5 py-3 text-base font-medium text-heading shadow-xs placeholder:font-normal placeholder:text-body',
+                                   'border-default-medium bg-neutral-secondary-medium focus:border-brand focus:ring-brand' => ! $errors->has('title'),
+                                   'border-danger bg-danger-soft focus:border-danger focus:ring-danger-medium' => $errors->has('title'),
+                               ])>
+                        @error('title')
+                            <p id="title-error" class="mt-2 text-sm text-fg-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
 
-                    <hr class="my-3 border-default">
+                    <div>
+                        <p class="mb-2 block text-sm font-medium text-heading">@lang('Article content')</p>
+                        <p class="mb-3 text-sm text-body">@lang('Start telling your story...')</p>
+                        @include('posts.partials._tiptap-editor')
+                        @error('content')
+                            <p class="mt-2 text-sm text-fg-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
 
-                    <p class="mb-2.5 text-sm font-medium text-heading">@lang('Article content')</p>
-                    @include('posts.partials._tiptap-editor')
-                    @error('content')
-                        <p class="mt-2 text-sm text-fg-danger">{{ $message }}</p>
-                    @enderror
-
-                    <div class="mt-6">
-                        <label for="excerpt" class="mb-2.5 block text-sm font-medium text-heading">@lang('Brief summary')</label>
-                        <textarea id="excerpt" name="excerpt" rows="3"
+                    <div>
+                        <label for="excerpt" class="mb-2 block text-sm font-medium text-heading">@lang('Brief summary')</label>
+                        <textarea id="excerpt" name="excerpt" rows="4"
+                                  placeholder="@lang('The brief description readers will see in the list')"
                                   @error('excerpt') aria-invalid="true" aria-describedby="excerpt-error" @enderror
-                                  class="{{ $field }} {{ $errors->has('excerpt') ? $fieldBad : $fieldOk }}">{{ old('excerpt') }}</textarea>
+                                  @class([
+                                      'block w-full rounded-base border px-3.5 py-3 text-sm leading-relaxed text-heading shadow-xs placeholder:text-body',
+                                      'border-default-medium bg-neutral-secondary-medium focus:border-brand focus:ring-brand' => ! $errors->has('excerpt'),
+                                      'border-danger bg-danger-soft focus:border-danger focus:ring-danger-medium' => $errors->has('excerpt'),
+                                  ])>{{ old('excerpt') }}</textarea>
                         @error('excerpt')
                             <p id="excerpt-error" class="mt-2 text-sm text-fg-danger">{{ $message }}</p>
                         @enderror
                     </div>
-                </section>
-            </div>
+                </div>
+            </section>
 
-            <aside class="space-y-6 lg:sticky lg:top-24">
-                <section class="space-y-5 rounded-base border border-default bg-neutral-primary-soft p-5 shadow-xs">
-                    <div>
-                        <label for="category_slug" class="mb-2.5 block text-sm font-medium text-heading">@lang('Category')</label>
+            <aside class="flex min-w-0 flex-col gap-4 lg:sticky lg:top-24">
+                <section class="rounded-base border border-default bg-neutral-primary-soft p-5 shadow-xs">
+                    <label for="category_slug" class="mb-2 block text-sm font-medium text-heading">@lang('Category')</label>
+                    <div class="relative">
                         <select id="category_slug" name="category_slug"
                                 @error('category_id') aria-invalid="true" aria-describedby="category-error" @enderror
-                                class="{{ $field }} {{ $errors->has('category_id') ? $fieldBad : $fieldOk }}">
+                                @class([
+                                    'block w-full appearance-none rounded-base border py-3 ps-3.5 pe-10 text-sm text-heading shadow-xs',
+                                    'border-default-medium bg-neutral-secondary-medium focus:border-brand focus:ring-brand' => ! $errors->has('category_id'),
+                                    'border-danger bg-danger-soft focus:border-danger focus:ring-danger-medium' => $errors->has('category_id'),
+                                ])>
                             <option value="">@lang('Select category')</option>
                             @foreach ($categories as $category)
                                 <option value="{{ $category->slug }}" @selected(old('category_slug') === $category->slug)>
@@ -79,40 +89,43 @@
                                 </option>
                             @endforeach
                         </select>
-                        @error('category_id')
-                            <p id="category-error" class="mt-2 text-sm text-fg-danger">{{ $message }}</p>
-                        @enderror
-                    </div>
-
-                    <div>
-                        <label for="published_at_feature" class="flex cursor-pointer items-start rounded-base border border-default bg-neutral-primary-soft shadow-xs">
-                            <input id="published_at_feature" type="checkbox" name="published_at_feature" value="on"
-                                   @checked($scheduleEnabled)
-                                   class="ms-4 mt-5 size-4 rounded-xs border border-default-medium bg-neutral-secondary-medium text-brand focus:ring-2 focus:ring-brand-soft">
-                            <span class="py-4 pe-4 ps-3">
-                                <span class="block text-sm font-medium text-heading">@lang('Publish later')</span>
-                                <span class="mt-1 block text-sm font-normal text-body">@lang('The post goes live on the date you choose.')</span>
-                            </span>
-                        </label>
-
-                        <div id="scheduled-date-container" @class(['mt-4', 'hidden' => ! $scheduleEnabled])>
-                            <label for="scheduled_at" class="mb-2.5 block text-sm font-medium text-heading">@lang('Publication date')</label>
-                            <div class="relative">
-                                <div class="pointer-events-none absolute inset-y-0 start-0 flex items-center ps-3">
-                                    <i class="fa-regular fa-calendar text-sm text-body" aria-hidden="true"></i>
-                                </div>
-                                <input id="scheduled_at" type="date" name="scheduled_at"
-                                       value="{{ old('scheduled_at') }}"
-                                       min="{{ now()->addDay()->toDateString() }}"
-                                       @error('scheduled_at') aria-invalid="true" aria-describedby="scheduled-at-error" @enderror
-                                       class="block w-full rounded-base border bg-neutral-secondary-medium py-2.5 ps-9 pe-3 text-sm text-heading shadow-xs focus:border-brand focus:ring-brand {{ $errors->has('scheduled_at') ? $fieldBad : $fieldOk }}">
-                            </div>
-                            @error('scheduled_at')
-                                <p id="scheduled-at-error" class="mt-2 text-sm text-fg-danger">{{ $message }}</p>
-                            @enderror
+                        <div class="pointer-events-none absolute inset-y-0 end-0 flex items-center pe-3.5">
+                            <i class="fa-solid fa-chevron-down text-xs text-body" aria-hidden="true"></i>
                         </div>
                     </div>
+                    @error('category_id')
+                        <p id="category-error" class="mt-2 text-sm text-fg-danger">{{ $message }}</p>
+                    @enderror
                 </section>
+
+                <section class="rounded-base border border-default bg-neutral-primary-soft p-5 shadow-xs">
+                    <label for="published_at_feature" class="flex cursor-pointer items-start gap-3">
+                        <input id="published_at_feature" type="checkbox" name="published_at_feature" value="on"
+                               @checked(old('published_at_feature'))
+                               class="mt-0.5 size-4 shrink-0 rounded-xs border border-default-medium bg-neutral-secondary-medium text-brand focus:ring-2 focus:ring-brand-soft">
+                        <span>
+                            <span class="block text-sm font-medium text-heading">@lang('Publish later')</span>
+                            <span class="mt-1 block text-sm leading-relaxed text-body">@lang('The post goes live on the date you choose.')</span>
+                        </span>
+                    </label>
+
+                    <div id="scheduled-date-container" @class(['mt-4', 'hidden' => old('published_at_feature') !== 'on'])>
+                        <label for="scheduled_at" class="mb-2 block text-sm font-medium text-heading">@lang('Publication date')</label>
+                        <input id="scheduled_at" type="date" name="scheduled_at"
+                               value="{{ old('scheduled_at') }}"
+                               min="{{ now()->addDay()->toDateString() }}"
+                               @error('scheduled_at') aria-invalid="true" aria-describedby="scheduled-at-error" @enderror
+                               @class([
+                                   'block w-full rounded-base border px-3.5 py-3 text-sm text-heading shadow-xs',
+                                   'border-default-medium bg-neutral-secondary-medium focus:border-brand focus:ring-brand' => ! $errors->has('scheduled_at'),
+                                   'border-danger bg-danger-soft focus:border-danger focus:ring-danger-medium' => $errors->has('scheduled_at'),
+                               ])>
+                        @error('scheduled_at')
+                            <p id="scheduled-at-error" class="mt-2 text-sm text-fg-danger">{{ $message }}</p>
+                        @enderror
+                    </div>
+                </section>
+
                 <section class="rounded-base border border-default bg-neutral-primary-soft p-5 shadow-xs">
                     <h2 class="text-base font-semibold text-heading">@lang('Publish')</h2>
                     <p class="mt-1 text-sm text-body">@lang('Everyone can see.')</p>
