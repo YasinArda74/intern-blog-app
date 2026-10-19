@@ -64,9 +64,18 @@
                             <a href="{{route('posts.create')}}"
                                class="block px-4 py-2 hover:bg-gray-100 sm:hidden dark:hover:bg-gray-700">@lang('Write something')</a>
                         </li>
+
                         <li>
                             <a href="#" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">@lang('Settings')</a>
                         </li>
+
+                        @auth()
+                            @role(\App\Enums\RoleEnum::admin->value)
+                                <li>
+                                    <a href="{{ route('admin.dashboard') }}" class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">@lang('Dashboard')</a>
+                                </li>
+                            @endrole
+                        @endauth
                     </ul>
 
                     <div class="py-2">

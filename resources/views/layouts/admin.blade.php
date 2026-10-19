@@ -17,6 +17,7 @@
         </div>
     </main>
 
+    <script src="{{ asset('js/fontawesome.js') }}"></script>
     <script>
         // Silme modalında seçilen kaydın adını gösterir (sadece arayüz).
         document.addEventListener('click', function (event) {
