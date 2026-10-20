@@ -20,7 +20,7 @@ class DashboardController extends Controller
         }
 
         $users = User::with('roles')
-            ->whereDate('created_at',now())
+            ->whereDate('created_at', now())
             ->orderByDesc('created_at')
             ->paginate(5);
 
@@ -30,7 +30,8 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function getUsersIndex(){
+    public function getUsersIndex()
+    {
         $users = User::with('roles')->paginate(7);
 
         return view('admin.users.index', [
@@ -38,14 +39,13 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function getCategoryIndex(){
+    public function getCategoryIndex()
+    {
         return view('admin.categories.index');
     }
 
-    public function getRolesIndex(){
-        return view('admin.roles.index');
-    }
-    public function getRolAsPermissions(){
+    public function getRolAsPermissions()
+    {
         return view('admin.role-permissions.index');
     }
 

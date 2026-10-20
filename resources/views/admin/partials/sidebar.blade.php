@@ -26,7 +26,7 @@
                 </a>
             </li>
             <li>
-                <a href="{{route('admin.getRoles')}}" @if (($active ?? null) === 'roles') aria-current="page" @endif class="group flex items-center p-2 rounded-lg text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 aria-[current=page]:bg-blue-600 aria-[current=page]:text-white aria-[current=page]:hover:bg-blue-600 dark:aria-[current=page]:bg-blue-600 dark:aria-[current=page]:hover:bg-blue-600">
+                <a href="{{route('admin.roles.list')}}" @if (($active ?? null) === 'roles') aria-current="page" @endif class="group flex items-center p-2 rounded-lg text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 aria-[current=page]:bg-blue-600 aria-[current=page]:text-white aria-[current=page]:hover:bg-blue-600 dark:aria-[current=page]:bg-blue-600 dark:aria-[current=page]:hover:bg-blue-600">
                     <x-admin.icon name="shield" class="w-5 h-5 text-gray-500 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white group-aria-[current=page]:text-white dark:group-aria-[current=page]:text-white" />
                     <span class="ms-3">@lang('Roles')</span>
                 </a>

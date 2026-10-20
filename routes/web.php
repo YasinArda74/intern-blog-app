@@ -28,13 +28,12 @@ Route::controller(ProfileController::class)
         });
     });
 
-
-//Dashboard Routes
+// Dashboard Routes
 Route::controller(DashboardController::class)
     ->prefix('dashboard')
     ->as('admin.')
     ->group(function () {
-        Route::middleware(['auth','role:admin'])->group(function () {
+        Route::middleware(['auth', 'role:admin'])->group(function () {
             Route::get('', 'dashboard')->name('dashboard');
 
             Route::get('dashboard/users', 'getUsersIndex')->name('getUsers');
@@ -44,9 +43,5 @@ Route::controller(DashboardController::class)
 
             Route::get('dashboard/categories', 'getCategoryIndex')->name('getCategories');
             Route::POST('dashboard/categories', 'postCategoryIndex');
-
-            Route::get('roles/index', 'getRolesIndex')->name('getRoles');
-            Route::POST('roles/index', 'postRolesIndex');
-
         });
     });

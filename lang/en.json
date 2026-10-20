@@ -146,6 +146,8 @@
     "The image could not be uploaded.": "The image could not be uploaded.",
     "admin": "Admin",
     "author": "Author",
-    "user": "User"
-
+    "user": "User",
+    "posts": "Posts",
+    "users": "Users",
+    "Permissions": "Permissions"
 }

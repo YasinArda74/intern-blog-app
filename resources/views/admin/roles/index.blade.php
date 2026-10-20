@@ -3,161 +3,71 @@
 @section('title', 'Roller')
 
 @section('content')
-    <div class="mb-6">
-        <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Roller ve İzinler</h1>
-        <p class="text-sm text-gray-500 dark:text-gray-400">Rollerin yetkilerini inceleyin ve kullanıcılara rol atayın.</p>
+    <div class="mb-6 flex items-center justify-between">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">@lang('Roles')</h1>
+            <p class="text-sm text-gray-500 dark:text-gray-400">@lang('Manage the roles of users in the system')</p>
+        </div>
+
+        <a
+            href="{{ route('admin.roles.create') }}"
+            class="inline-flex items-center justify-center  text-white bg-brand hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs rounded-base focus:outline-none py-1.5 px-3 text-sm font-medium"
+        >
+            @lang('New Role') <i class="fa-solid fa-plus ms-2"></i>
+        </a>
     </div>
 
-    {{-- Rol kartları --}}
-    <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4 mb-6">
-        <div class="p-5 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-            <div class="flex items-center justify-between mb-3">
-                <span class="text-sm font-medium px-2.5 py-0.5 rounded-sm bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-300">Admin</span>
-                <span class="text-sm text-gray-500 dark:text-gray-400">2 kullanıcı</span>
-            </div>
-            <p class="text-sm text-gray-500 dark:text-gray-400">Sitenin tüm bölümlerine tam erişim.</p>
-        </div>
+    <div class="overflow-visible bg-neutral-primary-soft shadow-xs rounded-base border border-default">
+        <table class="w-full text-sm text-left rtl:text-right text-body">
+            <thead class="text-sm text-body bg-neutral-secondary-medium border-b border-default-medium">
+            <tr>
+                <th scope="col" class="px-6 py-3 font-medium" width="30">@lang('Action')</th>
+                <th scope="col" class="px-6 py-3 font-medium">@lang('Role Name')</th>
+                <th scope="col" class="px-6 py-3 font-medium">@lang('Permission Count')</th>
+            </tr>
+            </thead>
 
-        <div class="p-5 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-            <div class="flex items-center justify-between mb-3">
-                <span class="text-sm font-medium px-2.5 py-0.5 rounded-sm bg-purple-100 text-purple-800 dark:bg-purple-900 dark:text-purple-300">Editör</span>
-                <span class="text-sm text-gray-500 dark:text-gray-400">5 kullanıcı</span>
-            </div>
-            <p class="text-sm text-gray-500 dark:text-gray-400">Tüm yazıları ve kategorileri yönetebilir.</p>
-        </div>
+            <tbody>
+            @forelse($roles as $role)
+                <tr class="bg-neutral-primary-soft hover:bg-neutral-secondary-medium @if(! $loop->last) border-b border-default @endif">
+                    <td class="px-6 py-1.5">
+                        <button id="role-actions-button-{{ $role->id }}" data-dropdown-toggle="role-actions-menu-{{ $role->id }}" data-dropdown-placement="bottom-start" class="cursor-pointer inline-flex items-center justify-center w-9 h-9 text-body rounded-base hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-2 focus:ring-neutral-tertiary focus:outline-none" type="button" aria-label="@lang('Open actions')">
+                            <i class="fa-solid fa-ellipsis-vertical" aria-hidden="true"></i>
+                        </button>
 
-        <div class="p-5 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-            <div class="flex items-center justify-between mb-3">
-                <span class="text-sm font-medium px-2.5 py-0.5 rounded-sm bg-blue-100 text-blue-800 dark:bg-blue-900 dark:text-blue-300">Yazar</span>
-                <span class="text-sm text-gray-500 dark:text-gray-400">18 kullanıcı</span>
-            </div>
-            <p class="text-sm text-gray-500 dark:text-gray-400">Kendi yazılarını oluşturur ve düzenler.</p>
-        </div>
+                        <div id="role-actions-menu-{{ $role->id }}" class="z-30 hidden bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44">
+                            <ul class="p-2 text-sm text-body font-medium" aria-labelledby="role-actions-button-{{ $role->id }}">
+                                <li>
+                                    <a href="{{ route('admin.roles.edit', $role->id) }}" class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">@lang('Edit')</a>
+                                </li>
 
-        <div class="p-5 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-            <div class="flex items-center justify-between mb-3">
-                <span class="text-sm font-medium px-2.5 py-0.5 rounded-sm bg-gray-100 text-gray-800 dark:bg-gray-600 dark:text-gray-300">Üye</span>
-                <span class="text-sm text-gray-500 dark:text-gray-400">1.229 kullanıcı</span>
-            </div>
-            <p class="text-sm text-gray-500 dark:text-gray-400">Yorum yapabilir ve profilini yönetebilir.</p>
-        </div>
-    </div>
+                                <li>
+                                    <a href="{{ route('admin.roles.delete', $role->id) }}" class="inline-flex items-center w-full p-2 hover:bg-red-100 rounded text-red-600">@lang('Delete')</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
 
-    <div class="grid gap-6 xl:grid-cols-3">
-        {{-- İzin matrisi --}}
-        <div class="xl:col-span-2 bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-            <div class="p-4 border-b border-gray-200 dark:border-gray-700">
-                <h2 class="text-lg font-semibold text-gray-900 dark:text-white">İzin Matrisi</h2>
-                <p class="text-sm text-gray-500 dark:text-gray-400">Hangi rolün hangi işlemi yapabileceğini belirleyin.</p>
-            </div>
-            <form action="#">
-                <div class="relative overflow-x-auto">
-                    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-                            <tr>
-                                <th scope="col" class="px-6 py-3">İzin</th>
-                                <th scope="col" class="px-6 py-3 text-center">Admin</th>
-                                <th scope="col" class="px-6 py-3 text-center">Editör</th>
-                                <th scope="col" class="px-6 py-3 text-center">Yazar</th>
-                                <th scope="col" class="px-6 py-3 text-center">Üye</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr class="bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">Yazı oluştur</th>
-                                <td class="px-6 py-4 text-center"><input type="checkbox" checked aria-label="Admin - Yazı oluştur" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></td>
-                                <td class="px-6 py-4 text-center"><input type="checkbox" checked aria-label="Editör - Yazı oluştur" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></td>
-                                <td class="px-6 py-4 text-center"><input type="checkbox" checked aria-label="Yazar - Yazı oluştur" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></td>
-                                <td class="px-6 py-4 text-center"><input type="checkbox" aria-label="Üye - Yazı oluştur" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></td>
-                            </tr>
+                    <td class="px-6 py-1.5 font-medium text-heading whitespace-nowrap">@lang(\App\Enums\RoleEnum::tryFrom($role->name)?->name ?? $role->name)</td>
 
-                            <tr class="bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">Yazı düzenle (tümü)</th>
-                                <td class="px-6 py-4 text-center"><input type="checkbox" checked aria-label="Admin - Yazı düzenle (tümü)" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></td>
-                                <td class="px-6 py-4 text-center"><input type="checkbox" checked aria-label="Editör - Yazı düzenle (tümü)" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></td>
-                                <td class="px-6 py-4 text-center"><input type="checkbox" aria-label="Yazar - Yazı düzenle (tümü)" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></td>
-                                <td class="px-6 py-4 text-center"><input type="checkbox" aria-label="Üye - Yazı düzenle (tümü)" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></td>
-                            </tr>
-
-                            <tr class="bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">Yazı sil</th>
-                                <td class="px-6 py-4 text-center"><input type="checkbox" checked aria-label="Admin - Yazı sil" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></td>
-                                <td class="px-6 py-4 text-center"><input type="checkbox" checked aria-label="Editör - Yazı sil" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></td>
-                                <td class="px-6 py-4 text-center"><input type="checkbox" aria-label="Yazar - Yazı sil" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></td>
-                                <td class="px-6 py-4 text-center"><input type="checkbox" aria-label="Üye - Yazı sil" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></td>
-                            </tr>
-
-                            <tr class="bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">Kategori yönet</th>
-                                <td class="px-6 py-4 text-center"><input type="checkbox" checked aria-label="Admin - Kategori yönet" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></td>
-                                <td class="px-6 py-4 text-center"><input type="checkbox" checked aria-label="Editör - Kategori yönet" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></td>
-                                <td class="px-6 py-4 text-center"><input type="checkbox" aria-label="Yazar - Kategori yönet" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></td>
-                                <td class="px-6 py-4 text-center"><input type="checkbox" aria-label="Üye - Kategori yönet" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></td>
-                            </tr>
-
-                            <tr class="bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">Yorum moderasyonu</th>
-                                <td class="px-6 py-4 text-center"><input type="checkbox" checked aria-label="Admin - Yorum moderasyonu" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></td>
-                                <td class="px-6 py-4 text-center"><input type="checkbox" checked aria-label="Editör - Yorum moderasyonu" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></td>
-                                <td class="px-6 py-4 text-center"><input type="checkbox" aria-label="Yazar - Yorum moderasyonu" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></td>
-                                <td class="px-6 py-4 text-center"><input type="checkbox" aria-label="Üye - Yorum moderasyonu" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></td>
-                            </tr>
-
-                            <tr class="bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">Kullanıcı yönet</th>
-                                <td class="px-6 py-4 text-center"><input type="checkbox" checked aria-label="Admin - Kullanıcı yönet" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></td>
-                                <td class="px-6 py-4 text-center"><input type="checkbox" aria-label="Editör - Kullanıcı yönet" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></td>
-                                <td class="px-6 py-4 text-center"><input type="checkbox" aria-label="Yazar - Kullanıcı yönet" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></td>
-                                <td class="px-6 py-4 text-center"><input type="checkbox" aria-label="Üye - Kullanıcı yönet" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></td>
-                            </tr>
-
-                            <tr class="bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
-                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">Rol ata</th>
-                                <td class="px-6 py-4 text-center"><input type="checkbox" checked aria-label="Admin - Rol ata" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></td>
-                                <td class="px-6 py-4 text-center"><input type="checkbox" aria-label="Editör - Rol ata" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></td>
-                                <td class="px-6 py-4 text-center"><input type="checkbox" aria-label="Yazar - Rol ata" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></td>
-                                <td class="px-6 py-4 text-center"><input type="checkbox" aria-label="Üye - Rol ata" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="flex justify-end p-4">
-                    <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">İzinleri Kaydet</button>
-                </div>
-            </form>
-        </div>
-
-        {{-- Rol atama formu --}}
-        <div class="self-start bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-            <div class="p-4 border-b border-gray-200 dark:border-gray-700">
-                <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Kullanıcıya Rol Ata</h2>
-                <p class="text-sm text-gray-500 dark:text-gray-400">Bir kullanıcı seçip yeni rolünü belirleyin.</p>
-            </div>
-            <form action="#" class="p-4 space-y-4">
-                <div>
-                    <label for="assign-user" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kullanıcı</label>
-                    <select id="assign-user" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                        <option selected disabled>Kullanıcı seçin</option>
-                        <option>Zeynep Arslan (zeynep@ornek.com)</option>
-                        <option>Ayşe Demir (ayse@ornek.com)</option>
-                        <option>Mehmet Kaya (mehmet@ornek.com)</option>
-                        <option>Can Yıldız (can@ornek.com)</option>
-                        <option>Elif Şahin (elif@ornek.com)</option>
-                        <option>Burak Öztürk (burak@ornek.com)</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="assign-role" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Rol</label>
-                    <select id="assign-role" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                        <option selected disabled>Rol seçin</option>
-                        <option>Admin</option>
-                        <option>Editör</option>
-                        <option>Yazar</option>
-                        <option>Üye</option>
-                    </select>
-                </div>
-                <button type="submit" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Rolü Ata</button>
-            </form>
-        </div>
+                    <td class="px-6 py-1.5">{{ $role->permissions->count() }}</td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="2" class="h-96 px-6">
+                        <div class="flex h-full flex-col items-center justify-center gap-3 text-center">
+                            <span class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-neutral-secondary-medium text-body">
+                                <i class="fa-solid fa-user-shield text-xl" aria-hidden="true"></i>
+                            </span>
+                            <div class="max-w-sm">
+                                <p class="text-base font-semibold text-heading">@lang('No roles yet')</p>
+                                <p class="mt-1 text-sm text-body">@lang('Roles added to the system will be listed in this table.')</p>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            @endforelse
+            </tbody>
+        </table>
     </div>
 @endsection
