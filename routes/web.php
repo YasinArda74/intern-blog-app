@@ -40,6 +40,7 @@ Route::controller(DashboardController::class)
             Route::get('dashboard/users', 'getUsersIndex')->name('getUsers');
             Route::post('dashboard/users', 'getUsersIndex')->name('getUsers');
 
+            Route::get('dashboard/rolpermissions', 'getRolAsPermissions')->name('getRolAsPermissions');
 
             Route::get('dashboard/categories', 'getCategoryIndex')->name('getCategories');
             Route::POST('dashboard/categories', 'postCategoryIndex');
