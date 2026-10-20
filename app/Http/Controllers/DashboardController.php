@@ -43,12 +43,7 @@ class DashboardController extends Controller
     }
 
     public function getRolesIndex(){
-        $users = User::with('roles')
-            ->paginate(7);
-        return view('admin.roles.index', [
-            'users' => $users,
-            'summary' => $this->getDashboardSummary(),
-        ]);
+        return view('admin.roles.index');
     }
     public function getRolAsPermissions(){
         return view('admin.role-permissions.index');
@@ -61,15 +56,6 @@ class DashboardController extends Controller
 
         $roleCount = Cache::remember('roleCount', $now->addMinutes(30), function () {
             return Role::query()->count();
-        });
-        $adminRoleCount = Cache::remember('adminRoleCount', $now->addMinutes(30), function () {
-            return Role::query()->where('name', 'admin')->count();
-        });
-        $authorRoleCount = Cache::remember('authorRoleCount', $now->addMinutes(30), function () {
-            return Role::query()->where('name', 'author')->count();
-        });
-        $userRoleCount = Cache::remember('userRoleCount', $now->addMinutes(30), function () {
-            return Role::query()->where('name', 'user')->count();
         });
 
         $postCount = Cache::remember('postCount', $now->addMinutes(30), function () {
@@ -86,9 +72,6 @@ class DashboardController extends Controller
 
         return [
             'roleCount' => $roleCount,
-            'adminRoleCount' => $adminRoleCount,
-            'authorRoleCount' => $authorRoleCount,
-            'userRoleCount' => $userRoleCount,
             'postCount' => $postCount,
             'userCount' => $userCount,
             'categoryCount' => $categoryCount,
@@ -97,9 +80,6 @@ class DashboardController extends Controller
 
     private function clearDashboardSummaryCache()
     {
-        Cache::forget('AdminRoleCount');
-        Cache::forget('authorRoleCount');
-        Cache::forget('userRoleCount');
         Cache::forget('roleCount');
         Cache::forget('postCount');
         Cache::forget('userCount');
