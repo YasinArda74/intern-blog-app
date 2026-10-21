@@ -1,36 +1,42 @@
-<aside class="fixed inset-y-0 left-0 z-40 hidden w-64 flex-col border-r border-slate-200 bg-white lg:flex">
-    <div class="flex h-20 items-center gap-3 border-b px-6">
-        <div class="flex h-9 w-9 items-center justify-center rounded-xl bg-slate-900 text-lg font-bold text-white">K
-        </div>
-        <div><p class="font-bold">Kare Blog</p>
-            <p class="text-[11px] text-slate-400">Yönetim paneli</p></div>
-    </div>
-    <nav class="flex flex-1 flex-col gap-1 p-4 text-sm"><p
-            class="mb-2 px-3 text-[10px] font-bold uppercase tracking-widest text-slate-400">Menü</p>
-        <a href="{{ url('/admin') }}" class="rounded-xl bg-slate-900 px-3 py-3 font-medium text-white">Genel Bakış</a>
-        <a href="#" class="rounded-xl px-3 py-3 font-medium text-slate-500 hover:bg-slate-50">Yazılar <span
-                class="float-right rounded bg-slate-100 px-2 text-xs">24</span></a>
-        <a href="{{ route('admin.getCategories') }}"
-           class="rounded-xl px-3 py-3 font-medium text-slate-500 hover:bg-slate-50">Kategoriler</a>
-        <a href="#" class="rounded-xl px-3 py-3 font-medium text-slate-500 hover:bg-slate-50">Etiketler</a>
-        <a href="#" class="rounded-xl px-3 py-3 font-medium text-slate-500 hover:bg-slate-50">Yorumlar <span
-                class="float-right rounded bg-slate-100 px-2 text-xs">8</span></a>
-
-
-        <p class="mb-2 mt-8 px-3 text-[10px] font-bold uppercase tracking-widest text-slate-400">Kullanıcı yönetimi</p>
-
-        <a href="{{ route('admin.getRoles') }}"
-           class="rounded-xl px-3 py-3 font-medium text-slate-500 hover:bg-slate-50">Kullanıcı rolleri</a>
-        <a href="#" class="rounded-xl px-3 py-3 font-medium text-slate-500 hover:bg-slate-50">Kullanıcılar</a>
-    </nav>
-    <div class="m-4 rounded-2xl bg-slate-50 p-4">
-        <div class="flex items-center gap-3">
-            <div
-                class="flex h-9 w-9 items-center justify-center rounded-full bg-orange-500 text-xs font-bold text-white">
-                AK
-            </div>
-            <div><p class="text-xs font-semibold">Ahmet Kaya</p>
-                <p class="text-[11px] text-slate-400">Yönetici</p></div>
-        </div>
+<aside id="admin-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 md:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Yan menü">
+    <div class="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
+        <ul class="space-y-2 font-medium">
+            <li>
+                <a href="{{route('admin.dashboard')}}" @if (($active ?? null) === 'dashboard') aria-current="page" @endif class="group flex items-center p-2 rounded-lg text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 aria-[current=page]:bg-blue-600 aria-[current=page]:text-white aria-[current=page]:hover:bg-blue-600 dark:aria-[current=page]:bg-blue-600 dark:aria-[current=page]:hover:bg-blue-600">
+                    <x-admin.icon name="home" class="w-5 h-5 text-gray-500 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white group-aria-[current=page]:text-white dark:group-aria-[current=page]:text-white" />
+                    <span class="ms-3">@lang('Overview')</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" @if (($active ?? null) === 'posts') aria-current="page" @endif class="group flex items-center p-2 rounded-lg text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 aria-[current=page]:bg-blue-600 aria-[current=page]:text-white aria-[current=page]:hover:bg-blue-600 dark:aria-[current=page]:bg-blue-600 dark:aria-[current=page]:hover:bg-blue-600">
+                    <x-admin.icon name="document" class="w-5 h-5 text-gray-500 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white group-aria-[current=page]:text-white dark:group-aria-[current=page]:text-white" />
+                    <span class="ms-3">@lang('Writings')</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{route('admin.getCategories')}}" @if (($active ?? null) === 'categories') aria-current="page" @endif class="group flex items-center p-2 rounded-lg text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 aria-[current=page]:bg-blue-600 aria-[current=page]:text-white aria-[current=page]:hover:bg-blue-600 dark:aria-[current=page]:bg-blue-600 dark:aria-[current=page]:hover:bg-blue-600">
+                    <x-admin.icon name="tag" class="w-5 h-5 text-gray-500 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white group-aria-[current=page]:text-white dark:group-aria-[current=page]:text-white" />
+                    <span class="ms-3">@lang('Categories')</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{route('admin.getUsers')}}" @if (($active ?? null) === 'users') aria-current="page" @endif class="group flex items-center p-2 rounded-lg text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 aria-[current=page]:bg-blue-600 aria-[current=page]:text-white aria-[current=page]:hover:bg-blue-600 dark:aria-[current=page]:bg-blue-600 dark:aria-[current=page]:hover:bg-blue-600">
+                    <x-admin.icon name="users" class="w-5 h-5 text-gray-500 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white group-aria-[current=page]:text-white dark:group-aria-[current=page]:text-white" />
+                    <span class="ms-3">@lang('Users')</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{route('admin.roles.list')}}" @if (($active ?? null) === 'roles') aria-current="page" @endif class="group flex items-center p-2 rounded-lg text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 aria-[current=page]:bg-blue-600 aria-[current=page]:text-white aria-[current=page]:hover:bg-blue-600 dark:aria-[current=page]:bg-blue-600 dark:aria-[current=page]:hover:bg-blue-600">
+                    <x-admin.icon name="shield" class="w-5 h-5 text-gray-500 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white group-aria-[current=page]:text-white dark:group-aria-[current=page]:text-white" />
+                    <span class="ms-3">@lang('Roles')</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{route('admin.getRolAsPermissions')}}" @if (($active ?? null) === 'role-permissions') aria-current="page" @endif class="group flex items-center p-2 rounded-lg text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 aria-[current=page]:bg-blue-600 aria-[current=page]:text-white aria-[current=page]:hover:bg-blue-600 dark:aria-[current=page]:bg-blue-600 dark:aria-[current=page]:hover:bg-blue-600">
+                    <i class="fa-solid fa-user-gear text-gray-300 "></i>
+                    <span class="ms-3">Rol İzinleri</span>
+                </a>
+            </li>
+        </ul>
     </div>
 </aside>

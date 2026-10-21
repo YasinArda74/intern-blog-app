@@ -14,19 +14,24 @@ use Illuminate\Support\Str;
 
 /**
  * @property int $id
+ * @property string $uuid
  * @property string $title
  * @property string $slug
- * @property json $content
- * @property int $views
+ * @property string $excerpt
+ * @property array<array-key, mixed> $content
+ * @property string $status
+ * @property int $is_featured
+ * @property int $views_count
+ * @property string|null $published_at
+ * @property string|null $scheduled_at
  * @property int $category_id
  * @property int $user_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property-read Category $category
- * @property-read Collection<int, Comment> $comments
+ * @property-read \App\Models\Category $category
+ * @property-read Collection<int, \App\Models\Comment> $comments
  * @property-read int|null $comments_count
- * @property-read User $user
- *
+ * @property-read \App\Models\User $user
  * @method static \Database\Factories\PostFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post newQuery()
@@ -34,13 +39,18 @@ use Illuminate\Support\Str;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereCategoryId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereContent($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereExcerpt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereIsFeatured($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Post wherePublishedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereScheduledAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereStatus($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereUpdatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereUserId($value)
- * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereViews($value)
- *
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereUuid($value)
+ * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereViewsCount($value)
  * @mixin \Eloquent
  */
 class Post extends Model

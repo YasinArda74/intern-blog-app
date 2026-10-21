@@ -5,6 +5,9 @@ use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 use Illuminate\Http\Request;
+use Spatie\Permission\Middleware\PermissionMiddleware;
+use Spatie\Permission\Middleware\RoleMiddleware;
+use Spatie\Permission\Middleware\RoleOrPermissionMiddleware;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -14,11 +17,20 @@ return Application::configure(basePath: dirname(__DIR__))
             // Ana web.php route dosyasını alır. web middleware ile gruplar
             Route::middleware('web')->group(base_path('routes/web.php'));
 
-            // Ayrı oluşturulan route dosyalarını web middleware ile gruplar
-            $moduleRoutes = glob(base_path('routes/modules/*.php'));
+            // routes/modules ve routes/modules/admin altındaki route dosyalarını web middleware ile gruplar
+            $moduleRoutes = glob(base_path('routes/modules/*.php')) ?: [];
+
+            $adminRoutes = glob(base_path('routes/modules/admin/*.php')) ?: [];
 
             foreach ($moduleRoutes as $moduleRoute) {
                 Route::middleware('web')->group($moduleRoute);
+            }
+
+            foreach ($adminRoutes as $adminRoute) {
+                Route::middleware(['web', 'auth', 'role:admin'])
+                    ->prefix('admin')
+                    ->as('admin.')
+                    ->group($adminRoute);
             }
         },
     )
@@ -28,9 +40,9 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
 
         $middleware->alias([
-            'role' => \Spatie\Permission\Middleware\RoleMiddleware::class,
-            'permission' => \Spatie\Permission\Middleware\PermissionMiddleware::class,
-            'role_or_permission' => \Spatie\Permission\Middleware\RoleOrPermissionMiddleware::class,
+            'role' => RoleMiddleware::class,
+            'permission' => PermissionMiddleware::class,
+            'role_or_permission' => RoleOrPermissionMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

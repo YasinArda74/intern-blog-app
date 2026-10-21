@@ -1,68 +1,118 @@
-<!doctype html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Yönetim Paneli</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet"/>
-</head>
-<body class="bg-slate-50 text-slate-900">
-<div class="flex min-h-screen">
-    @include('admin.partials.sidebar')
-    <main class="min-w-0 flex-1 lg:ml-64">
-        <header class="flex h-20 items-center justify-between border-b bg-white px-6 lg:px-10">
-            <div><p class="text-xs text-slate-400">Pazartesi, 12 Ekim 2026</p>
-                <h1 class="text-xl font-bold">Genel Bakış</h1></div>
-            <div class="flex items-center gap-4">
-                <button class="relative rounded-lg p-2 text-slate-500 hover:bg-slate-100" aria-label="Bildirimler">
-                    <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                              d="M15 17h5l-1.4-1.4A2 2 0 0118 14.2V11a6 6 0 10-12 0v3.2a2 2 0 01-.6 1.4L4 17h5m6 0a3 3 0 01-6 0"/>
-                    </svg>
-                    <span class="absolute right-1 top-1 h-2 w-2 rounded-full bg-orange-500"></span></button>
-                <div
-                    class="flex h-9 w-9 items-center justify-center rounded-full bg-orange-500 text-xs font-bold text-white">
-                    AK
-                </div>
-            </div>
-        </header>
-        <div class="p-6 lg:p-10">
-            <div class="mb-8 flex flex-col justify-between gap-4 sm:flex-row sm:items-end">
-                <div><p class="font-medium text-orange-600">Hoş geldin, Ahmet</p>
-                    <h2 class="mt-1 text-3xl font-bold tracking-tight">Bugün neler oluyor?</h2>
-                    <p class="mt-2 text-sm text-slate-500">Blog performansının kısa özeti burada.</p></div>
-                <a href="#"
-                   class="rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white hover:bg-slate-700">+ Yeni
-                    yazı oluştur</a></div>
-            <div
-                class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">@foreach ([['Toplam yazı','24','+12.5%'],['Görüntülenme','18.429','+18.2%'],['Aktif okuyucu','3.842','+8.4%'],['Bekleyen yorum','8','Yanıt bekliyor']] as $stat)
-                    <div class="rounded-2xl border bg-white p-5 shadow-sm"><p
-                            class="text-sm text-slate-500">{{ $stat[0] }}</p>
-                        <p class="mt-4 text-3xl font-bold">{{ $stat[1] }}</p>
-                        <p class="mt-2 text-xs text-emerald-600">{{ $stat[2] }}</p></div>
-                @endforeach</div>
-            <div class="mt-6 grid gap-6 xl:grid-cols-[1.4fr_1fr]">
-                <section class="rounded-2xl border bg-white p-6 shadow-sm"><h3 class="font-bold">Görüntülenme
-                        istatistikleri</h3>
-                    <p class="mt-1 text-xs text-slate-400">Son 30 gündeki toplam görüntülenme</p>
-                    <div
-                        class="mt-8 flex h-48 items-end gap-2">@foreach ([35,48,42,62,57,73,55,68,78,64,84,72,88,76,93,80,67,86,78,96] as $height)
-                            <div class="flex-1 rounded-t bg-orange-200 hover:bg-orange-500"
-                                 style="height: {{ $height }}%"></div>
-                        @endforeach</div>
-                </section>
-                <section class="rounded-2xl border bg-white p-6 shadow-sm"><h3 class="font-bold">En çok okunanlar</h3>
-                    <p class="mt-1 text-xs text-slate-400">Bu ayın popüler
-                        yazıları</p>@foreach (['Laravel ile modern web uygulamaları','Tailwind CSS ile hızlı arayüz','Blogunuz için SEO kontrol listesi'] as $index => $post)
-                        <div class="mt-5 flex items-center gap-3"><span
-                                class="rounded-lg bg-slate-100 px-2 py-1 text-xs font-bold">0{{ $index + 1 }}</span><span
-                                class="truncate text-sm font-medium">{{ $post }}</span></div>
-                    @endforeach</section>
+@extends('layouts.admin', ['active' => 'dashboard'])
+
+@section('title', 'Genel Bakış')
+
+@section('content')
+    <div class="mb-6 flex items-center justify-between">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">@lang('Overview')</h1>
+            <p class="text-sm text-gray-500 dark:text-gray-400">@lang('Summary status of your blog site.').</p>
+        </div>
+
+        <div>
+            <a
+                href="{{ route('admin.dashboard') }}?refreshSummary=1"
+                class="inline-flex items-center justify-center  text-white bg-brand hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs rounded-base w-10 h-10 focus:outline-none"
+                data-tooltip-target="tooltip-default"
+                data-tooltip-placement="left"
+            >
+                <i class="fa-solid fa-arrows-rotate"></i>
+            </a>
+
+            <div id="tooltip-default" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-dark rounded-base shadow-xs opacity-0 tooltip">
+                @lang('Refresh Summary')
+                <div class="tooltip-arrow" data-popper-arrow></div>
             </div>
         </div>
-    </main>
-</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
-</body>
-</html>
+    </div>
+
+    <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4 mb-6">
+        <a href="#"
+           class="flex items-center justify-between p-5 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+            <div>
+                <p class="text-sm font-medium text-gray-500 dark:text-gray-400">@lang('Total Text')</p>
+                <p class="mt-1 text-3xl font-bold text-gray-900 dark:text-white">{{ $summary['postCount'] }}</p>
+            </div>
+            <span
+                class="flex items-center justify-center w-12 h-12 rounded-lg bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-300">
+                <x-admin.icon name="document" class="w-6 h-6"/>
+            </span>
+        </a>
+
+        <a href="{{route('admin.getCategories')}}"
+           class="flex items-center justify-between p-5 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+            <div>
+                <p class="text-sm font-medium text-gray-500 dark:text-gray-400">@lang('Categories')</p>
+                <p class="mt-1 text-3xl font-bold text-gray-900 dark:text-white">{{ $summary['categoryCount'] }}</p>
+            </div>
+            <span
+                class="flex items-center justify-center w-12 h-12 rounded-lg bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-300">
+                <x-admin.icon name="tag" class="w-6 h-6"/>
+            </span>
+        </a>
+
+        <a href="{{route('admin.getUsers')}}"
+           class="flex items-center justify-between p-5 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+            <div>
+                <p class="text-sm font-medium text-gray-500 dark:text-gray-400">@lang('Users')</p>
+                <p class="mt-1 text-3xl font-bold text-gray-900 dark:text-white">{{ $summary['userCount'] }}</p>
+            </div>
+            <span
+                class="flex items-center justify-center w-12 h-12 rounded-lg bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-300">
+                <x-admin.icon name="users" class="w-6 h-6"/>
+            </span>
+        </a>
+
+        <a href="{{route('admin.roles.list')}}"
+           class="flex items-center justify-between p-5 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+            <div>
+                <p class="text-sm font-medium text-gray-500 dark:text-gray-400">@lang('Role')</p>
+                <p class="mt-1 text-3xl font-bold text-gray-900 dark:text-white">{{ $summary['roleCount'] }}</p>
+            </div>
+            <span
+                class="flex items-center justify-center w-12 h-12 rounded-lg bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-300">
+                <x-admin.icon name="shield" class="w-6 h-6"/>
+            </span>
+        </a>
+    </div>
+
+    <div class="bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+        <div class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700">
+            <h2 class="text-lg font-semibold text-gray-900 dark:text-white">@lang('Those who registered today')</h2>
+            <a href="{{route('admin.getUsers')}}"
+               class="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500">@lang('See all')</a>
+        </div>
+        <div class="relative overflow-x-auto">
+            <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <tr>
+                    <th scope="col" class="px-6 py-3">@lang('Full Name')</th>
+                    <th scope="col" class="px-6 py-3">@lang('Email')</th>
+                    <th scope="col" class="px-6 py-3">@lang('Role')</th>
+                    <th scope="col" class="px-6 py-3">@lang('Registration date')</th>
+                </tr>
+                </thead>
+                <tbody>
+                @foreach($users as $user)
+                    <tr class="bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
+                        <th scope="row"
+                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{$user->getFullName()}}</th>
+                        <td class="px-6 py-4">{{$user->email}}</td>
+                        @forelse($user->roles as $role)
+                            <td class="px-6 py-4">{{$role->name}}</td>
+                        @empty
+                            <td class="px-6 py-4">@lang('No Role')</td>
+                        @endforelse
+                        <td class="px-6 py-4">{{$user->created_at->format('d/m/Y H:m')}}</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
+        @if ($users->hasPages())
+            <div class="mt-8">
+                {{ $users->links() }}
+            </div>
+        @endif
+    </div>
+@endsection

@@ -1,77 +1,73 @@
-<!doctype html>
-<html lang="tr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Kullanıcı Rolleri</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet">
-</head>
-<body class="bg-slate-50 text-slate-900">
-<div class="flex min-h-screen">@include('admin.partials.sidebar')
-    <main class="min-w-0 flex-1 lg:ml-64">
-        <header class="flex h-20 items-center justify-between border-b bg-white px-6 lg:px-10">
-            <div><p class="text-xs text-slate-400">Yönetim</p>
-                <h1 class="text-xl font-bold">Kullanıcı rolleri</h1></div>
-            <button data-modal-target="role-modal" data-modal-toggle="role-modal"
-                    class="rounded-xl bg-slate-900 px-4 py-3 text-sm font-semibold text-white">+ Yeni rol
-            </button>
-        </header>
-        <div class="p-6 lg:p-10">
-            <div class="mb-6 rounded-2xl border bg-white p-5"><h2 class="font-bold">Roller ve yetkiler</h2>
-                <p class="mt-1 text-sm text-slate-500">Kullanıcıların erişebileceği bölümleri buradan yönetin.</p></div>
-            <div class="overflow-hidden rounded-2xl border bg-white shadow-sm">
-                <table class="w-full text-left text-sm">
-                    <thead class="border-b bg-slate-50 text-xs uppercase text-slate-500">
-                    <tr>
-                        <th class="px-6 py-4">Rol adı</th>
-                        <th class="px-6 py-4">Kullanıcı</th>
-                        <th class="px-6 py-4">Yetkiler</th>
-                        <th class="px-6 py-4">İşlem</th>
-                    </tr>
-                    </thead>
-                    <tbody>@foreach ([['Yönetici','1','Tüm yetkiler'],['Editör','3','Yazılar, yorumlar'],['Yazar','8','Kendi yazıları']] as $role)
-                        <tr class="border-b last:border-0">
-                            <td class="px-6 py-5 font-semibold">{{ $role[0] }}</td>
-                            <td class="px-6 py-5 text-slate-500">{{ $role[1] }} kişi</td>
-                            <td class="px-6 py-5"><span
-                                    class="rounded-full bg-orange-100 px-3 py-1 text-xs font-medium text-orange-700">{{ $role[2] }}</span>
-                            </td>
-                            <td class="px-6 py-5">
-                                <button class="text-sm font-medium text-orange-600 hover:underline">Düzenle</button>
-                            </td>
-                        </tr>
-                    @endforeach</tbody>
-                </table>
-            </div>
+@extends('layouts.admin', ['active' => 'roles'])
+
+@section('title', 'Roller')
+
+@section('content')
+    <div class="mb-6 flex items-center justify-between">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">@lang('Roles')</h1>
+            <p class="text-sm text-gray-500 dark:text-gray-400">@lang('Manage the roles of users in the system')</p>
         </div>
-    </main>
-</div>
-<div id="role-modal" tabindex="-1"
-     class="fixed left-0 right-0 top-0 z-50 hidden h-[calc(100%-1rem)] max-h-full w-full items-center justify-center overflow-y-auto overflow-x-hidden p-4">
-    <div class="relative max-h-full w-full max-w-md">
-        <div class="relative rounded-2xl bg-white p-6 shadow">
-            <div class="flex items-center justify-between border-b pb-4"><h3 class="text-lg font-bold">Yeni rol
-                    oluştur</h3>
-                <button data-modal-hide="role-modal" class="text-2xl text-slate-400">×</button>
-            </div>
-            <form class="mt-5"><label class="mb-2 block text-sm font-medium">Rol adı</label><input type="text"
-                                                                                                   class="mb-5 w-full rounded-lg border border-slate-300 p-3 text-sm"
-                                                                                                   placeholder="Örn. Moderatör">
-                <p class="mb-3 text-sm font-semibold">Yetkiler</p>
-                <div class="grid gap-3 text-sm"><label><input type="checkbox" class="mr-2 rounded border-slate-300">
-                        Yazıları yönetebilir</label><label><input type="checkbox" class="mr-2 rounded border-slate-300">
-                        Yorumları yönetebilir</label><label><input type="checkbox"
-                                                                   class="mr-2 rounded border-slate-300"> Kategori
-                        yönetebilir</label></div>
-                <button type="button"
-                        class="mt-6 w-full rounded-lg bg-slate-900 px-4 py-3 text-sm font-semibold text-white">Rolü
-                    kaydet
-                </button>
-            </form>
-        </div>
+
+        <a
+            href="{{ route('admin.roles.create') }}"
+            class="inline-flex items-center justify-center  text-white bg-brand hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs rounded-base focus:outline-none py-1.5 px-3 text-sm font-medium"
+        >
+            @lang('New Role') <i class="fa-solid fa-plus ms-2"></i>
+        </a>
     </div>
-</div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
-</body>
-</html>
+
+    <div class="overflow-visible bg-neutral-primary-soft shadow-xs rounded-base border border-default">
+        <table class="w-full text-sm text-left rtl:text-right text-body">
+            <thead class="text-sm text-body bg-neutral-secondary-medium border-b border-default-medium">
+            <tr>
+                <th scope="col" class="px-6 py-3 font-medium" width="30">@lang('Action')</th>
+                <th scope="col" class="px-6 py-3 font-medium">@lang('Role Name')</th>
+                <th scope="col" class="px-6 py-3 font-medium">@lang('Permission Count')</th>
+            </tr>
+            </thead>
+
+            <tbody>
+            @forelse($roles as $role)
+                <tr class="bg-neutral-primary-soft hover:bg-neutral-secondary-medium @if(! $loop->last) border-b border-default @endif">
+                    <td class="px-6 py-1.5">
+                        <button id="role-actions-button-{{ $role->id }}" data-dropdown-toggle="role-actions-menu-{{ $role->id }}" data-dropdown-placement="bottom-start" class="cursor-pointer inline-flex items-center justify-center w-9 h-9 text-body rounded-base hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-2 focus:ring-neutral-tertiary focus:outline-none" type="button" aria-label="@lang('Open actions')">
+                            <i class="fa-solid fa-ellipsis-vertical" aria-hidden="true"></i>
+                        </button>
+
+                        <div id="role-actions-menu-{{ $role->id }}" class="z-30 hidden bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44">
+                            <ul class="p-2 text-sm text-body font-medium" aria-labelledby="role-actions-button-{{ $role->id }}">
+                                <li>
+                                    <a href="{{ route('admin.roles.edit', $role->id) }}" class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">@lang('Edit')</a>
+                                </li>
+
+                                <li>
+                                    <a href="{{ route('admin.roles.delete', $role->id) }}" class="inline-flex items-center w-full p-2 hover:bg-red-100 rounded text-red-600">@lang('Delete')</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </td>
+
+                    <td class="px-6 py-1.5 font-medium text-heading whitespace-nowrap">@lang(\App\Enums\RoleEnum::tryFrom($role->name)?->name ?? $role->name)</td>
+
+                    <td class="px-6 py-1.5">{{ $role->permissions->count() }}</td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="2" class="h-96 px-6">
+                        <div class="flex h-full flex-col items-center justify-center gap-3 text-center">
+                            <span class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-neutral-secondary-medium text-body">
+                                <i class="fa-solid fa-user-shield text-xl" aria-hidden="true"></i>
+                            </span>
+                            <div class="max-w-sm">
+                                <p class="text-base font-semibold text-heading">@lang('No roles yet')</p>
+                                <p class="mt-1 text-sm text-body">@lang('Roles added to the system will be listed in this table.')</p>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            @endforelse
+            </tbody>
+        </table>
+    </div>
+@endsection
