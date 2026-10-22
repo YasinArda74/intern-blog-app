@@ -1,10 +1,12 @@
 <?php
 
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+
 
 Route::get('/lang/{locale}', function (string $locale) {
     abort_unless(in_array($locale, ['en', 'tr'], true), 404);
@@ -41,9 +43,20 @@ Route::controller(DashboardController::class)
             Route::post('dashboard/users', 'getUsersIndex')->name('getUsers');
 
             Route::get('dashboard/rolpermissions', 'getRolAsPermissions')->name('getRolAsPermissions');
+        });
+    });
 
+Route::controller(CategoryController::class)
+    ->prefix('categories')
+    ->as('categories.')
+    ->group(function () {
+        Route::middleware(['auth', 'role:admin'])->group(function () {
             Route::get('dashboard/categories', 'getCategoryIndex')->name('getCategories');
             Route::POST('dashboard/categories', 'postCategoryIndex');
+
+            Route::delete('/categories/{categories}', 'getCategoryDelete')->name('delete');
+
+            Route::put('/categories/{categories}', 'getCategoryPut')->name('categoryPut');
         });
     });
 

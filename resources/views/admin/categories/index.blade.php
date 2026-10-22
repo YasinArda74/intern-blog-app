@@ -37,125 +37,38 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="bg-white border-b border-gray-200 hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">Teknoloji</th>
-                        <td class="px-6 py-4"><code class="text-xs">teknoloji</code></td>
-                        <td class="px-6 py-4">
-                            <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-sm dark:bg-blue-900 dark:text-blue-300">42</span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">12 Oca 2026</td>
-                        <td class="px-6 py-4">
-                            <div class="flex items-center justify-end gap-2">
-                                <button type="button" data-modal-target="edit-category-modal" data-modal-toggle="edit-category-modal" class="p-2 text-blue-600 rounded-lg hover:bg-blue-50 dark:text-blue-500 dark:hover:bg-gray-700" aria-label="Teknoloji kategorisini düzenle">
-                                    <x-admin.icon name="pencil" class="w-5 h-5" />
-                                </button>
-                                <button type="button" data-modal-target="delete-category-modal" data-modal-toggle="delete-category-modal" data-delete-name="Teknoloji" class="p-2 text-red-600 rounded-lg hover:bg-red-50 dark:text-red-500 dark:hover:bg-gray-700" aria-label="Teknoloji kategorisini sil">
-                                    <x-admin.icon name="trash" class="w-5 h-5" />
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr class="bg-white border-b border-gray-200 hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">Yazılım</th>
-                        <td class="px-6 py-4"><code class="text-xs">yazilim</code></td>
-                        <td class="px-6 py-4">
-                            <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-sm dark:bg-blue-900 dark:text-blue-300">35</span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">12 Oca 2026</td>
-                        <td class="px-6 py-4">
-                            <div class="flex items-center justify-end gap-2">
-                                <button type="button" data-modal-target="edit-category-modal" data-modal-toggle="edit-category-modal" class="p-2 text-blue-600 rounded-lg hover:bg-blue-50 dark:text-blue-500 dark:hover:bg-gray-700" aria-label="Yazılım kategorisini düzenle">
-                                    <x-admin.icon name="pencil" class="w-5 h-5" />
-                                </button>
-                                <button type="button" data-modal-target="delete-category-modal" data-modal-toggle="delete-category-modal" data-delete-name="Yazılım" class="p-2 text-red-600 rounded-lg hover:bg-red-50 dark:text-red-500 dark:hover:bg-gray-700" aria-label="Yazılım kategorisini sil">
-                                    <x-admin.icon name="trash" class="w-5 h-5" />
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr class="bg-white border-b border-gray-200 hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">Seyahat</th>
-                        <td class="px-6 py-4"><code class="text-xs">seyahat</code></td>
-                        <td class="px-6 py-4">
-                            <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-sm dark:bg-blue-900 dark:text-blue-300">18</span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">03 Şub 2026</td>
-                        <td class="px-6 py-4">
-                            <div class="flex items-center justify-end gap-2">
-                                <button type="button" data-modal-target="edit-category-modal" data-modal-toggle="edit-category-modal" class="p-2 text-blue-600 rounded-lg hover:bg-blue-50 dark:text-blue-500 dark:hover:bg-gray-700" aria-label="Seyahat kategorisini düzenle">
-                                    <x-admin.icon name="pencil" class="w-5 h-5" />
-                                </button>
-                                <button type="button" data-modal-target="delete-category-modal" data-modal-toggle="delete-category-modal" data-delete-name="Seyahat" class="p-2 text-red-600 rounded-lg hover:bg-red-50 dark:text-red-500 dark:hover:bg-gray-700" aria-label="Seyahat kategorisini sil">
-                                    <x-admin.icon name="trash" class="w-5 h-5" />
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr class="bg-white border-b border-gray-200 hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">Yaşam</th>
-                        <td class="px-6 py-4"><code class="text-xs">yasam</code></td>
-                        <td class="px-6 py-4">
-                            <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-sm dark:bg-blue-900 dark:text-blue-300">14</span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">21 Mar 2026</td>
-                        <td class="px-6 py-4">
-                            <div class="flex items-center justify-end gap-2">
-                                <button type="button" data-modal-target="edit-category-modal" data-modal-toggle="edit-category-modal" class="p-2 text-blue-600 rounded-lg hover:bg-blue-50 dark:text-blue-500 dark:hover:bg-gray-700" aria-label="Yaşam kategorisini düzenle">
-                                    <x-admin.icon name="pencil" class="w-5 h-5" />
-                                </button>
-                                <button type="button" data-modal-target="delete-category-modal" data-modal-toggle="delete-category-modal" data-delete-name="Yaşam" class="p-2 text-red-600 rounded-lg hover:bg-red-50 dark:text-red-500 dark:hover:bg-gray-700" aria-label="Yaşam kategorisini sil">
-                                    <x-admin.icon name="trash" class="w-5 h-5" />
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr class="bg-white border-b border-gray-200 hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">Kitap</th>
-                        <td class="px-6 py-4"><code class="text-xs">kitap</code></td>
-                        <td class="px-6 py-4">
-                            <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-sm dark:bg-blue-900 dark:text-blue-300">9</span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">08 Nis 2026</td>
-                        <td class="px-6 py-4">
-                            <div class="flex items-center justify-end gap-2">
-                                <button type="button" data-modal-target="edit-category-modal" data-modal-toggle="edit-category-modal" class="p-2 text-blue-600 rounded-lg hover:bg-blue-50 dark:text-blue-500 dark:hover:bg-gray-700" aria-label="Kitap kategorisini düzenle">
-                                    <x-admin.icon name="pencil" class="w-5 h-5" />
-                                </button>
-                                <button type="button" data-modal-target="delete-category-modal" data-modal-toggle="delete-category-modal" data-delete-name="Kitap" class="p-2 text-red-600 rounded-lg hover:bg-red-50 dark:text-red-500 dark:hover:bg-gray-700" aria-label="Kitap kategorisini sil">
-                                    <x-admin.icon name="trash" class="w-5 h-5" />
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <tr class="bg-white border-b border-gray-200 hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
-                        <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">Sinema</th>
-                        <td class="px-6 py-4"><code class="text-xs">sinema</code></td>
-                        <td class="px-6 py-4">
-                            <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-sm dark:bg-blue-900 dark:text-blue-300">6</span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">30 May 2026</td>
-                        <td class="px-6 py-4">
-                            <div class="flex items-center justify-end gap-2">
-                                <button type="button" data-modal-target="edit-category-modal" data-modal-toggle="edit-category-modal" class="p-2 text-blue-600 rounded-lg hover:bg-blue-50 dark:text-blue-500 dark:hover:bg-gray-700" aria-label="Sinema kategorisini düzenle">
-                                    <x-admin.icon name="pencil" class="w-5 h-5" />
-                                </button>
-                                <button type="button" data-modal-target="delete-category-modal" data-modal-toggle="delete-category-modal" data-delete-name="Sinema" class="p-2 text-red-600 rounded-lg hover:bg-red-50 dark:text-red-500 dark:hover:bg-gray-700" aria-label="Sinema kategorisini sil">
-                                    <x-admin.icon name="trash" class="w-5 h-5" />
-                                </button>
-                            </div>
-                        </td>
-                    </tr>
+                    @foreach($categories as $category)
+                        <tr class="bg-white border-b border-gray-200 hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
+                            <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{$category->name}}</th>
+                            <td class="px-6 py-4"><code class="text-xs">{{$category->slug}}</code></td>
+                            <td class="px-6 py-4">
+                                <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-sm dark:bg-blue-900 dark:text-blue-300">42</span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">{{$category->created_at->format('d/m/Y')}}</td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center justify-end gap-2">
+                                    <button type="button"  data-modal-target="edit-category-modal-{{$category->id}}" data-modal-toggle="edit-category-modal-{{$category->id}}" class="p-2 text-blue-600 rounded-lg hover:bg-blue-50 dark:text-blue-500 dark:hover:bg-gray-700" aria-label="{{$category->name}} kategorisini düzenle">
+                                        <x-admin.icon name="pencil" class="w-5 h-5" />
+                                    </button>
+                                    <button type="button" data-modal-target="delete-category-modal-{{$category->id}}" data-modal-toggle="delete-category-modal-{{$category->id}}" class="p-2 text-red-600 rounded-lg hover:bg-red-50 dark:text-red-500 dark:hover:bg-gray-700" aria-label="{{$category->name}} kategorisini sil">
+                                        <x-admin.icon name="trash" class="w-5 h-5" />
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
+            <div class="p-3" >
+                @if ($categories->hasPages())
+                    <div class="mt-8">
+                        {{ $categories->links() }}
+                    </div>
+                @endif
+            </div>
         </div>
-
-        <x-admin.pagination :from="1" :to="6" :total="12" />
     </div>
+
 
     {{-- Yeni kategori modalı --}}
     <div id="create-category-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -193,41 +106,43 @@
     </div>
 
     {{-- Kategori düzenleme modalı --}}
-    <div id="edit-category-modal" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-        <div class="relative p-4 w-full max-w-md max-h-full">
-            <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
-                <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
-                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Kategoriyi Düzenle</h3>
-                    <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="edit-category-modal">
-                        <svg class="w-3 h-3" aria-hidden="true" fill="none" viewBox="0 0 14 14"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" /></svg>
-                        <span class="sr-only">Kapat</span>
-                    </button>
+    @foreach($categories as $category)
+        <div id="edit-category-modal-{{$category->id}}" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+            <div class="relative p-4 w-full max-w-md max-h-full">
+                <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
+                    <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Kategoriyi Düzenle</h3>
+                        <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="edit-category-modal-{{$category->id}}">
+                            <svg class="w-3 h-3" aria-hidden="true" fill="none" viewBox="0 0 14 14"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" /></svg>
+                            <span class="sr-only">Kapat</span>
+                        </button>
+                    </div>
+                    <form method="POST" action="{{ route('categories.categoryPut', $category->id) }}" class="p-4 md:p-5">
+                        @csrf
+                        @method('PUT')
+                        <div class="grid gap-4 mb-4">
+                            <div>
+                                <label for="edit-name-{{$category->id}}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kategori Adı</label>
+                                <input type="text" id="name" name="name" value="{{ $category->name }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
+                            </div>
+                            <div>
+                                <label for="edit-slug-{{$category->id}}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Slug</label>
+                                <input type="text" id="slug" name="slug" value="{{ $category->slug }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <button type="submit" class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Değişiklikleri Kaydet</button>
+                            <button type="button" data-modal-hide="edit-category-modal-{{$category->id}}" class="py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Vazgeç</button>
+                        </div>
+                    </form>
                 </div>
-                <form action="#" class="p-4 md:p-5">
-                    <div class="grid gap-4 mb-4">
-                        <div>
-                            <label for="edit-name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kategori Adı</label>
-                            <input type="text" id="edit-name" value="Teknoloji" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
-                        </div>
-                        <div>
-                            <label for="edit-slug" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Slug</label>
-                            <input type="text" id="edit-slug" value="teknoloji" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
-                        </div>
-                        <div>
-                            <label for="edit-description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Açıklama</label>
-                            <textarea id="edit-description" rows="3" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">Teknoloji dünyasından haberler ve incelemeler.</textarea>
-                        </div>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <button type="submit" class="text-white inline-flex items-center bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Değişiklikleri Kaydet</button>
-                        <button type="button" data-modal-hide="edit-category-modal" class="py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Vazgeç</button>
-                    </div>
-                </form>
             </div>
         </div>
-    </div>
+    @endforeach
 
-    <x-admin.delete-modal id="delete-category-modal" title="Kategoriyi sil">
-        kategorisini silmek istediğinize emin misiniz? Bu işlem geri alınamaz.
-    </x-admin.delete-modal>
+    @foreach($categories as $category)
+        <x-admin.delete-modal :action="route('categories.delete', $category->id)" :categories="$category" id="delete-category-modal-{{$category->id}}" title="Kategoriyi sil">
+            <strong>{{$category->name}}</strong> kategorisini silmek istediğinize emin misiniz? Bu işlem geri alınamaz.
+        </x-admin.delete-modal>
+    @endforeach
 @endsection

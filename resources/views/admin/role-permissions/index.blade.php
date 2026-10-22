@@ -916,7 +916,7 @@
     </div>
 
     {{-- Silme onayı --}}
-    <x-admin.delete-modal id="delete-role-modal" title="Rolü silmek istiyor musunuz?">
+    <x-admin.delete-modal :action="route('admin.getRolAsPermissions')" id="delete-role-modal" title="Rolü silmek istiyor musunuz?">
         rolü kalıcı olarak silinecek. Bu role sahip kullanıcılar rolsüz kalır.
     </x-admin.delete-modal>
 @endsection
