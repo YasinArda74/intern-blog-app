@@ -117,7 +117,7 @@
                             <span class="sr-only">Kapat</span>
                         </button>
                     </div>
-                    <form method="POST" action="{{ route('categories.categoryPut', $category->id) }}" class="p-4 md:p-5">
+                    <form method="POST" action="{{ route('admin.categories.update', $category->id) }}" class="p-4 md:p-5">
                         @csrf
                         @method('PUT')
                         <div class="grid gap-4 mb-4">
@@ -125,9 +125,16 @@
                                 <label for="edit-name-{{$category->id}}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kategori Adı</label>
                                 <input type="text" id="name" name="name" value="{{ $category->name }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
                             </div>
-                            <div>
-                                <label for="edit-slug-{{$category->id}}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Slug</label>
-                                <input type="text" id="slug" name="slug" value="{{ $category->slug }}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white" required>
+
+                            <div class="mb-4">
+                                <label for="edit-parent_category_slug-{{$category->id}}" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">@lang('Parent ID')</label>
+                                <select name="parent_category_slug" id="parent_category_slug" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white">
+                                    <option selected value="">Select parent id..</option>
+
+                                    @foreach($parentCategories as $parentCategory)
+                                        <option value="{{ $parentCategory->slug }}">{{ $parentCategory->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                         </div>
                         <div class="flex items-center gap-3">
@@ -141,7 +148,7 @@
     @endforeach
 
     @foreach($categories as $category)
-        <x-admin.delete-modal :action="route('categories.delete', $category->id)" :categories="$category" id="delete-category-modal-{{$category->id}}" title="Kategoriyi sil">
+        <x-admin.delete-modal :action="route('admin.categories.delete', $category->id)" :categories="$category" id="delete-category-modal-{{$category->id}}" title="Kategoriyi sil">
             <strong>{{$category->name}}</strong> kategorisini silmek istediğinize emin misiniz? Bu işlem geri alınamaz.
         </x-admin.delete-modal>
     @endforeach
