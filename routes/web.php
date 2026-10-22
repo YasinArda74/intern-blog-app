@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -45,3 +46,7 @@ Route::controller(DashboardController::class)
             Route::POST('dashboard/categories', 'postCategoryIndex');
         });
     });
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::post('permissions/import', [PermissionController::class,'import'])->name('permissions.import');
+});
