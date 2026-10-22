@@ -2,10 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Imports\PermissionsImport;
 use App\Jobs\ImportPermissionsJob;
 use Illuminate\Http\Request;
-use Maatwebsite\Excel\Facades\Excel;
 
 
 class PermissionController extends Controller

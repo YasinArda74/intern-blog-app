@@ -9,14 +9,16 @@
             <p class="text-sm text-gray-500 dark:text-gray-400">@lang('Manage the roles of users in the system')</p>
         </div>
 
-        <a href="{{ route('admin.roles.create') }}"
-           class="inline-flex items-center justify-center  text-white bg-brand hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs rounded-base focus:outline-none py-1.5 px-3 text-sm font-medium">
-            @lang('New Role') <i class="fa-solid fa-plus ms-2"></i>
-        </a>
-        <a href="#" role="button" id="openImportModal"
-           class="inline-flex items-center justify-center  text-white bg-brand hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs rounded-base focus:outline-none py-1.5 px-3 text-sm font-medium">
-            @lang('New Create Permission')
-        </a>
+        <div>
+            <a href="{{ route('admin.roles.create') }}"
+               class="inline-flex items-center justify-center  text-white bg-brand hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs rounded-base focus:outline-none py-1.5 px-3 text-sm font-medium">
+                @lang('New Role') <i class="fa-solid fa-plus ms-2"></i>
+            </a>
+            <a href="#" role="button" id="openImportModal"
+               class="inline-flex items-center justify-center  text-white bg-brand hover:bg-brand-strong focus:ring-4 focus:ring-brand-medium shadow-xs rounded-base focus:outline-none py-1.5 px-3 text-sm font-medium">
+                @lang('New Create Permission')
+            </a>
+        </div>
     </div>
     <div id="importModal"
          class="hidden fixed inset-0 z-50 items-center justify-center bg-black/50 p-4">

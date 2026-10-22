@@ -18,9 +18,7 @@ class PermissionsImport implements ToCollection, WithHeadingRow, WithChunkReadin
     public function collection(Collection $rows): void
     {
         foreach ($rows as $row) {
-            $name = trim((string) (
-                $row['permission'] ?? $row['name'] ?? $row['permission_name'] ?? ''
-            ));
+            $name = trim((string) $row['permission'] ?? $row['name'] ?? $row['permission_name'] ?? '');
 
             if ($name === '') {
                 $this->empty++;
