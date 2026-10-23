@@ -5,33 +5,56 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\Categories\StoreCategoryRequest;
 use App\Models\Category;
-use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
     public function getList()
     {
-        $categories = Category::query();
-
-        $parentCategories = $categories->whereNull('parent_id')->get();
+        $categories = Category::query()->paginate(10);
 
         return view('admin.categories.index', [
-            'categories' => $categories->paginate(10),
-            'parentCategories' => $parentCategories,
+            'categories' => $categories,
         ]);
     }
 
-    public function putUpdate(Category $categories, StoreCategoryRequest $request)
+    public function getCreate()
     {
-        $categories->update($request->validated());
+        $categories = Category::query()->whereNull('parent_id')->get();
+
+        return view('admin.categories.create',[
+            'categories' => $categories,
+        ]);
+    }
+
+    public function postCreate(StoreCategoryRequest $request)
+    {
+        Category::query()->create($request->validated());
+
+        return redirect()->route('admin.categories.list');
+
+    }
+
+    public function putUpdate(Category $category, StoreCategoryRequest $request)
+    {
+        $category->update($request->validated());
 
         return redirect()->route('admin.categories.list');
     }
 
-    public function deleteCategory(Category $categories)
+    public function getUpdate(Category $category)
     {
-        $categories->delete();
+        $categories = Category::query()->whereNull('parent_id')->get();
 
-        return redirect()->back();
+        return view('admin.categories.create',[
+            'category' => $category,
+            'categories' => $categories,
+        ]);
+    }
+
+    public function deleteCategory(Category $category)
+    {
+        $category->delete();
+
+        return redirect()->route('admin.categories.list');
     }
 }

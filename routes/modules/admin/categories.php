@@ -11,7 +11,12 @@ Route::controller(CategoryController::class)
         Route::get('/', 'getList')->name('list');
         Route::post('/', 'getList');
 
-        Route::delete('{categories}', 'deleteCategory')->name('delete');
+        Route::get('/create','getCreate')->name('create');
+        route::post('/create', 'postCreate')->name('create');
 
-        Route::put('{categories}', 'putUpdate')->name('update');
+        Route::get('{category}/delete', 'deleteCategory')->name('delete');
+
+
+        Route::get('{category}/edit', 'getUpdate')->name('edit');
+        Route::put('{category}/update', 'putUpdate')->name('update');
     });
