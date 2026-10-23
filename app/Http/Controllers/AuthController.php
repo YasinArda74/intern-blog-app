@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Auth\LoginRequest;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -14,29 +15,17 @@ class AuthController extends Controller
         return view('auth.login');
     }
 
-    public function postLogin(Request $request)
+    public function postLogin(LoginRequest $request)
     {
-        $credentials = Validator::make(
-            $request->all(),
-            [
-                'username' => ['required'],
-                'password' => ['required'],
-                'remember' => ['boolean'],
-            ],
-        )->validated();
+        $credentials = $request->validated();
 
         if (Auth::attempt(['username' => $credentials['username'], 'password' => $credentials['password']])) {
             $request->session()->regenerate();
 
-            return redirect()->intended('/');
+            return $this->returnSuccessResponse('Welcome again', route('home'));
         }
 
-        return back()
-            ->withErrors([
-                'status' => false,
-                'message' => 'Invalid credentials',
-            ])
-            ->withInput($request->only('username', 'remember'));
+        return $this->returnErrorResponse('Invalid credentials');
     }
 
     public function getRegister()
@@ -62,7 +51,7 @@ class AuthController extends Controller
 
         Auth::login($user);
 
-        return redirect()->route('login');
+        return $this->returnSuccessResponse('Welcome', route('home'));
     }
 
     public function getLogout()

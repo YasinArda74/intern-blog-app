@@ -6,6 +6,17 @@
 
 @section('panel-text', trans('Log in to your account and continue where you left off'))
 
+@section('js')
+    <script>
+        // addEventListener: seçimi yapılan elemana event tanımlar
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('btn-form-login').addEventListener('click', function () {
+                submitForm('#form-login', '{{ route('login') }}')
+            });
+        });
+    </script>
+@endsection
+
 @section('content')
     <div>
         <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
@@ -19,9 +30,7 @@
         </p>
     </div>
 
-    <form method="POST" action="{{ route('login') }}" class="mt-8 space-y-5" novalidate>
-        @csrf
-
+    <form id="form-login" class="mt-8 space-y-5" novalidate>
         <x-text-input id="username" name="username" type="username" icon="username" :label="trans('User Name')"
                       placeholder="örn:ahmet31" autocomplete="username" autofocus/>
 
@@ -41,7 +50,8 @@
             <label for="remember" class="ms-2 text-sm text-gray-700 dark:text-gray-300">@lang('Remember Me')</label>
         </div>
 
-        <button type="submit"
+        <button type="button"
+                id="btn-form-login"
             class="w-full rounded-lg bg-indigo-700 px-5 py-3 text-center text-sm font-semibold text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
             @lang('Sign In')
         </button>

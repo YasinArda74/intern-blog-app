@@ -6,6 +6,16 @@
 
 @section('panel-text', trans('Create your free account and start using all the features right away.'))
 
+@section('js')
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            document.getElementById('btn-register-form').addEventListener('click', function () {
+                submitForm('#form-register', '{{ route('register') }}');
+            });
+        });
+    </script>
+@endsection
+
 @section('content')
     <div>
         <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">@lang('Create an account')</h1>
@@ -15,9 +25,7 @@
         </p>
     </div>
 
-    <form method="POST" action="{{ route('register') }}" class="mt-8 space-y-5" novalidate>
-        @csrf
-
+    <form id="form-register" class="mt-8 space-y-5" novalidate>
         <x-text-input id="username" name="username" icon="user" :label="trans('User Name')" placeholder="" autocomplete="username" autofocus />
         <x-text-input id="firstname" name="firstname" icon="user" :label="trans('Name')" placeholder="" autocomplete="firstname" autofocus />
         <x-text-input id="lastname" name="lastname" icon="user" :label="trans('Surname')" placeholder="" autocomplete="lastname" autofocus />
@@ -30,8 +38,10 @@
 
 
 
-        <button type="submit"
-            class="w-full rounded-lg bg-indigo-700 px-5 py-3 text-center text-sm font-semibold text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
+        <button type="button"
+                id="btn-register-form"
+                class="w-full rounded-lg bg-indigo-700 px-5 py-3 text-center text-sm font-semibold text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800"
+        >
             @lang('Create an account')
         </button>
     </form>

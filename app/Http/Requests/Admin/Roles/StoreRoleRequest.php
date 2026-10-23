@@ -24,4 +24,19 @@ class StoreRoleRequest extends FormRequest
             'permissions' => ['nullable', 'array'],
         ];
     }
+
+    public function prepareForValidation(): void
+    {
+        $this->merge([
+            'permissions' => $this->enabledPermissionNames($this->input('permissions')),
+        ]);
+    }
+
+    private function enabledPermissionNames(array $permissions): array
+    {
+        return array_keys(array_filter(
+            $permissions,
+            fn (mixed $enabled): bool => in_array($enabled, ['1', 1, true], true),
+        ));
+    }
 }

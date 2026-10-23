@@ -47,10 +47,10 @@ class RoleController extends Controller
         } catch (\Throwable $exception) {
             Log::error('Role creation error: '.$exception);
 
-            return redirect()->back()->withErrors(['error' => 'An error occurred while creating the role.']);
+            return $this->returnErrorResponse('An error occurred while creating the role.');
         }
 
-        return redirect()->route('admin.roles.list');
+        return $this->returnSuccessResponse('Role created successfully.', route('admin.roles.list'));
     }
 
     public function getEdit(Role $role)
