@@ -39,7 +39,7 @@
             </span>
         </a>
 
-        <a href="{{route('admin.getCategories')}}"
+        <a href="{{route('admin.categories.list')}}"
            class="flex items-center justify-between p-5 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
             <div>
                 <p class="text-sm font-medium text-gray-500 dark:text-gray-400">@lang('Categories')</p>

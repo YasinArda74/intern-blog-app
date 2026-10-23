@@ -39,11 +39,6 @@ class DashboardController extends Controller
         ]);
     }
 
-    public function getCategoryIndex()
-    {
-        return view('admin.categories.index');
-    }
-
     public function getRolAsPermissions()
     {
         return view('admin.role-permissions.index');

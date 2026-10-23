@@ -1,6 +1,8 @@
 @props([
     'id' => 'delete-modal',
     'title' => 'Silme işlemini onaylayın',
+    'categories',
+    'action',
 ])
 
 <div id="{{ $id }}" tabindex="-1" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -21,12 +23,14 @@
                     <span data-delete-target class="font-semibold text-gray-900 dark:text-white"></span>
                     {{ $slot }}
                 </p>
-                <button type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
-                    Evet, sil
-                </button>
-                <button type="button" data-modal-hide="{{ $id }}" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
-                    Vazgeç
-                </button>
+                <form method="Post" action="{{ $action}}">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-800">Evet, sil</button>
+                    <button type="button" data-modal-hide="{{ $id }}" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">
+                        Vazgeç
+                    </button>
+                </form>
             </div>
         </div>
     </div>

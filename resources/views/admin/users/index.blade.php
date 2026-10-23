@@ -121,7 +121,9 @@
         </div>
     </div>
 
-    <x-admin.delete-modal id="delete-user-modal" title="Kullanıcıyı sil">
-        kullanıcısını silmek istediğinize emin misiniz? Bu işlem geri alınamaz.
-    </x-admin.delete-modal>
+    @foreach($users as $user)
+        <x-admin.delete-modal :action="route('admin.getUsers')" :id="'delete-user-modal-' . $user->id" title="Kullanıcıyı sil">
+            <strong>{{ $user->name }}</strong> kullanıcısını silmek istediğinize emin misiniz? Bu işlem geri alınamaz.
+        </x-admin.delete-modal>
+    @endforeach
 @endsection

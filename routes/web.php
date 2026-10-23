@@ -6,6 +6,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
+
 Route::get('/lang/{locale}', function (string $locale) {
     abort_unless(in_array($locale, ['en', 'tr'], true), 404);
 
@@ -41,9 +42,6 @@ Route::controller(DashboardController::class)
             Route::post('dashboard/users', 'getUsersIndex')->name('getUsers');
 
             Route::get('dashboard/rolpermissions', 'getRolAsPermissions')->name('getRolAsPermissions');
-
-            Route::get('dashboard/categories', 'getCategoryIndex')->name('getCategories');
-            Route::POST('dashboard/categories', 'postCategoryIndex');
         });
     });
 

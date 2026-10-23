@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 /**
  * @property int $id
@@ -33,4 +34,15 @@ class Category extends Model
         'parent_id',
         'slug'
     ];
+
+
+    // Hooks
+    public static function boot()
+    {
+        parent::boot();
+
+        static::saving(function (Category $model) {
+            $model->slug = Str::slug($model->name);
+        });
+    }
 }
