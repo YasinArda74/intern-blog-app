@@ -2,6 +2,7 @@
 
 namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 
 /**
  * @property int $id
@@ -23,6 +24,15 @@ class Tag extends Model
 {
     protected $fillable = [
         'name',
-        'slug'
+        'slug',
+        'is_active',
     ];
+    public static function boot()
+    {
+        parent::boot();
+
+        static::saving(function (Tag $model) {
+            $model->slug = Str::slug($model->name);
+        });
+    }
 }

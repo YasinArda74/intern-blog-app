@@ -31,7 +31,7 @@
             <label for="parent_category_slug" class="mb-2 block text-sm font-medium text-heading">@lang('Parent Category')</label>
             <label for="parent_category_slug" class="block mb-2.5 text-sm font-medium text-heading">Select an option</label>
             <select id="parent_category_slug" name="parent_category_slug" class="block w-full px-3 py-2.5 bg-neutral-secondary-medium border border-default-medium text-heading text-sm rounded-base focus:ring-brand focus:border-brand shadow-xs placeholder:text-body">
-                <option selected>Choose a country</option>
+                <option selected value="">Choose a country</option>
                 @foreach($categories as $category)
                     <option value="{{$category->slug}}">{{$category->name}}</option>
                 @endforeach
