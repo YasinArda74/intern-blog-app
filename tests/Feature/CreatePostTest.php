@@ -38,6 +38,106 @@ test('an author sees the create post form', function () {
         ->assertSee('id="scheduled-date-container" class="mt-4 hidden"', false);
 });
 
+test('the create form lists only the first five categories', function () {
+    $this->seed(RoleSeeder::class);
+
+    $author = User::factory()->create();
+    $author->assignRole(RoleEnum::author->value);
+
+    foreach (['Alpha', 'Bravo', 'Charlie', 'Delta', 'Echo', 'Foxtrot'] as $name) {
+        Category::factory()->create(['name' => $name]);
+    }
+
+    $this->actingAs($author)
+        ->get(route('posts.create'))
+        ->assertOk()
+        ->assertSee('Alpha', false)
+        ->assertSee('Echo', false)
+        ->assertDontSee('Foxtrot', false);
+});
+
+test('a searched category outside the first five stays selected after validation', function () {
+    $this->seed(RoleSeeder::class);
+
+    $author = User::factory()->create();
+    $author->assignRole(RoleEnum::author->value);
+
+    foreach (['Alpha', 'Bravo', 'Charlie', 'Delta', 'Echo', 'Foxtrot'] as $name) {
+        Category::factory()->create(['name' => $name]);
+    }
+
+    $this->actingAs($author)
+        ->from(route('posts.create'))
+        ->post(route('posts.create'), [
+            'category_slug' => 'foxtrot',
+        ])
+        ->assertRedirect(route('posts.create'));
+
+    $this->get(route('posts.create'))
+        ->assertOk()
+        ->assertSee('Foxtrot', false);
+});
+
+test('category search returns matches for an author', function () {
+    $this->seed(RoleSeeder::class);
+
+    $author = User::factory()->create();
+    $author->assignRole(RoleEnum::author->value);
+
+    Category::factory()->create(['name' => 'Alpha']);
+    Category::factory()->create(['name' => 'Alpine']);
+    Category::factory()->create(['name' => 'Bravo']);
+
+    $this->actingAs($author)
+        ->getJson(route('posts.categories', ['q' => 'Alp']))
+        ->assertOk()
+        ->assertExactJson([
+            ['value' => 'alpha', 'text' => 'Alpha'],
+            ['value' => 'alpine', 'text' => 'Alpine'],
+        ]);
+});
+
+test('category search does not treat percent as a wildcard', function () {
+    $this->seed(RoleSeeder::class);
+
+    $author = User::factory()->create();
+    $author->assignRole(RoleEnum::author->value);
+    Category::factory()->create(['name' => 'Alpha']);
+
+    $this->actingAs($author)
+        ->getJson(route('posts.categories', ['q' => '%']))
+        ->assertOk()
+        ->assertExactJson([]);
+});
+
+test('category search returns 401 when the visitor is signed out', function () {
+    $this->getJson(route('posts.categories', ['q' => 'Alpha']))
+        ->assertUnauthorized();
+});
+
+test('a reader cannot search categories', function () {
+    $this->seed(RoleSeeder::class);
+
+    $reader = User::factory()->create();
+    $reader->assignRole(RoleEnum::user->value);
+
+    $this->actingAs($reader)
+        ->getJson(route('posts.categories', ['q' => 'Alpha']))
+        ->assertForbidden();
+});
+
+test('category search returns 422 when the query is too long', function () {
+    $this->seed(RoleSeeder::class);
+
+    $author = User::factory()->create();
+    $author->assignRole(RoleEnum::author->value);
+
+    $this->actingAs($author)
+        ->getJson(route('posts.categories', ['q' => str_repeat('a', 101)]))
+        ->assertUnprocessable()
+        ->assertJsonValidationErrors('q');
+});
+
 test('a reader cannot open the create post page', function () {
     $this->seed(RoleSeeder::class);
 

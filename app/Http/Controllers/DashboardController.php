@@ -32,7 +32,12 @@ class DashboardController extends Controller
 
     public function getUsersIndex()
     {
-        $users = User::with('roles')->paginate(7);
+        $users = User::query()
+            ->with('roles')
+            ->when(request()->has('username'), function ($query) {
+                $query->where('username', request()->input('username'));
+            })
+            ->paginate(7);
 
         return view('admin.users.index', [
             'users' => $users,
