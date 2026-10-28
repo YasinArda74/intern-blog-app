@@ -44,7 +44,7 @@
 
         <div class="flex items-center gap-3">
             <button id="btn-form-tag" type="button" class="inline-flex items-center justify-center rounded-base bg-brand px-4 py-2.5 text-sm font-medium text-white shadow-xs hover:bg-brand-strong focus:outline-none focus:ring-4 focus:ring-brand-medium">
-                @lang('Create Tag')
+                @lang(isset($tag) ? 'Update Tag' : 'Create Tag')
             </button>
 
             <a href="{{ route('admin.tags.list') }}" class="inline-flex items-center justify-center rounded-base border border-default-medium bg-neutral-secondary-medium px-4 py-2.5 text-sm font-medium text-body shadow-xs hover:bg-neutral-tertiary-medium hover:text-heading focus:outline-none focus:ring-4 focus:ring-neutral-tertiary">

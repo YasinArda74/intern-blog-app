@@ -27,7 +27,8 @@ class Tag extends Model
         'slug',
         'is_active',
     ];
-    public static function boot()
+
+    public static function boot(): void
     {
         parent::boot();
 

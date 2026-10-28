@@ -22,23 +22,20 @@ class TagController extends Controller
     {
         $tags = Tag::query()->get();
 
-        return view('admin.tags.create', [],[
-            'tags' => $tags,
-        ]);
+        return view('admin.tags.create', ['tags' => $tags]);
     }
 
     public function postCreate(StoreTagsRequest $request)
     {
         try {
             Tag::query()->create($request->validated());
-        }catch (\Exception $exception){
-            Log::error($exception);
+        } catch (\Exception $exception){
+            Log::error('Tags Create Error: '.$exception->getMessage());
+
             return $this->returnErrorResponse('An error occurred while creating the tag.');
         }
+
         return $this->returnSuccessResponse('Tag created successfully.', route('admin.tags.list'));
-
-
-
     }
 
     public function putUpdate(Tag $tag, StoreTagsRequest $request)
@@ -47,7 +44,7 @@ class TagController extends Controller
            $tag->update($request->validated());
 
         } catch (\Exception $exception) {
-            Log::error('Tag creation error: ' . $exception);
+            Log::error('Tag updating error: ' . $exception->getMessage());
 
             return $this->returnErrorResponse('An error occurred while updating the Tag.');
         }

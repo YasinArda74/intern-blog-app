@@ -3,8 +3,8 @@
 namespace App\Http\Requests\Admin\Tags;
 
 use App\Enums\RoleEnum;
-use App\Models\Category;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreTagsRequest extends FormRequest
 {
@@ -20,17 +20,16 @@ class StoreTagsRequest extends FormRequest
 
     public function rules(): array
     {
-        return [
-            'name' => ['required', 'string', 'max:255'],
-            'is_active' => ['required', 'boolean'],
-            'slug' => ['nullable', 'max:255'],
-        ];
-    }
+        $tag = $this->route('tag');
 
-    public function prepareForValidation(): void
-    {
-        $category = Category::query()
-            ->where('slug', $this->input('slug'))
-            ->first();
+        return [
+            'name' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('tags', 'name')->ignore($tag),
+            ],
+            'is_active' => ['required', 'boolean'],
+        ];
     }
 }
