@@ -6,6 +6,7 @@ use App\Http\Requests\Post\CreatePostRequest;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -14,7 +15,10 @@ class PostController extends Controller
 {
     public function getCreate()
     {
-        $categories = Category::all();
+        $categories = Category::query()
+            ->orderBy('name')
+            ->limit(5)
+            ->get();
 
         return view('posts.create', [
             'categories' => $categories,
@@ -57,11 +61,15 @@ class PostController extends Controller
 
     public function getEdit(User $user, $post)
     {
-        $categories = Category::all();
         $post = Post::query()
             ->where('user_id', $user->id)
             ->where('slug', $post)
             ->firstOrFail();
+
+        $categories = Category::query()
+            ->orderBy('name')
+            ->limit(5)
+            ->get();
 
         return view('posts.create', [
             'post' => $post,

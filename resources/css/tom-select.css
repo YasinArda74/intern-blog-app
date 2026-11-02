@@ -1,0 +1,133 @@
+/*
+ * Tom Select'in kendi yerleşim stillerinin üstüne binen Flowbite görünümü.
+ * Kütüphane CSS'i input sıfırlamasını ve orijinal select'in gizlenmesini sağlar.
+ */
+
+.ts-wrapper {
+    width: 100%;
+}
+
+.ts-wrapper.dropdown-active {
+    z-index: 30;
+}
+
+.ts-control,
+.ts-wrapper.single.input-active .ts-control {
+    position: relative;
+    border: 1px solid var(--color-default-medium);
+    border-radius: var(--radius-base);
+    background-color: var(--color-neutral-secondary-medium);
+    background-image: none;
+    color: var(--color-heading);
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    padding: 0.75rem 0.875rem;
+    box-shadow: var(--shadow-xs);
+}
+
+.ts-wrapper.single .ts-control {
+    padding-inline-end: 2.5rem !important;
+}
+
+.ts-wrapper.single .ts-control::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    inset-inline-end: 0.875rem;
+    width: 0.75rem;
+    height: 0.45rem;
+    transform: translateY(-50%);
+    pointer-events: none;
+    background-color: var(--color-body);
+    -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 10 6'%3E%3Cpath stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m1 1 4 4 4-4'/%3E%3C/svg%3E") center / contain no-repeat;
+    mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 10 6'%3E%3Cpath stroke='black' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m1 1 4 4 4-4'/%3E%3C/svg%3E") center / contain no-repeat;
+}
+
+.ts-wrapper .ts-control,
+.ts-wrapper .ts-control input,
+.ts-wrapper .ts-dropdown {
+    color: var(--color-heading);
+    font-family: inherit;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+
+.ts-wrapper .ts-control > input::placeholder {
+    color: var(--color-body);
+    font-weight: 400;
+    opacity: 1;
+}
+
+.ts-wrapper.focus .ts-control,
+.ts-wrapper.single.input-active.focus .ts-control {
+    border-color: var(--color-brand);
+    box-shadow: 0 0 0 1px var(--color-brand), var(--shadow-xs);
+}
+
+.ts-wrapper.is-invalid .ts-control,
+.ts-wrapper.invalid .ts-control,
+.ts-wrapper.is-invalid.single.input-active .ts-control,
+.ts-wrapper.invalid.single.input-active .ts-control {
+    border-color: var(--color-danger);
+    background-color: var(--color-danger-soft);
+}
+
+.ts-wrapper.is-invalid.focus .ts-control,
+.ts-wrapper.invalid.focus .ts-control {
+    border-color: var(--color-danger);
+    box-shadow: 0 0 0 1px var(--color-danger-medium), var(--shadow-xs);
+}
+
+.ts-wrapper.multi .ts-control > .item {
+    margin: 0;
+    border: 0;
+    border-radius: var(--radius-base);
+    background: var(--color-neutral-tertiary-medium);
+    color: var(--color-heading);
+    padding: 0.125rem 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+}
+
+.ts-dropdown {
+    z-index: 30;
+    margin-top: 0.25rem;
+    overflow: hidden;
+    border: 1px solid var(--color-default-medium);
+    border-radius: var(--radius-base);
+    background: var(--color-neutral-primary-medium);
+    box-shadow: var(--shadow-lg);
+    color: var(--color-body);
+}
+
+.ts-dropdown-content {
+    max-height: 15rem;
+    padding: 0.5rem;
+}
+
+.ts-dropdown .option,
+.ts-dropdown .create,
+.ts-dropdown .no-results,
+.ts-dropdown .optgroup-header {
+    padding: 0.5rem;
+    border-radius: var(--radius);
+    color: var(--color-body);
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.25rem;
+}
+
+.ts-dropdown .option.active,
+.ts-dropdown .create.active {
+    background: var(--color-neutral-tertiary-medium);
+    color: var(--color-heading);
+}
+
+.ts-dropdown .option.selected {
+    color: var(--color-heading);
+}
+
+.ts-dropdown .highlight {
+    border-radius: 0.125rem;
+    background: var(--color-brand-soft);
+}

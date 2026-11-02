@@ -72,30 +72,28 @@
             </section>
 
             <aside class="flex min-w-0 flex-col gap-4 lg:sticky lg:top-24">
+                <!-- Category Field -->
                 <section class="rounded-base border border-default bg-neutral-primary-soft p-5 shadow-xs">
-                    <label for="category_slug" class="mb-2 block text-sm font-medium text-heading">@lang('Category')</label>
-                    <div class="relative">
-                        <select id="category_slug" name="category_slug"
-                                @error('category_id') aria-invalid="true" aria-describedby="category-error" @enderror
-                                @class([
-                                    'block w-full appearance-none rounded-base border py-3 ps-3.5 pe-10 text-sm text-heading shadow-xs',
-                                    'border-default-medium bg-neutral-secondary-medium focus:border-brand focus:ring-brand' => ! $errors->has('category_id'),
-                                    'border-danger bg-danger-soft focus:border-danger focus:ring-danger-medium' => $errors->has('category_id'),
-                                ])>
-                            <option value="">@lang('Select category')</option>
-                            @foreach ($categories as $category)
-                                <option value="{{ $category->slug }}" @selected(old('category_slug') === $category->slug)>
-                                    {{ $category->name }}
-                                </option>
-                            @endforeach
-                        </select>
-                        <div class="pointer-events-none absolute inset-y-0 end-0 flex items-center pe-3.5">
-                            <i class="fa-solid fa-chevron-down text-xs text-body" aria-hidden="true"></i>
-                        </div>
-                    </div>
-                    @error('category_id')
-                        <p id="category-error" class="mt-2 text-sm text-fg-danger">{{ $message }}</p>
-                    @enderror
+                    <label for="category_slug" class="mb-2 block text-sm font-medium text-heading">
+                        @lang('Category')
+                    </label>
+
+                    <select id="category_slug"
+                            name="category_slug"
+                            @class([
+                                'block w-full appearance-none rounded-base border py-3 ps-3.5 pe-10 text-sm text-heading shadow-xs',
+                                'border-default-medium bg-neutral-secondary-medium focus:border-brand focus:ring-brand' => ! $errors->has('category_id'),
+                                'border-danger bg-danger-soft focus:border-danger focus:ring-danger-medium' => $errors->has('category_id'),
+                            ])
+                    >
+                        <option value="">@lang('Select category')</option>
+
+                        @foreach ($categories as $category)
+                            <option value="{{ $category->slug }}">
+                                {{ $category->name }}
+                            </option>
+                        @endforeach
+                    </select>
                 </section>
 
                 <section class="rounded-base border border-default bg-neutral-primary-soft p-5 shadow-xs">
@@ -162,6 +160,12 @@
 @endsection
 
 @section('js')
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initTomSelect('#category_slug', '{{ route('select-search.categories') }}');
+        });
+    </script>
+
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const checkbox = document.getElementById('published_at_feature');

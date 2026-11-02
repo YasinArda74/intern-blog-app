@@ -2,6 +2,18 @@
 
 @section('title', 'Kullanıcılar')
 
+@section('js')
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const userSearch = initTomSelect('#user-search', '{{ route('select-search.users') }}', {maxItems: 1});
+
+            userSearch.on('change', (value) => {
+                window.location = '{{ route('admin.getUsers') }}?username='+value
+            });
+        });
+    </script>
+@endsection
+
 @section('content')
     <div class="mb-6">
         <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Kullanıcılar</h1>
@@ -10,13 +22,10 @@
 
     <div class="bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
         <div class="flex flex-col gap-3 p-4 sm:flex-row sm:items-center sm:justify-between">
-            <div class="relative w-full sm:max-w-xs">
-                <label for="user-search" class="sr-only">Kullanıcı ara</label>
-                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none text-gray-500 dark:text-gray-400">
-                    <x-admin.icon name="search" class="w-4 h-4" />
-                </div>
-                <input type="text" id="user-search" placeholder="Ad veya e-posta ara..." class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
+            <div class="relative w-full sm:max-w-lg">
+                <input type="text" id="user-search" placeholder="{{ trans('Search username...') }}" class="block w-full p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white">
             </div>
+
             <div>
                 <label for="role-filter" class="sr-only">Role göre filtrele</label>
                 <select id="role-filter" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
