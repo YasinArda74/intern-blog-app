@@ -15,6 +15,8 @@ Route::controller(PostController::class)
 
             Route::get('{user:username}/{postSlug}/edit', 'getEdit')->name('edit');
             Route::put('{user:username}/{postSlug}/update', 'putUpdate')->name('update');
+
+            Route::delete('{user:username}/{postSlug}/delete', 'postDelete')->name('delete');
         });
 
         Route::get('{user:username}/{postSlug}', 'getShow')->name('show');

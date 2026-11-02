@@ -13,7 +13,7 @@ class CreatePostRequest extends FormRequest
     {
         if (! $this->user()->hasRole([
             RoleEnum::admin->value,
-            RoleEnum::author->value
+            RoleEnum::author->value,
         ])) {
             return false;
         }
@@ -29,8 +29,12 @@ class CreatePostRequest extends FormRequest
             'content' => ['required'],
             'excerpt' => ['required'],
             'category_id' => ['required', 'exists:categories,id'],
-            'scheduled_at'=> ['nullable', Rule::date()->afterToday(),'required_if:published_at_feature,on'],
-            'published_at_feature'=> ['nullable'],
+            'scheduled_at' => [
+                'nullable',
+                Rule::date()->afterToday(),
+                Rule::requiredIf($this->boolean('published_at_feature')),
+            ],
+            'published_at_feature' => ['nullable'],
         ];
     }
 
@@ -41,8 +45,8 @@ class CreatePostRequest extends FormRequest
             'content' => trans('Article content'),
             'excerpt' => trans('Brief summary'),
             'category_id' => trans('Category'),
-            'scheduled_at'=> trans('Scheduled At'),
-            'published_at_feature'=> trans('Published At Feature'),
+            'scheduled_at' => trans('Scheduled At'),
+            'published_at_feature' => trans('Published At Feature'),
         ];
     }
 
@@ -56,11 +60,10 @@ class CreatePostRequest extends FormRequest
             ->where('slug', $this->input('category_slug'))
             ->first();
 
-
         $this->merge([
             'user_id' => $this->user()->id,
             'category_id' => $category->id ?? null,
-            'scheduled_at' => $this->filled('published_at_feature') && $this->input('published_at_feature') == 'on'
+            'scheduled_at' => $this->boolean('published_at_feature')
                 ? $this->input('scheduled_at')
                 : null,
         ]);

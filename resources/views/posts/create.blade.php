@@ -14,59 +14,29 @@
             <p class="mt-2 text-base leading-relaxed text-body">@lang("Write down your ideas, publish them when you're ready.")</p>
         </div>
 
-        @if ($errors->any())
-            <div class="mb-6 flex items-start gap-3 rounded-base border border-danger-subtle bg-danger-soft p-4 text-sm text-fg-danger-strong" role="alert">
-                <i class="fa-solid fa-circle-exclamation mt-0.5" aria-hidden="true"></i>
-                <ul class="space-y-1">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
 
-        <form id="create-post-form" action="{{ route('posts.create') }}" method="POST" class="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_22rem]">
-            @csrf
+        <form id="create-post-form" class="grid items-start gap-6 lg:grid-cols-[minmax(0,1fr)_22rem]">
 
             <section class="min-w-0 rounded-base border border-default bg-neutral-primary-soft p-5 shadow-xs sm:p-8">
                 <div class="flex flex-col gap-7">
                     <div>
                         <label for="title" class="mb-2 block text-sm font-medium text-heading">@lang('Title')</label>
-                        <input type="text" id="title" name="title" value="{{ old('title') }}" maxlength="255"
+                        <input type="text" id="title" name="title" value="{{ $post->title ?? '' }}" maxlength="255"
                                placeholder="@lang('Give your article an attention-grabbing title.')"
-                               @error('title') aria-invalid="true" aria-describedby="title-error" @enderror
-                               @class([
-                                   'block w-full rounded-base border px-3.5 py-3 text-base font-medium text-heading shadow-xs placeholder:font-normal placeholder:text-body',
-                                   'border-default-medium bg-neutral-secondary-medium focus:border-brand focus:ring-brand' => ! $errors->has('title'),
-                                   'border-danger bg-danger-soft focus:border-danger focus:ring-danger-medium' => $errors->has('title'),
-                               ])>
-                        @error('title')
-                            <p id="title-error" class="mt-2 text-sm text-fg-danger">{{ $message }}</p>
-                        @enderror
+                            @class([
+                               'block w-full rounded-base border px-3.5 py-3 text-base font-medium text-heading shadow-xs placeholder:font-normal placeholder:text-body',])>
                     </div>
 
                     <div>
                         <p class="mb-2 block text-sm font-medium text-heading">@lang('Article content')</p>
                         <p class="mb-3 text-sm text-body">@lang('Start telling your story...')</p>
                         @include('posts.partials._tiptap-editor')
-                        @error('content')
-                            <p class="mt-2 text-sm text-fg-danger">{{ $message }}</p>
-                        @enderror
                     </div>
-
                     <div>
-                        <label for="excerpt" class="mb-2 block text-sm font-medium text-heading">@lang('Brief summary')</label>
-                        <textarea id="excerpt" name="excerpt" rows="4"
-                                  placeholder="@lang('The brief description readers will see in the list')"
-                                  @error('excerpt') aria-invalid="true" aria-describedby="excerpt-error" @enderror
-                                  @class([
-                                      'block w-full rounded-base border px-3.5 py-3 text-sm leading-relaxed text-heading shadow-xs placeholder:text-body',
-                                      'border-default-medium bg-neutral-secondary-medium focus:border-brand focus:ring-brand' => ! $errors->has('excerpt'),
-                                      'border-danger bg-danger-soft focus:border-danger focus:ring-danger-medium' => $errors->has('excerpt'),
-                                  ])>{{ old('excerpt') }}</textarea>
-                        @error('excerpt')
-                            <p id="excerpt-error" class="mt-2 text-sm text-fg-danger">{{ $message }}</p>
-                        @enderror
+                        <label for="excerpt"
+                               class="mb-2 block text-sm font-medium text-heading">@lang('Brief summary')</label>
+                        <textarea id="excerpt" name="excerpt" rows="4" placeholder="@lang('The brief description readers will see in the list')"
+                            @class(['block w-full rounded-base border px-3.5 py-3 text-sm leading-relaxed text-heading shadow-xs placeholder:text-body',])>{{ $post->excerpt ?? ''}}</textarea>
                     </div>
                 </div>
             </section>
@@ -80,47 +50,52 @@
 
                     <select id="category_slug"
                             name="category_slug"
-                            @class([
-                                'block w-full appearance-none rounded-base border py-3 ps-3.5 pe-10 text-sm text-heading shadow-xs',
-                                'border-default-medium bg-neutral-secondary-medium focus:border-brand focus:ring-brand' => ! $errors->has('category_id'),
-                                'border-danger bg-danger-soft focus:border-danger focus:ring-danger-medium' => $errors->has('category_id'),
-                            ])
+                        @class([
+                            'block w-full appearance-none rounded-base border py-3 ps-3.5 pe-10 text-sm text-heading shadow-xs',
+                        ])
                     >
                         <option value="">@lang('Select category')</option>
 
                         @foreach ($categories as $category)
-                            <option value="{{ $category->slug }}">
+                            <option value="{{ $category->slug }}"
+                                @selected(old('category_slug', $post->category->slug ?? '') === $category->slug)>
                                 {{ $category->name }}
                             </option>
                         @endforeach
                     </select>
                 </section>
+                @php
+                    $scheduledAt = old('scheduled_at', isset($post) && $post->scheduled_at
+                        ? $post->scheduled_at
+                        : '');
+                    $isScheduled = filter_var(
+                        old('published_at_feature', $scheduledAt ? '1' : '0'),
+                        FILTER_VALIDATE_BOOLEAN
+                    );
+                @endphp
 
                 <section class="rounded-base border border-default bg-neutral-primary-soft p-5 shadow-xs">
                     <label for="published_at_feature" class="flex cursor-pointer items-start gap-3">
                         <input id="published_at_feature" type="checkbox" name="published_at_feature" value="on"
-                               @checked(old('published_at_feature'))
+                               @checked($isScheduled)
                                class="mt-0.5 size-4 shrink-0 rounded-xs border border-default-medium bg-neutral-secondary-medium text-brand focus:ring-2 focus:ring-brand-soft">
                         <span>
                             <span class="block text-sm font-medium text-heading">@lang('Publish later')</span>
-                            <span class="mt-1 block text-sm leading-relaxed text-body">@lang('The post goes live on the date you choose.')</span>
+                            <span
+                                class="mt-1 block text-sm leading-relaxed text-body">@lang('The post goes live on the date you choose.')</span>
                         </span>
                     </label>
 
-                    <div id="scheduled-date-container" @class(['mt-4', 'hidden' => old('published_at_feature') !== 'on'])>
-                        <label for="scheduled_at" class="mb-2 block text-sm font-medium text-heading">@lang('Publication date')</label>
+                    <div
+                        id="scheduled-date-container" @class(['mt-4', 'hidden' => !$isScheduled])>
+                        <label for="scheduled_at"
+                               class="mb-2 block text-sm font-medium text-heading">@lang('Publication date')</label>
                         <input id="scheduled_at" type="date" name="scheduled_at"
-                               value="{{ old('scheduled_at') }}"
+                               value="{{ $scheduledAt }}"
                                min="{{ now()->addDay()->toDateString() }}"
-                               @error('scheduled_at') aria-invalid="true" aria-describedby="scheduled-at-error" @enderror
-                               @class([
-                                   'block w-full rounded-base border px-3.5 py-3 text-sm text-heading shadow-xs',
-                                   'border-default-medium bg-neutral-secondary-medium focus:border-brand focus:ring-brand' => ! $errors->has('scheduled_at'),
-                                   'border-danger bg-danger-soft focus:border-danger focus:ring-danger-medium' => $errors->has('scheduled_at'),
-                               ])>
-                        @error('scheduled_at')
-                            <p id="scheduled-at-error" class="mt-2 text-sm text-fg-danger">{{ $message }}</p>
-                        @enderror
+                            @class([
+                                'block w-full rounded-base border px-3.5 py-3 text-sm text-heading shadow-xs',
+                            ])>
                     </div>
                 </section>
 
@@ -129,7 +104,7 @@
                     <p class="mt-1 text-sm text-body">@lang('Everyone can see.')</p>
 
                     <div class="mt-5 hidden flex-col gap-3 lg:flex">
-                        <button type="submit"
+                        <button type="button" id="btn-create-post-form"
                                 class="inline-flex w-full items-center justify-center gap-2 rounded-base border border-transparent bg-brand px-4 py-2.5 text-sm font-medium text-white shadow-xs hover:bg-brand-strong focus:outline-none focus:ring-4 focus:ring-brand-medium">
                             <i class="fa-solid fa-paper-plane text-xs" aria-hidden="true"></i>
                             @lang('Publish')
@@ -151,7 +126,7 @@
                 @lang('Give up')
             </a>
             <button type="submit" form="create-post-form"
-                    class="inline-flex flex-1 items-center justify-center gap-2 rounded-base border border-transparent bg-brand px-4 py-2.5 text-sm font-medium text-white shadow-xs hover:bg-brand-strong focus:outline-none focus:ring-4 focus:ring-brand-medium">
+                    class="js-submit-post inline-flex flex-1 items-center justify-center gap-2 rounded-base border border-transparent bg-brand px-4 py-2.5 text-sm font-medium text-white shadow-xs hover:bg-brand-strong focus:outline-none focus:ring-4 focus:ring-brand-medium">
                 <i class="fa-solid fa-paper-plane text-xs" aria-hidden="true"></i>
                 @lang('Publish')
             </button>
@@ -160,26 +135,31 @@
 @endsection
 
 @section('js')
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            initTomSelect('#category_slug', '{{ route('select-search.categories') }}');
-        });
-    </script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded',() => {
+
+            document.getElementById('btn-create-post-form').addEventListener('click', function () {
+                @isset($post)
+                submitForm('#create-post-form', '{{ route('posts.update', ['user' => $post->user->username, 'postSlug' => $post->slug])}}', 'PUT');
+                @else
+                submitForm('#create-post-form', '{{ route('posts.create') }}');
+                @endisset
+            });
+            initTomSelect('#category_slug', '{{ route('select-search.categories') }}');
+
             const checkbox = document.getElementById('published_at_feature');
             const dateContainer = document.getElementById('scheduled-date-container');
             const dateInput = document.getElementById('scheduled_at');
 
-            if (! checkbox || ! dateContainer) {
+            if (!checkbox || !dateContainer) {
                 return;
             }
 
             checkbox.addEventListener('change', () => {
-                dateContainer.classList.toggle('hidden', ! checkbox.checked);
+                dateContainer.classList.toggle('hidden', !checkbox.checked);
 
-                if (! checkbox.checked && dateInput) {
+                if (!checkbox.checked && dateInput) {
                     dateInput.value = '';
                 }
             });

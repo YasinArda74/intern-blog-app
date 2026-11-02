@@ -14,9 +14,9 @@
 
         <span class="mx-1 hidden h-5 w-px bg-default-medium sm:block" aria-hidden="true"></span>
 
-        <label for="editor-heading" class="sr-only">@lang('Paragraph')</label>
+        <label for="editor-heading" class="sr-only ">@lang('Paragraph')</label>
         <select id="editor-heading"
-                class="h-8 rounded-base border border-default-medium bg-neutral-secondary-medium px-2 text-sm text-heading focus:border-brand focus:ring-brand">
+                class="h-8 rounded-base border border-default-medium bg-neutral-secondary-medium pl-3 text-xs text-heading focus:border-brand focus:ring-brand">
             <option value="paragraph">@lang('Paragraph')</option>
             @foreach (range(1, 6) as $level)
                 <option value="{{ $level }}">H{{ $level }}</option>
@@ -121,7 +121,7 @@
         <p id="editor-count"></p>
     </div>
 
-    <input type="hidden" name="content" id="content" value="{{ old('content') }}">
+    <input type="hidden" name="content" id="content" value="{{ $post->content ?? '' }}">
     <input id="editor-image" type="file" accept="image/jpeg,image/png,image/webp,image/gif" class="sr-only">
 
     <dialog id="editor-link-dialog" class="w-[min(100%,24rem)] rounded-base border border-default bg-neutral-primary-soft p-5 text-heading shadow-xs backdrop:bg-black/40">

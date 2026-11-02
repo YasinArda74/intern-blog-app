@@ -24,6 +24,19 @@
         ],
     ];
 @endphp
+@section('js')
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('btn-delete-post')?.addEventListener('click', () => {
+                if (!confirm('@lang('Are you sure you want to delete this post?')')) return;
+
+                submitForm('#delete-post-form',
+                    '{{ route('posts.delete', [$post->user, $post->slug]) }}',
+                    'DELETE');
+            });
+        });
+    </script>
+@endsection
 
 @section('content')
     <div class="mx-auto flex w-full min-w-0 max-w-6xl flex-col gap-8 px-4 py-10 sm:px-6 sm:py-14">
@@ -39,14 +52,22 @@
                             <p class="mt-1 text-sm text-body">{{ '@'.$post->user->username }} · {{ $post->created_at->translatedFormat('d F Y') }}</p>
                         </div>
                     </div>
-
-                    @if ($authUser?->id === $post->user_id)
-                        <a href="{{ route('posts.edit', [$authUser->username, $post->slug]) }}"
-                                class="inline-flex shrink-0 items-center gap-2 self-start rounded-base border border-transparent bg-brand px-4 py-2.5 text-sm font-medium text-white shadow-xs hover:bg-brand-strong focus:outline-none focus:ring-4 focus:ring-brand-medium sm:mt-4">
-                            <i class="fa-solid fa-pen text-xs" aria-hidden="true"></i>
-                            @lang('Edit post')
-                        </a>
-                    @endif
+                    <div>
+                        @if ($authUser?->id === $post->user_id)
+                            <a href="{{ route('posts.edit', [$authUser->username, $post->slug]) }}"
+                                    class="inline-flex shrink-0 items-center gap-2 self-start rounded-base border border-transparent bg-brand px-4 py-2.5 text-sm font-medium text-white shadow-xs hover:bg-brand-strong focus:outline-none focus:ring-4 focus:ring-brand-medium sm:mt-4">
+                                <i class="fa-solid fa-pen text-xs" aria-hidden="true"></i>
+                                @lang('Edit post')
+                            </a>
+                            <form id="delete-post-form">
+                                <button type="button" id="btn-delete-post"
+                                        class="inline-flex shrink-0 items-center gap-2 self-start rounded-base border border-transparent bg-danger px-4 py-2.5 text-sm font-medium text-white shadow-xs hover:opacity-90 focus:outline-none focus:ring-4 sm:mt-4">
+                                    <i class="fa-solid fa-trash-can"></i>
+                                    @lang('Delete')
+                                </button>
+                            </form>
+                        @endif
+                    </div>
                 </div>
 
                 <header class="mt-8 flex flex-col gap-4">
