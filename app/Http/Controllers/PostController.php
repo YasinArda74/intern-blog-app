@@ -26,9 +26,9 @@ class PostController extends Controller
 
     public function postCreate(CreatePostRequest $request)
     {
-        Post::query()->create($request->safe()->except(['published_at_feature']));
+        Post::query()->create($request->validated());
 
-        return redirect()->route('home');
+        return $this->returnSuccessResponse('Post created', route('profile.show'));
 
     }
 
@@ -55,6 +55,11 @@ class PostController extends Controller
 
         return view('posts.show', [
             'post' => $post,
+            'comments' => $post->comments()
+                ->whereNull('parent_id')
+                ->with('user')
+                ->latest()
+                ->get(),
         ]);
     }
 
