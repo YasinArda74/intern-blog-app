@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\CommentController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\PermissionController;
@@ -47,9 +46,4 @@ Route::controller(DashboardController::class)
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('permissions/import', [PermissionController::class, 'import'])->name('permissions.import');
-});
-
-Route::middleware('auth')->group(function () {
-    Route::post('comments', [CommentController::class, 'store'])->name('comment.store');
-    Route::delete('comments/{comment}', [CommentController::class, 'delete'])->name('comment.delete');
 });
