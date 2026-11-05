@@ -16,6 +16,21 @@ import StarterKit from '@tiptap/starter-kit'
 import { common, createLowlight } from 'lowlight'
 import 'highlight.js/styles/github.css'
 
+const FloatImage = Image.extend({
+    addAttributes() {
+        return {
+            ...this.parent?.(),
+            float: {
+                default: 'left',
+                parseHTML: (element) => element.getAttribute('data-float') ?? 'left',
+                renderHTML: (attributes) => ({
+                    'data-float': attributes.float,
+                }),
+            },
+        }
+    },
+})
+
 const root = document.querySelector('#tiptap')
 const element = document.querySelector('#editor')
 const input = document.querySelector('#content')
@@ -93,9 +108,11 @@ if (element && input && root) {
             CodeBlockLowlight.configure({
                 lowlight,
             }),
-            Image.configure({
+            FloatImage.configure({
+                inline: true,
                 resize: {
                     enabled: true,
+                    directions: ['top-left', 'top-right', 'bottom-left', 'bottom-right'],
                     minWidth: 80,
                     minHeight: 80,
                     alwaysPreserveAspectRatio: true,
@@ -225,6 +242,12 @@ if (element && input && root) {
             alignCenter: { run: () => editor.chain().focus().setTextAlign('center').run(), active: () => editor.isActive({ textAlign: 'center' }) },
             alignRight: { run: () => editor.chain().focus().setTextAlign('right').run(), active: () => editor.isActive({ textAlign: 'right' }) },
             alignJustify: { run: () => editor.chain().focus().setTextAlign('justify').run(), active: () => editor.isActive({ textAlign: 'justify' }) },
+            imageFloatLeft: {
+                run: () => editor.chain().focus().updateAttributes('image', { float: 'left' }).setTextAlign('left').run(),
+            },
+            imageFloatRight: {
+                run: () => editor.chain().focus().updateAttributes('image', { float: 'right' }).setTextAlign('left').run(),
+            },
             bulletList: { run: () => editor.chain().focus().toggleBulletList().run(), active: () => editor.isActive('bulletList') },
             orderedList: { run: () => editor.chain().focus().toggleOrderedList().run(), active: () => editor.isActive('orderedList') },
             taskList: { run: () => editor.chain().focus().toggleTaskList().run(), active: () => editor.isActive('taskList') },

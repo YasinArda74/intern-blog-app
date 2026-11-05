@@ -22,10 +22,58 @@
     pointer-events: none;
 }
 
-.tiptap img,
+.tiptap img {
+    margin: 7px;
+}
+
 .prose img {
     height: auto;
+    max-width: 98%;
+}
+
+.tiptap [data-resize-container] {
     max-width: 100%;
+}
+
+.tiptap p [data-resize-container]:not(:has(img[data-float="right"])),
+.prose p img[data-float="left"] {
+    float: left;
+    margin: 0 1rem 0.5rem 0;
+}
+
+.tiptap p [data-resize-container] img {
+    margin: 0;
+}
+
+.prose p img[data-float="right"] {
+    float: right;
+    margin: 0 0 0.5rem 1rem;
+}
+
+.tiptap [data-resize-handle] {
+    z-index: 1;
+    height: 10px;
+    width: 10px;
+    border: 1px solid var(--color-brand-strong);
+    border-radius: 9999px;
+    background-color: var(--color-brand);
+    opacity: 0;
+    transition: opacity 150ms ease;
+}
+
+.tiptap [data-resize-container]:hover [data-resize-handle],
+.tiptap [data-resize-container][data-resize-state="true"] [data-resize-handle] {
+    opacity: 1;
+}
+
+.tiptap [data-resize-handle="top-left"],
+.tiptap [data-resize-handle="bottom-right"] {
+    cursor: nwse-resize;
+}
+
+.tiptap [data-resize-handle="top-right"],
+.tiptap [data-resize-handle="bottom-left"] {
+    cursor: nesw-resize;
 }
 
 .tiptap table,
@@ -65,6 +113,17 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+.tiptap [data-resize-container]:has(img[data-float="left"]),
+.prose img[data-float="left"] {
+    float: left;
+    margin: 0 1rem 0.5rem 0;
+}
+
+.tiptap [data-resize-container]:has(img[data-float="right"]),
+.prose img[data-float="right"] {
+    float: right;
+    margin: 0 0 0.5rem 1rem;
+}
 @theme {
     --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
