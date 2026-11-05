@@ -64,7 +64,12 @@
         <x-editor-button action="alignJustify" :label="__('Justify')">
             <i class="fa-solid fa-align-justify text-xs" aria-hidden="true"></i>
         </x-editor-button>
-
+        <x-editor-button action="imageFloatLeft" :label="__('Image left')">
+            <i class="fa-solid fa-arrow-left text-xs" aria-hidden="true"></i>
+        </x-editor-button>
+        <x-editor-button action="imageFloatRight" :label="__('Image right')">
+            <i class="fa-solid fa-arrow-right text-xs" aria-hidden="true"></i>
+        </x-editor-button>
         <span class="mx-1 hidden h-5 w-px bg-default-medium sm:block" aria-hidden="true"></span>
 
         <x-editor-button action="bulletList" :label="__('Bullet list')">

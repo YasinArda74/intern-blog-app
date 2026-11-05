@@ -157,8 +157,10 @@ class TiptapRenderer
 
         $alt = e(is_string($node['attrs']['alt'] ?? null) ? $node['attrs']['alt'] : '');
         $style = $this->imageSize($node);
+        $float = $node['attrs']['float'] ?? 'left';
+        $float = in_array($float, ['left', 'right'], true) ? $float : 'left';
 
-        return '<img src="'.e($src).'" alt="'.$alt.'"'.$style.'>';
+        return '<img src="'.e($src).'" alt="'.$alt.'" data-float="'.$float.'"'.$style.'>';
     }
 
     /**

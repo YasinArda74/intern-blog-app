@@ -112,15 +112,12 @@
                             </div>
                             <p class="mt-4 text-sm leading-relaxed text-body">{{ $comment->content }}</p>
                             @if ($authUser?->id === $comment->user_id)
-
                                     <button type="button" data-comment-id="{{ $comment->id }}" id="btn-delete-comment"
                                             class="mt-4 inline-flex shrink-0 items-center gap-2 self-start rounded-base border border-transparent bg-danger px-4 py-2.5 text-sm font-medium text-white shadow-xs hover:opacity-90 focus:outline-none focus:ring-4">
                                         <i class="fa-solid fa-trash-can"></i>
                                         @lang('Delete')
                                     </button>
-
                             @endif
-
                         </article>
                     @endforeach
                 </div>

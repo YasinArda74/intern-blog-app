@@ -6,6 +6,20 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
+test('duplicate post titles receive a unique slug for the same user', function () {
+    $user = User::factory()->create();
+
+    $firstPost = Post::factory()->for($user)->create([
+        'title' => 'Ayni baslik',
+    ]);
+    $secondPost = Post::factory()->for($user)->create([
+        'title' => 'Ayni baslik',
+    ]);
+
+    expect($firstPost->slug)->toBe('ayni-baslik')
+        ->and($secondPost->slug)->toBe('ayni-baslik-2');
+});
+
 test('the post page renders tiptap content as written', function () {
     $user = User::factory()->create();
     $post = Post::factory()->for($user)->create([
@@ -147,7 +161,7 @@ test('extended editor content is rendered and unsafe images are dropped', functi
     $this->get(route('posts.show', ['user' => $user->username, 'postSlug' => $post->slug]))
         ->assertOk()
         ->assertSee('<p style="text-align: center"><mark>vurgu</mark></p>', false)
-        ->assertSee('<img src="https://kalem.test/photo.jpg" alt="Kapak">', false)
+        ->assertSee('<img src="https://kalem.test/photo.jpg" alt="Kapak" data-float="left">', false)
         ->assertDontSee('javascript:alert', false)
         ->assertSee('data-checked="true"', false)
         ->assertSee('<th><p>Ad</p></th>', false)
