@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Post\Comment\DeleteCommentRequest;
+use App\Http\Requests\Post\Comment\StoreCommentRequest;
 use App\Http\Requests\Post\CreatePostRequest;
 use App\Models\Category;
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
-use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -29,7 +31,7 @@ class PostController extends Controller
     {
         Post::query()->create($request->validated());
 
-        return redirect()->route('home');
+        return $this->returnSuccessResponse('Post created', route('profile.show'));
 
     }
 
@@ -56,6 +58,11 @@ class PostController extends Controller
 
         return view('posts.show', [
             'post' => $post,
+            'comments' => $post->comments()
+                ->whereNull('parent_id')
+                ->with('user')
+                ->latest()
+                ->get(),
         ]);
     }
 
@@ -77,5 +84,63 @@ class PostController extends Controller
         ]);
     }
 
-    public function putUpdate() {}
+    public function putUpdate(CreatePostRequest $request, User $user, $postSlug)
+    {
+        $post = Post::query()
+            ->where('user_id', $user->id)
+            ->where('slug', $postSlug)
+            ->firstOrFail();
+
+        abort_unless($post->user_id === $this->authUser->id, 403);
+
+        $post->update($request->safe()->except(['published_at_feature']));
+
+        return $this->returnSuccessResponse(
+            'Post updated',
+            route('posts.show', ['user' => $user, 'postSlug' => $post->slug])
+        );
+    }
+
+    public function postDelete(User $user, $postSlug)
+    {
+        $post = Post::query()
+            ->where('user_id', $user->id)
+            ->where('slug', $postSlug)
+            ->firstOrFail();
+
+        abort_unless($post->user_id === $this->authUser->id, 403);
+
+        $post->delete();
+
+        return $this->returnSuccessResponse('Post deleted', route('home'));
+
+    }
+
+    // region Comments
+    public function postComment(User $user, $postSlug, StoreCommentRequest $request)
+    {
+        $inputs = $request->validated();
+        $inputs['post_id'] = Post::query()
+            ->where('user_id', $user->id)
+            ->where('slug', $postSlug)
+            ->firstOrFail()
+            ->id;
+
+        Comment::create($inputs);
+
+        return $this->returnSuccessResponse('Comment added successfully');
+    }
+
+    public function deleteComment(DeleteCommentRequest $request)
+    {
+        $comment = Comment::query()->findOrFail($request->input('comment_id'));
+
+        abort_unless($comment->user_id === $this->authUser->id, 403);
+
+        $comment->delete();
+
+        return $this->returnSuccessResponse('Comment deleted successfully');
+    }
+
+    // endregion
 }

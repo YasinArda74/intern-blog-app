@@ -28,10 +28,11 @@ use Illuminate\Support\Str;
  * @property int $user_id
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
- * @property-read \App\Models\Category $category
- * @property-read Collection<int, \App\Models\Comment> $comments
+ * @property-read Category $category
+ * @property-read Collection<int, Comment> $comments
  * @property-read int|null $comments_count
- * @property-read \App\Models\User $user
+ * @property-read User $user
+ *
  * @method static \Database\Factories\PostFactory factory($count = null, $state = [])
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post newQuery()
@@ -51,6 +52,7 @@ use Illuminate\Support\Str;
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereUserId($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereUuid($value)
  * @method static \Illuminate\Database\Eloquent\Builder<static>|Post whereViewsCount($value)
+ *
  * @mixin \Eloquent
  */
 class Post extends Model
@@ -125,6 +127,9 @@ class Post extends Model
 
             if ($post->scheduled_at !== null) {
                 $post->status = PostStatusEnum::scheduled;
+            } elseif (blank($post->status)) {
+                $post->status = PostStatusEnum::published;
+                $post->published_at ??= now();
             }
         });
 
