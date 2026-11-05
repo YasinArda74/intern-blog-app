@@ -64,20 +64,10 @@
                         @endforeach
                     </select>
                 </section>
-                @php
-                    $scheduledAt = old('scheduled_at', isset($post) && $post->scheduled_at
-                        ? $post->scheduled_at
-                        : '');
-                    $isScheduled = filter_var(
-                        old('published_at_feature', $scheduledAt ? '1' : '0'),
-                        FILTER_VALIDATE_BOOLEAN
-                    );
-                @endphp
-
                 <section class="rounded-base border border-default bg-neutral-primary-soft p-5 shadow-xs">
                     <label for="published_at_feature" class="flex cursor-pointer items-start gap-3">
                         <input id="published_at_feature" type="checkbox" name="published_at_feature" value="on"
-                               @checked($isScheduled)
+                               @checked($post->scheduled_at ?? false)
                                class="mt-0.5 size-4 shrink-0 rounded-xs border border-default-medium bg-neutral-secondary-medium text-brand focus:ring-2 focus:ring-brand-soft">
                         <span>
                             <span class="block text-sm font-medium text-heading">@lang('Publish later')</span>
@@ -87,11 +77,11 @@
                     </label>
 
                     <div
-                        id="scheduled-date-container" @class(['mt-4', 'hidden' => !$isScheduled])>
+                        id="scheduled-date-container" @class(['mt-4', 'hidden' => !($post->scheduled_at ?? false)])>
                         <label for="scheduled_at"
                                class="mb-2 block text-sm font-medium text-heading">@lang('Publication date')</label>
                         <input id="scheduled_at" type="date" name="scheduled_at"
-                               value="{{ $scheduledAt }}"
+                               value="{{ $post->scheduled_at ?? '' }}"
                                min="{{ now()->addDay()->toDateString() }}"
                             @class([
                                 'block w-full rounded-base border px-3.5 py-3 text-sm text-heading shadow-xs',
