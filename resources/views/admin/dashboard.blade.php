@@ -27,7 +27,7 @@
     </div>
 
     <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4 mb-6">
-        <a href="#"
+        <a href="{{ route('admin.posts.list') }}"
            class="flex items-center justify-between p-5 bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
             <div>
                 <p class="text-sm font-medium text-gray-500 dark:text-gray-400">@lang('Total Text')</p>

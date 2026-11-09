@@ -28,15 +28,16 @@
                     </div>
 
                     <div>
-                        <p class="mb-2 block text-sm font-medium text-heading">@lang('Article content')</p>
-                        <p class="mb-3 text-sm text-body">@lang('Start telling your story...')</p>
-                        @include('posts.partials._tiptap-editor')
-                    </div>
-                    <div>
                         <label for="excerpt"
                                class="mb-2 block text-sm font-medium text-heading">@lang('Brief summary')</label>
                         <textarea id="excerpt" name="excerpt" rows="4" placeholder="@lang('The brief description readers will see in the list')"
                             @class(['block w-full rounded-base border px-3.5 py-3 text-sm leading-relaxed text-heading shadow-xs placeholder:text-body',])>{{ $post->excerpt ?? ''}}</textarea>
+                    </div>
+
+                    <div>
+                        <p class="mb-2 block text-sm font-medium text-heading">@lang('Article content')</p>
+                        <p class="mb-3 text-sm text-body">@lang('Start telling your story...')</p>
+                        @include('posts.partials._tiptap-editor')
                     </div>
                 </div>
             </section>

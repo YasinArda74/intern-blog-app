@@ -62,8 +62,12 @@
             <div class="border-t border-default">
                 <ul class="mx-auto flex max-w-6xl gap-1 px-4 text-sm font-medium sm:px-6">
                     <li>
-                        <a href="{{ route('profile.show') }}" aria-current="page"
-                           class="inline-flex items-center gap-2 border-b-2 border-brand px-3 py-3 text-fg-brand">
+                        <a href="{{ route('profile.show') }}" @if ($activeTab === 'articles') aria-current="page" @endif
+                           @class([
+                               'inline-flex items-center gap-2 border-b-2 px-3 py-3',
+                               'border-brand text-fg-brand' => $activeTab === 'articles',
+                               'border-transparent text-body hover:border-default-medium hover:text-heading' => $activeTab !== 'articles',
+                           ])>
                             @lang('Articles')
                             <span class="rounded-base bg-brand-soft px-1.5 py-0.5 text-xs font-medium text-fg-brand-strong">{{ $articleCount }}</span>
                         </a>
@@ -74,12 +78,63 @@
                             @lang('Saved items')
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route('profile.show', ['tab' => 'scheduled']) }}" @if ($activeTab === 'scheduled') aria-current="page" @endif
+                           @class([
+                               'inline-flex items-center gap-2 border-b-2 px-3 py-3',
+                               'border-brand text-fg-brand' => $activeTab === 'scheduled',
+                               'border-transparent text-body hover:border-default-medium hover:text-heading' => $activeTab !== 'scheduled',
+                           ])>
+                            Planlanmış
+                            <span class="rounded-base bg-brand-soft px-1.5 py-0.5 text-xs font-medium text-fg-brand-strong">{{ $scheduled_posts->total() }}</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
 
         <div class="mx-auto max-w-6xl px-4 py-10 sm:px-6">
-            @if ($published_posts->isEmpty())
+            @if ($activeTab === 'scheduled')
+                @if ($scheduled_posts->isEmpty())
+                    <div class="rounded-base border border-dashed border-default-medium bg-neutral-primary-soft px-6 py-16 text-center shadow-xs">
+                        <span class="mx-auto flex size-12 items-center justify-center rounded-full bg-brand-soft text-fg-brand">
+                            <i class="fa-regular fa-calendar" aria-hidden="true"></i>
+                        </span>
+                        <h2 class="mt-4 text-lg font-semibold text-heading">Planlanmış yazı yok</h2>
+                        <p class="mx-auto mt-2 max-w-md text-sm leading-relaxed text-body">Yayınlanması için ileri bir tarih belirlediğiniz yazılar burada görünür.</p>
+                        @role('author|admin')
+                            <a href="{{ route('posts.create') }}"
+                               class="mt-6 inline-flex items-center gap-2 rounded-base border border-transparent bg-brand px-4 py-2.5 text-sm font-medium text-white shadow-xs hover:bg-brand-strong focus:outline-none focus:ring-4 focus:ring-brand-medium">
+                                <i class="fa-solid fa-pencil text-xs" aria-hidden="true"></i>
+                                @lang('Write something')
+                            </a>
+                        @endrole
+                    </div>
+                @else
+                    <a class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                        @foreach ($scheduled_posts as $post)
+                            <article class="group flex flex-col overflow-hidden rounded-base border border-default bg-neutral-primary-soft shadow-xs transition hover:shadow-md">
+                                <a href="{{ route('posts.show', ['user' => $post->user->username, 'postSlug' => $post->slug]) }}" class="flex flex-1 flex-col">
+                                    @component('components.post-card', [
+                                        'image' => '/images/post-1.png',
+                                        'post' => $post,
+                                    ])@endcomponent
+                                </a>
+                                <div class="flex items-center gap-2 border-t border-default px-5 py-3 text-sm text-body">
+                                    <i class="fa-regular fa-calendar text-xs" aria-hidden="true"></i>
+                                    <span>Yayınlanma zamanı: {{ \Illuminate\Support\Carbon::parse($post->scheduled_at)->translatedFormat('d F Y H:i') }}</span>
+                                </div>
+                            </article>
+                        @endforeach
+                    </div>
+
+                    @if ($scheduled_posts->hasPages())
+                        <div class="mt-8">
+                            {{ $scheduled_posts->links() }}
+                        </div>
+                    @endif
+                @endif
+            @elseif ($published_posts->isEmpty())
                 <div class="rounded-base border border-dashed border-default-medium bg-neutral-primary-soft px-6 py-16 text-center shadow-xs">
                     <span class="mx-auto flex size-12 items-center justify-center rounded-full bg-brand-soft text-fg-brand">
                         <i class="fa-solid fa-feather-pointed" aria-hidden="true"></i>

@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Admin\Users\UpdateUserRequest;
 use App\Models\Category;
 use App\Models\Post;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\DB;
 use Spatie\Permission\Models\Role;
 
 class DashboardController extends Controller
@@ -42,6 +45,56 @@ class DashboardController extends Controller
         return view('admin.users.index', [
             'users' => $users,
         ]);
+    }
+    public function getUsersEdit(User $user)
+    {
+        $roles = Role::query()
+            ->where('guard_name', config('auth.defaults.guard'))
+            ->orderBy('name')
+            ->get();
+
+        $user->load('roles');
+
+        return view('admin.users.edit', [
+            'user' => $user,
+            'roles' => $roles,
+        ]);
+    }
+
+    public function putUsersEdit(UpdateUserRequest $request, User $user): JsonResponse
+    {
+        $validated = $request->validated();
+
+        DB::transaction(function () use ($user, $validated): void {
+            $user->fill([
+                'firstname' => $validated['firstname'],
+                'lastname' => $validated['lastname'],
+                'username' => $validated['username'],
+                'email' => $validated['email'],
+                'about' => $validated['about'] ?? null,
+            ]);
+
+            if ($user->isDirty('email')) {
+                $user->email_verified_at = null;
+            }
+
+            $user->save();
+            $roleIds = array_map('intval', $validated['roles'] ?? []);
+
+            $user->syncRoles($roleIds);
+        });
+
+        return $this->returnSuccessResponse(
+            'User updated',
+            route('admin.getUsersEdit', $user)
+        );
+    }
+
+    public function usersDelete(User $user)
+    {
+        $user->delete();
+
+        return $this->returnSuccessResponse('User deleted',route('admin.getUsers'));
     }
 
     public function getRolAsPermissions()
