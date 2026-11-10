@@ -104,6 +104,47 @@ class Post extends Model
         return (new TiptapRenderer)->render($this->content);
     }
 
+    // region Kelime sayısına bağlı olarak blogun süresini hesaplar dakidada 200 kelime okunulduğunu baz alır ve en düşük 1 dakika yazar
+    public function readingTimeMinutes(): int
+    {
+        return max(1, (int) ceil($this->countWordsInContent($this->content) / 200));
+    }
+
+    private function countWordsInContent(mixed $node): int
+    {
+        if (is_string($node)) {
+            return $this->countWordsInText($node);
+        }
+
+        if (! is_array($node)) {
+            return 0;
+        }
+
+        $wordCount = 0;
+        $text = $node['text'] ?? null;
+
+        if (is_string($text)) {
+            $wordCount += $this->countWordsInText($text);
+        }
+
+        foreach (is_array($node['content'] ?? null) ? $node['content'] : [] as $child) {
+            $wordCount += $this->countWordsInContent($child);
+        }
+
+        return $wordCount;
+    }
+
+    private function countWordsInText(string $text): int
+    {
+        $wordCount = preg_match_all('/[\p{L}\p{N}]+/u', $text);
+
+        if ($wordCount === false) {
+            throw new \UnexpectedValueException('Post content contains invalid UTF-8.');
+        }
+
+        return $wordCount;
+    }
+//endregion
     // Hooks
 
     /**

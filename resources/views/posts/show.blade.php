@@ -2,8 +2,6 @@
 
 @section('title', $post->title)
 
-@php
-    @endphp
 @section('js')
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -52,7 +50,7 @@
 @section('content')
     <div class="mx-auto flex w-full min-w-0 max-w-6xl flex-col gap-8 px-4 py-10 sm:px-6 sm:py-14">
         <article
-            class="min-w-0 wrap-break-word overflow-hidden rounded-base border border-default bg-neutral-primary-soft shadow-xs">
+            class="min-w-0 wrap-break-word overflow-hidden rounded-2xl border border-default bg-neutral-primary-soft shadow-sm">
             <img src="{{ asset('images/post-cover.svg') }}" alt="@lang('Cover image')"
                  class="aspect-[2/1] w-full object-cover sm:aspect-[2.6/1]">
 
@@ -86,7 +84,13 @@
                 </div>
 
                 <header class="mt-8 flex flex-col gap-4">
-                    <p class="text-sm font-medium text-fg-brand">{{ $post->category->name }}</p>
+                    <div class="flex flex-wrap items-center gap-2">
+                        <x-category-badge :category="$post->category" />
+                        <span class="text-sm text-body">{{ $post->created_at->translatedFormat('d F Y') }}</span>
+                        <span class="text-sm text-body" aria-label="{{ trans(':count min read', ['count' => $post->readingTimeMinutes()]) }}">
+                            · {{ trans(':count min read', ['count' => $post->readingTimeMinutes()]) }}
+                        </span>
+                    </div>
                     <h1 class="text-balance text-4xl font-semibold tracking-tight text-heading sm:text-5xl sm:leading-[1.1]">{{ $post->title }}</h1>
 
                     @if (filled($post->excerpt))
@@ -106,13 +110,13 @@
         <section aria-labelledby="comments-heading" class="flex min-w-0 flex-col gap-4">
             <div>
                 <h2 id="comments-heading"
-                    class="text-xl font-semibold tracking-tight text-heading">@lang('Comments')</h2>
+                    class="text-2xl font-semibold tracking-tight text-heading">@lang('Comments')</h2>
                 <p class="mt-1 text-sm text-body">@lang('Share what you think about this article.')</p>
             </div>
 
             <form
                 id="create-comment-form"
-                class="rounded-base border border-default bg-neutral-primary-soft p-5 shadow-xs sm:p-6"
+                class="rounded-2xl border border-default bg-neutral-primary-soft p-5 shadow-sm sm:p-6"
             >
                 <label for="comment" class="mb-2.5 block text-sm font-medium text-heading">@lang('Write a comment')</label>
 
@@ -137,9 +141,9 @@
                 </div>
             </form>
 
-            <div class="grid grid-cols-1 gap-4 md:grid-cols-3">
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                 @foreach ($comments as $comment)
-                    <article class="comment-card min-w-0 wrap-break-word rounded-base border border-default bg-neutral-primary-soft p-5 shadow-xs">
+                    <article class="comment-card min-w-0 wrap-break-word rounded-2xl border border-default bg-neutral-primary-soft p-5 shadow-xs transition hover:shadow-sm">
                         <div class="flex items-center gap-3">
                             <x-avatar :initials="$comment->user->getFullNameInitials()" size="sm"/>
 

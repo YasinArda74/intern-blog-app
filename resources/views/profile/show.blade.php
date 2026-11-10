@@ -104,10 +104,6 @@
                                     'post' => $post,
                                 ])@endcomponent
                             </a>
-                            <div class="flex items-center gap-2 border-t border-default px-5 py-3 text-sm text-body">
-                                <i class="fa-regular fa-clock text-xs" aria-hidden="true"></i>
-                                <time datetime="{{ $post->created_at->toAtomString() }}">{{ $post->created_at->diffForHumans() }}</time>
-                            </div>
                         </article>
                     @endforeach
                 </div>

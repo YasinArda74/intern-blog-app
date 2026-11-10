@@ -24,7 +24,7 @@
         </h1>
         <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
             @lang("Don't you have an account?")
-            <a href="{{ route('register') }}" class="font-medium text-indigo-700 hover:underline dark:text-indigo-400">
+            <a href="{{ route('register') }}" class="font-medium text-fg-brand hover:underline">
                 @lang('Sign up now')
             </a>
         </p>
@@ -38,7 +38,7 @@
             @if (Route::has('password.request'))
                 <x-slot:action>
                     <a href="{{ route('password.request') }}"
-                       class="text-sm font-medium text-indigo-700 hover:underline dark:text-indigo-400">Şifremi
+                       class="text-sm font-medium text-fg-brand hover:underline">Şifremi
                         unuttum</a>
                 </x-slot:action>
             @endif
@@ -52,7 +52,7 @@
 
         <button type="button"
                 id="btn-form-login"
-            class="w-full rounded-lg bg-indigo-700 px-5 py-3 text-center text-sm font-semibold text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800">
+            class="w-full rounded-base bg-brand px-5 py-3 text-center text-sm font-semibold text-white shadow-xs transition hover:bg-brand-strong focus:outline-none focus:ring-4 focus:ring-brand-medium">
             @lang('Sign In')
         </button>
     </form>
