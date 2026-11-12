@@ -42,18 +42,18 @@
             <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
-                        <th scope="col" class="px-6 py-3">Kullanıcı</th>
-                        <th scope="col" class="px-6 py-3">Rol</th>
-                        <th scope="col" class="px-6 py-3">Durum</th>
-                        <th scope="col" class="px-6 py-3">Kayıt Tarihi</th>
-                        <th scope="col" class="px-6 py-3 text-right">İşlemler</th>
+                        <th scope="col" class="px-6 py-3">@lang('User')</th>
+                        <th scope="col" class="px-6 py-3">@lang('Rol')</th>
+                        <th scope="col" class="px-6 py-3">@lang('Situation')</th>
+                        <th scope="col" class="px-6 py-3">@lang('Registration Date')</th>
+                        <th scope="col" class="px-6 py-3 text-right">@lang('Options')</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($users as $user)
                         <tr class="bg-white border-b border-gray-200 hover:bg-gray-50 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-600">
                             <th scope="row" class="flex items-center px-6 py-4 text-gray-900 whitespace-nowrap dark:text-white">
-                                <span class="w-10 h-10 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-semibold dark:bg-blue-900 dark:text-blue-300">A</span>
+                                <span class="w-10 h-10 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-semibold dark:bg-blue-900 dark:text-blue-300">{{$user->getFullNameInitials()}}</span>
                                 <div class="ps-3">
                                     <div class="text-base font-semibold">{{$user->getFullName()}}</div>
                                     <div class="font-normal text-gray-500">{{$user->email}}</div>
@@ -72,17 +72,23 @@
                                 <div class="flex items-center"><span class="h-2.5 w-2.5 rounded-full bg-green-500 me-2"></span> Aktif</div>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap">01 Oca 2026</td>
-                            <td class="px-6 py-4">
-                                <div class="flex items-center justify-end gap-2">
-                                    <button type="button" data-modal-target="change-role-modal" data-modal-toggle="change-role-modal" data-delete-name="Admin Kullanıcı" class="inline-flex items-center gap-1 px-3 py-1.5 text-xs font-medium text-blue-700 border border-blue-700 rounded-lg hover:bg-blue-700 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">
-                                        <x-admin.icon name="swap" class="w-4 h-4" />
-                                        Rol Değiştir
-                                    </button>
-                                    <button type="button" data-modal-target="delete-user-modal" data-modal-toggle="delete-user-modal" data-delete-name="Admin Kullanıcı" class="p-2 text-red-600 rounded-lg hover:bg-red-50 dark:text-red-500 dark:hover:bg-gray-700" aria-label="Admin Kullanıcı kullanıcısını sil">
-                                        <x-admin.icon name="trash" class="w-5 h-5" />
-                                    </button>
-                                </div>
-                            </td>
+                            <td class="px-12 py-4 text-right">
+                                <button id="role-actions-button-{{ $user->id }}"
+                                        data-dropdown-toggle="role-actions-menu-{{ $user->id }}"
+                                        data-dropdown-placement="bottom-start"
+                                        class="cursor-pointer inline-flex items-center justify-center w-9 h-9 text-body rounded-base hover:bg-neutral-tertiary-medium hover:text-heading focus:ring-2 focus:ring-neutral-tertiary focus:outline-none"
+                                        type="button" aria-label="@lang('Open actions')"> <i class="fa-solid fa-ellipsis-vertical" aria-hidden="true"></i> </button></td>
+                            <div id="role-actions-menu-{{ $user->id }}"
+                                 class="z-30 hidden bg-neutral-primary-medium border border-default-medium rounded-base shadow-lg w-44">
+                                <ul class="p-2 text-sm text-body font-medium"
+                                    aria-labelledby="role-actions-button-{{ $user->id }}">
+                                    <li>
+                                        <a href="{{ route('admin.getUsersEdit', $user->id) }}"
+                                           class="inline-flex items-center w-full p-2 hover:bg-neutral-tertiary-medium hover:text-heading rounded">@lang('Edit')</a>
+                                    </li>
+
+                                </ul>
+                            </div>
                         </tr>
                     @endforeach
                 </tbody>
@@ -130,9 +136,4 @@
         </div>
     </div>
 
-    @foreach($users as $user)
-        <x-admin.delete-modal :action="route('admin.getUsers')" :id="'delete-user-modal-' . $user->id" title="Kullanıcıyı sil">
-            <strong>{{ $user->name }}</strong> kullanıcısını silmek istediğinize emin misiniz? Bu işlem geri alınamaz.
-        </x-admin.delete-modal>
-    @endforeach
 @endsection

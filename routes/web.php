@@ -40,6 +40,11 @@ Route::controller(DashboardController::class)
             Route::get('dashboard/users', 'getUsersIndex')->name('getUsers');
             Route::post('dashboard/users', 'getUsersIndex')->name('getUsers');
 
+            Route::get('dashboard/users/{user}/edit', 'getUsersEdit')->name('getUsersEdit');
+            Route::delete('dashboard/users/{user}/delete', 'usersDelete')->name('usersDelete');
+            Route::put('dashboard/users/{user}/edit', 'putUsersEdit')->name('putUsersEdit');
+
+
             Route::get('dashboard/rolpermissions', 'getRolAsPermissions')->name('getRolAsPermissions');
         });
     });
