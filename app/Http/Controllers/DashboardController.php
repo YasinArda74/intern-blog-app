@@ -65,24 +65,15 @@ class DashboardController extends Controller
     {
         $validated = $request->validated();
 
-        DB::transaction(function () use ($user, $validated): void {
-            $user->fill([
-                'firstname' => $validated['firstname'],
-                'lastname' => $validated['lastname'],
-                'username' => $validated['username'],
-                'email' => $validated['email'],
-                'about' => $validated['about'] ?? null,
-            ]);
+        try {
+            DB::transaction(function () use ($user, $validated): void {
+                $user->update($validated);
 
-            if ($user->isDirty('email')) {
-                $user->email_verified_at = null;
-            }
-
-            $user->save();
-            $roleIds = array_map('intval', $validated['roles'] ?? []);
-
-            $user->syncRoles($roleIds);
-        });
+                $user->syncRoles($validated['roles'] ?? []);
+            });
+        } catch (\Throwable $exception) {
+            return $this->returnErrorResponse('An error occurred while updating the user.');
+        }
 
         return $this->returnSuccessResponse(
             'User updated',
@@ -94,7 +85,7 @@ class DashboardController extends Controller
     {
         $user->delete();
 
-        return $this->returnSuccessResponse('User deleted',route('admin.getUsers'));
+        return $this->returnSuccessResponse('User deleted', route('admin.getUsers'));
     }
 
     public function getRolAsPermissions()

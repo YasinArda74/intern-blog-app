@@ -23,13 +23,9 @@ class UpdateUserRequest extends FormRequest
             'username' => ['required', 'string', 'max:255', Rule::unique('users', 'username')->ignore($user)],
             'email' => ['required', 'email', 'max:255', Rule::unique('users', 'email')->ignore($user)],
             'about' => ['nullable', 'string', 'max:160'],
+
             'roles' => ['sometimes', 'array'],
-            'roles.*' => [
-                'required',
-                'integer',
-                'distinct',
-                Rule::exists('roles', 'id')->where('guard_name', config('auth.defaults.guard')),
-            ],
+            'roles.*' => ['required', 'exists:roles,name'],
         ];
     }
 }

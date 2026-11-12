@@ -123,13 +123,15 @@
                     </div>
                     <div class="grid gap-3 p-4 sm:grid-cols-2">
                         @forelse ($roles as $role)
-                            <label for="role-{{ $role->id }}" class="flex cursor-pointer items-start gap-3 rounded-base border border-default-medium bg-neutral-secondary-medium p-4 transition hover:border-brand">
-                                <input id="role-{{ $role->id }}"
+                            <label for="role-{{ $role->name }}" class="flex cursor-pointer items-start gap-3 rounded-base border border-default-medium bg-neutral-secondary-medium p-4 transition hover:border-brand">
+                                <input id="role-{{ $role->name }}"
                                        data-role-checkbox
                                        type="checkbox"
-                                       value="{{ $role->id }}"
+                                       value="{{ $role->name }}"
                                        @checked($user->roles->contains('id', $role->id))
-                                       class="mt-0.5 h-4 w-4 rounded border-default-medium bg-neutral-primary-soft text-brand focus:ring-2 focus:ring-brand-medium">
+                                       class="mt-0.5 h-4 w-4 rounded border-default-medium bg-neutral-primary-soft text-brand focus:ring-2 focus:ring-brand-medium"
+                                />
+
                                 <span>
                                     <span class="block text-sm font-medium text-heading">{{ trans($role->name) }}</span>
                                     <span class="mt-1 block text-xs text-body">{{ $role->name }}</span>

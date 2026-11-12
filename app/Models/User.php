@@ -95,4 +95,17 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
     // endregion
+
+    // Hooks
+    public static function boot(): void
+    {
+        parent::boot();
+
+        static::updating(function (User $user) {
+            // Reset email verification when email is updated
+            if ($user->isDirty('email')) {
+                $user->email_verified_at = null;
+            }
+        });
+    }
 }

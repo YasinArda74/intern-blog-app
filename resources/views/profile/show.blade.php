@@ -4,7 +4,7 @@
     $articleCount = $published_posts->total();
 @endphp
 
-@section('title', $user->getFullName())
+@section('title', $authUser->getFullName())
 
 @section('content')
     <section>
@@ -18,10 +18,10 @@
             <div class="mx-auto max-w-6xl px-4 sm:px-6">
                 <div class="flex flex-col gap-5 pb-8 sm:flex-row sm:items-start sm:justify-between">
                     <div class="flex items-start gap-4">
-                        <x-avatar :initials="$user->getFullNameInitials()" size="xl" class="relative z-10 -mt-14 shrink-0 shadow-xs" />
+                        <x-avatar :initials="$authUser->getFullNameInitials()" size="xl" class="relative z-10 -mt-14 shrink-0 shadow-xs" />
                         <div class="min-w-0 pt-4">
-                            <h1 class="text-2xl font-bold tracking-tight text-heading sm:text-3xl">{{ $user->getFullName() }}</h1>
-                            <p class="mt-1 text-sm text-body">{{ '@'.$user->username }}</p>
+                            <h1 class="text-2xl font-bold tracking-tight text-heading sm:text-3xl">{{ $authUser->getFullName() }}</h1>
+                            <p class="mt-1 text-sm text-body">{{ '@'.$authUser->username }}</p>
                         </div>
                     </div>
 
@@ -42,8 +42,8 @@
                 </div>
 
                 <div class="flex flex-col gap-6 pb-8">
-                    @if (filled($user->about))
-                        <p class="max-w-2xl text-base leading-relaxed text-body">{{ $user->about }}</p>
+                    @if (filled($authUser->about))
+                        <p class="max-w-2xl text-base leading-relaxed text-body">{{ $authUser->about }}</p>
                     @endif
 
                     <dl class="flex flex-wrap gap-3">
@@ -53,7 +53,7 @@
                         </div>
                         <div class="rounded-base border border-default bg-neutral-secondary-soft px-4 py-3">
                             <dt class="text-sm text-body">@lang('Registration Date')</dt>
-                            <dd class="mt-1 text-lg font-semibold whitespace-nowrap text-heading">{{ $user->created_at->translatedFormat('d F Y') }}</dd>
+                            <dd class="mt-1 text-lg font-semibold whitespace-nowrap text-heading">{{ $authUser->created_at->translatedFormat('d F Y') }}</dd>
                         </div>
                     </dl>
                 </div>
