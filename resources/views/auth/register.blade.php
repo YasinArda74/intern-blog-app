@@ -21,7 +21,7 @@
         <h1 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white">@lang('Create an account')</h1>
         <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
             @lang('Do you already have an account?')
-            <a href="{{ route('login') }}" class="font-medium text-indigo-700 hover:underline dark:text-indigo-400">@lang('Sign In')</a>
+            <a href="{{ route('login') }}" class="font-medium text-fg-brand hover:underline">@lang('Sign In')</a>
         </p>
     </div>
 
@@ -40,7 +40,7 @@
 
         <button type="button"
                 id="btn-register-form"
-                class="w-full rounded-lg bg-indigo-700 px-5 py-3 text-center text-sm font-semibold text-white hover:bg-indigo-800 focus:outline-none focus:ring-4 focus:ring-indigo-300 dark:bg-indigo-600 dark:hover:bg-indigo-700 dark:focus:ring-indigo-800"
+                class="w-full rounded-base bg-brand px-5 py-3 text-center text-sm font-semibold text-white shadow-xs transition hover:bg-brand-strong focus:outline-none focus:ring-4 focus:ring-brand-medium"
         >
             @lang('Create an account')
         </button>

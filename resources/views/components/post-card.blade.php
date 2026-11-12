@@ -8,27 +8,30 @@
 <article class="group flex flex-col">
     @if ($hasImage)
         <div class="aspect-[16/9] overflow-hidden bg-neutral-secondary-medium">
-            <img src="{{ $image }}" alt="{{ $post->title }}" class="size-full object-cover transition duration-300 group-hover:scale-105">
+            <img src="{{ $image }}" alt="{{ $post->title }}" loading="lazy"
+                 class="size-full object-cover transition duration-500 group-hover:scale-105">
         </div>
     @else
-        <div class="relative flex aspect-[16/9] items-end overflow-hidden bg-brand p-5">
-            <div class="absolute -end-8 -top-10 size-36 rounded-full bg-white/10" aria-hidden="true"></div>
-            <div class="absolute -bottom-12 -start-8 size-32 rounded-full bg-white/10" aria-hidden="true"></div>
-            <span class="relative rounded-base bg-white/15 px-2.5 py-1 text-xs font-medium text-white">{{ $post->category->name }}</span>
-        </div>
+        <x-category-gradient :category="$post->category" class="flex aspect-[16/9] items-end p-5">
+            <span class="relative size-10 rounded-full bg-white/40 dark:bg-white/10" aria-hidden="true"></span>
+        </x-category-gradient>
     @endif
 
     <div class="flex flex-1 flex-col gap-3 p-5">
-        @if ($hasImage)
-            <span class="w-fit rounded-base bg-brand-soft px-2.5 py-0.5 text-xs font-medium text-fg-brand-strong">{{ $post->category->name }}</span>
-        @endif
+        <x-category-badge :category="$post->category" />
 
-        <h3 class="text-lg font-semibold leading-snug text-heading">
+        <h3 class="text-lg font-semibold leading-snug tracking-tight text-heading">
             <span class="transition group-hover:text-fg-brand">{{ $post->title }}</span>
         </h3>
 
         <p class="line-clamp-2 text-sm leading-relaxed text-body">
             {{ Str::limit($post->excerpt, 100) }}
         </p>
+
+        <div class="mt-auto flex items-center gap-2 border-t border-default pt-3 text-xs text-body">
+            <time datetime="{{ $post->created_at->toAtomString() }}">{{ $post->created_at->translatedFormat('d F Y') }}</time>
+            <span aria-hidden="true">·</span>
+            <span>{{ trans(':count min read', ['count' => $post->readingTimeMinutes()]) }}</span>
+        </div>
     </div>
 </article>

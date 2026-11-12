@@ -13,8 +13,8 @@
 </head>
 <body class="h-full bg-gray-50 font-sans text-gray-900 antialiased dark:bg-gray-950 dark:text-gray-100">
 <div class="flex min-h-full">
-    <aside class="relative hidden w-1/2 flex-col justify-between overflow-hidden bg-indigo-700 p-12 text-white lg:flex">
-        <div class="pointer-events-none absolute -right-24 -top-24 size-96 rounded-full bg-indigo-500/40 blur-3xl" aria-hidden="true"></div>
+    <aside class="relative hidden w-1/2 flex-col justify-between overflow-hidden bg-brand p-12 text-white lg:flex">
+        <div class="pointer-events-none absolute -right-24 -top-24 size-96 rounded-full bg-white/15 blur-3xl" aria-hidden="true"></div>
         <div class="pointer-events-none absolute -bottom-32 -left-16 size-96 rounded-full bg-sky-400/30 blur-3xl" aria-hidden="true"></div>
 
         <a href="{{ route('home') }}" class="relative flex items-center gap-3 text-lg font-semibold">
@@ -28,11 +28,11 @@
 
         <div class="relative max-w-md">
             <h2 class="text-balance text-4xl font-bold leading-tight">@yield('panel-title')</h2>
-            <p class="mt-4 text-pretty text-lg leading-relaxed text-indigo-100">
+            <p class="mt-4 text-pretty text-lg leading-relaxed text-white/80">
                 @yield('panel-text')
             </p>
 
-            <ul class="mt-10 space-y-4 text-indigo-50">
+            <ul class="mt-10 space-y-4 text-white/90">
                 <li class="flex items-center gap-3">
                     <i class="fa-solid fa-circle-check"></i>
                     @lang('Simple and focused writing editor')
@@ -53,9 +53,9 @@
         <p>&copy; {{ now()->format('Y') . ' ' . config('app.name') }}. @lang('All rights reserved.')</p>
     </aside>
 
-    <main class="flex w-full flex-1 flex-col justify-center px-6 py-12 sm:px-12 lg:w-1/2 lg:px-20">
-        <div class="mx-auto w-full max-w-md">
-            <a href="{{ route('home') }}" class="mb-10 flex items-center gap-2 text-lg font-semibold text-indigo-700 lg:hidden dark:text-indigo-400">
+    <main class="flex w-full flex-1 flex-col justify-center px-4 py-10 sm:px-12 sm:py-12 lg:w-1/2 lg:px-20">
+        <div class="mx-auto w-full max-w-md rounded-2xl border border-gray-200 bg-white p-6 shadow-sm sm:p-8 lg:rounded-none lg:border-0 lg:bg-transparent lg:p-0 lg:shadow-none dark:border-gray-800 dark:bg-gray-900 lg:dark:bg-transparent">
+            <a href="{{ route('home') }}" class="mb-10 flex items-center gap-2 text-lg font-semibold text-fg-brand lg:hidden">
                     <span class="flex size-9 items-center justify-center rounded-lg bg-indigo-700 text-white">
                         <svg class="size-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2" aria-hidden="true">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
